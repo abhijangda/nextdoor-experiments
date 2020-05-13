@@ -1,0 +1,148 @@
+num_devices = 2
+rand-seed = 1540989783
+using device[0] 0
+using device[1] 1
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Read bandwidth-latency=Bandwidth
+Random Read Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	11.9208	6.44512	0.000202823	13.1248
+GPU 1	6.43863	11.8163	0.000210026	6.23402
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Read bandwidth-latency=Latency
+Random Read Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.90735	1.19209	13.5899	1.09673
+GPU 1	1.78814	3.50475	16.6893	1.78814
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Write bandwidth-latency=Bandwidth
+Random Write Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	12.2429	7.82994	0.00492898	7.29241
+GPU 1	7.71665	12.0499	0.0031716	5.24161
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Write bandwidth-latency=Latency
+Random Write Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	7.20024	2.00272	1.69277	2.00272
+GPU 1	1.09673	3.21865	1.00136	1.00136
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Update bandwidth-latency=Bandwidth
+Random Update Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	6.3288	3.61786	0.0617999	4.33641
+GPU 1	3.63843	6.39121	0.0628548	3.20722
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Update bandwidth-latency=Latency
+Random Update Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.19209	1.09673	1.28746	1.09673
+GPU 1	1.00136	1.00136	1.19209	1.09673
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Read bandwidth-latency=Bandwidth
+Regular Read Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	254.726	71.3092	7.01562	63.288
+GPU 1	72.2144	284.444	6.27297	65.641
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Read bandwidth-latency=Latency
+Regular Read Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.09673	1.40667	1.09673	1.3113
+GPU 1	1.28746	1.00136	1.09673	1.50204
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Write bandwidth-latency=Bandwidth
+Regular Write Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	673.684	79.257	21.3779	70.137
+GPU 1	79.7508	764.179	4.66813	70.9141
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Write bandwidth-latency=Latency
+Regular Write Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.19209	1.00136	1.12057	1.00136
+GPU 1	1.00136	1.00136	1.12057	1.00136
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Update bandwidth-latency=Bandwidth
+Regular Update Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	581.818	38.8762	17.0496	36.8876
+GPU 1	39.2638	640	17.1009	37.1014
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Update bandwidth-latency=Latency
+Regular Update Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.19209	1.40667	1.50204	1.21593
+GPU 1	1.3113	1.00136	1.40667	1.40667
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Read bandwidth-latency=Bandwidth
+Random Read Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	16.3161	6.41765	0.000203096	13.2711
+GPU 1	6.44836	15.9551	0.000212993	6.38484
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Read bandwidth-latency=Latency
+Random Read Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.69277	1.19209	16.0933	1.09673
+GPU 1	1.78814	3.19481	19.5026	1.90735
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Write bandwidth-latency=Bandwidth
+Random Write Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	12.2576	7.56389	0.0952625	7.90611
+GPU 1	7.50293	10.0728	0.00452898	5.54353
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Write bandwidth-latency=Latency
+Random Write Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	2.81334	1.78814	1.69277	1.88351
+GPU 1	1.12057	1.00136	1.00136	1.09673
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Update bandwidth-latency=Bandwidth
+Random Update Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	6.28607	3.61582	0.0529408	4.2328
+GPU 1	3.64387	6.42812	0.0529739	3.19142
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Random operation=Update bandwidth-latency=Latency
+Random Update Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.19209	1.21593	1.3113	1.3113
+GPU 1	1.21593	3.29018	1.3113	1.40667
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Read bandwidth-latency=Bandwidth
+Regular Read Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	469.725	71.3092	6.8808	70.5234
+GPU 1	71.8093	506.931	6.76622	70.137
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Read bandwidth-latency=Latency
+Regular Read Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.09673	1.50204	1.3113	1.81198
+GPU 1	1.50204	1.00136	1.21593	1.5974
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Write bandwidth-latency=Bandwidth
+Regular Write Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	673.684	79.257	12.1471	70.5234
+GPU 1	79.7508	711.111	3.16989	67.3684
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Write bandwidth-latency=Latency
+Regular Write Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.00136	1.09673	1.21593	1.09673
+GPU 1	1.09673	1.09673	1.3113	1.09673
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Update bandwidth-latency=Bandwidth
+Regular Update Bandwidth (GB/s)
+Peer	0	1	Host	All2All
+GPU 0	581.818	38.9947	10.0807	36.65
+GPU 1	38.8762	581.818	10.1066	36.8611
+==============================================
+ num-elements=3145278000 for-size=327680 num-repeats=10 access-type=Regular operation=Update bandwidth-latency=Latency
+Regular Update Latency (us)
+Peer	0	1	Host	All2All
+GPU 0	1.00136	1.28746	1.78814	1.09673
+GPU 1	1.38283	1.00136	1.69277	1.40667

@@ -1,0 +1,57 @@
+ypan@txdgx:~/Projects/gunrock/tests/sage$ ./bin/test_sage_9.1_x86_64 market /raid/data/hive/pokec/pokec.mtx --omp-threads=1 --undirected
+Loading Matrix-market coordinate-formatted graph ...
+  Reading meta data from /raid/data/hive/pokec/pokec.mtx.meta
+  Reading edge lists from /raid/data/hive/pokec/pokec.mtx.coo_edge_pairs
+  Substracting 1 from node Ids...
+  Edge doubleing: 30622564 -> 61245128 edges
+  Removed 16641200 duplicate edges and self circles.
+  graph loaded as COO in 1.444690s.
+Converting 1632803 vertices, 44603928 directed edges ( ordered tuples) to CSR format...Done (0s).
+Degree Histogram (1632803 vertices, 44603928 edges):
+    Degree 0: 0 (0.000000 %)
+    Degree 2^0: 163971 (10.042301 %)
+    Degree 2^1: 201604 (12.347111 %)
+    Degree 2^2: 238757 (14.622523 %)
+    Degree 2^3: 273268 (16.736128 %)
+    Degree 2^4: 298404 (18.275567 %)
+    Degree 2^5: 265002 (16.229882 %)
+    Degree 2^6: 148637 (9.103180 %)
+    Degree 2^7: 38621 (2.365319 %)
+    Degree 2^8: 4089 (0.250428 %)
+    Degree 2^9: 418 (0.025600 %)
+    Degree 2^10: 23 (0.001409 %)
+    Degree 2^11: 3 (0.000184 %)
+    Degree 2^12: 3 (0.000184 %)
+    Degree 2^13: 3 (0.000184 %)
+
+==============================================
+ feature-column=64 num-children-per-source=10 num-leafs-per-child=-1
+Computing reference value ...
+__________________________
+rand-seed = 1540888333
+--------------------------
+CPU Reference elapsed: 366390.250000 ms.
+Embedding validation: PASS
+==============================================
+ batch-size=65536
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540888704
+__________________________
+--------------------------
+Run 0 elapsed: 1727.031946 ms, #iterations = 25
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 1727.031946 ms
+ iterations: 25
+ min. elapsed: 1727.031946 ms
+ max. elapsed: 1727.031946 ms
+ load time: 1536.23 ms
+ preprocess time: 3519.730000 ms
+ postprocess time: 627.954006 ms
+ total time: 5892.503023 ms

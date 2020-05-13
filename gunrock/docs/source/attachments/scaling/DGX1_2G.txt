@@ -1,0 +1,10 @@
+num_devices = 8
+rand-seed = 1540990942
+using device[0] 0
+using device[5] 5
+using device[4] 4
+using device[1] 1
+using device[6] 6
+using device[7] 7
+using device[2] 2
+using device[3] 3

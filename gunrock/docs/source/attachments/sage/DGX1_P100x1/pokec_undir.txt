@@ -1,0 +1,2197 @@
+Loading Matrix-market coordinate-formatted graph ...
+  Reading meta data from /raid/data/hive/pokec/pokec.mtx.meta
+  Reading edge lists from /raid/data/hive/pokec/pokec.mtx.coo_edge_pairs
+  Substracting 1 from node Ids...
+  Edge doubleing: 30622564 -> 61245128 edges
+  Removed 16641200 duplicate edges and self circles.
+  graph loaded as COO in 1.511201s.
+Converting 1632803 vertices, 44603928 directed edges ( ordered tuples) to CSR format...Done (0s).
+Degree Histogram (1632803 vertices, 44603928 edges):
+    Degree 0: 0 (0.000000 %)
+    Degree 2^0: 163971 (10.042301 %)
+    Degree 2^1: 201604 (12.347111 %)
+    Degree 2^2: 238757 (14.622523 %)
+    Degree 2^3: 273268 (16.736128 %)
+    Degree 2^4: 298404 (18.275567 %)
+    Degree 2^5: 265002 (16.229882 %)
+    Degree 2^6: 148637 (9.103180 %)
+    Degree 2^7: 38621 (2.365319 %)
+    Degree 2^8: 4089 (0.250428 %)
+    Degree 2^9: 418 (0.025600 %)
+    Degree 2^10: 23 (0.001409 %)
+    Degree 2^11: 3 (0.000184 %)
+    Degree 2^12: 3 (0.000184 %)
+    Degree 2^13: 3 (0.000184 %)
+
+==============================================
+ feature-column=64 num-children-per-source=10 num-leafs-per-child=-1
+Computing reference value ...
+__________________________
+rand-seed = 1540498523
+--------------------------
+CPU Reference elapsed: 25242.941406 ms.
+Embedding validation: PASS
+==============================================
+ batch-size=512
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498553
+__________________________
+--------------------------
+Run 0 elapsed: 2047.366858 ms, #iterations = 3190
+rand-seed = 1540498555
+__________________________
+--------------------------
+Run 1 elapsed: 2243.710995 ms, #iterations = 3190
+rand-seed = 1540498558
+__________________________
+--------------------------
+Run 2 elapsed: 2016.211987 ms, #iterations = 3190
+rand-seed = 1540498560
+__________________________
+--------------------------
+Run 3 elapsed: 2029.805183 ms, #iterations = 3190
+rand-seed = 1540498562
+__________________________
+--------------------------
+Run 4 elapsed: 2010.715961 ms, #iterations = 3190
+rand-seed = 1540498564
+__________________________
+--------------------------
+Run 5 elapsed: 2015.054941 ms, #iterations = 3190
+rand-seed = 1540498566
+__________________________
+--------------------------
+Run 6 elapsed: 2025.522947 ms, #iterations = 3190
+rand-seed = 1540498568
+__________________________
+--------------------------
+Run 7 elapsed: 2013.901949 ms, #iterations = 3190
+rand-seed = 1540498570
+__________________________
+--------------------------
+Run 8 elapsed: 2009.524107 ms, #iterations = 3190
+rand-seed = 1540498572
+__________________________
+--------------------------
+Run 9 elapsed: 2013.216972 ms, #iterations = 3190
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 2042.503190 ms
+ iterations: 3190
+ min. elapsed: 2009.524107 ms
+ max. elapsed: 2243.710995 ms
+ load time: 1600.46 ms
+ preprocess time: 3997.880000 ms
+ postprocess time: 2106.487989 ms
+ total time: 26634.360075 ms
+==============================================
+ batch-size=1024
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498579
+__________________________
+--------------------------
+Run 0 elapsed: 1899.548054 ms, #iterations = 1595
+rand-seed = 1540498581
+__________________________
+--------------------------
+Run 1 elapsed: 1886.148930 ms, #iterations = 1595
+rand-seed = 1540498582
+__________________________
+--------------------------
+Run 2 elapsed: 1883.849859 ms, #iterations = 1595
+rand-seed = 1540498584
+__________________________
+--------------------------
+Run 3 elapsed: 1886.344910 ms, #iterations = 1595
+rand-seed = 1540498586
+__________________________
+--------------------------
+Run 4 elapsed: 1898.072004 ms, #iterations = 1595
+rand-seed = 1540498588
+__________________________
+--------------------------
+Run 5 elapsed: 1891.916037 ms, #iterations = 1595
+rand-seed = 1540498590
+__________________________
+--------------------------
+Run 6 elapsed: 1892.826080 ms, #iterations = 1595
+rand-seed = 1540498592
+__________________________
+--------------------------
+Run 7 elapsed: 1887.010098 ms, #iterations = 1595
+rand-seed = 1540498594
+__________________________
+--------------------------
+Run 8 elapsed: 1889.267206 ms, #iterations = 1595
+rand-seed = 1540498596
+__________________________
+--------------------------
+Run 9 elapsed: 1884.220839 ms, #iterations = 1595
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 1889.920402 ms
+ iterations: 1595
+ min. elapsed: 1883.849859 ms
+ max. elapsed: 1899.548054 ms
+ load time: 1600.46 ms
+ preprocess time: 2583.920000 ms
+ postprocess time: 1854.774952 ms
+ total time: 23436.267138 ms
+==============================================
+ batch-size=2048
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498602
+__________________________
+--------------------------
+Run 0 elapsed: 1811.417818 ms, #iterations = 798
+rand-seed = 1540498604
+__________________________
+--------------------------
+Run 1 elapsed: 1811.897039 ms, #iterations = 798
+rand-seed = 1540498606
+__________________________
+--------------------------
+Run 2 elapsed: 1823.134184 ms, #iterations = 798
+rand-seed = 1540498608
+__________________________
+--------------------------
+Run 3 elapsed: 2119.329929 ms, #iterations = 798
+rand-seed = 1540498610
+__________________________
+--------------------------
+Run 4 elapsed: 1820.760012 ms, #iterations = 798
+rand-seed = 1540498612
+__________________________
+--------------------------
+Run 5 elapsed: 1821.814060 ms, #iterations = 798
+rand-seed = 1540498614
+__________________________
+--------------------------
+Run 6 elapsed: 1823.718071 ms, #iterations = 798
+rand-seed = 1540498616
+__________________________
+--------------------------
+Run 7 elapsed: 1960.455179 ms, #iterations = 798
+rand-seed = 1540498618
+__________________________
+--------------------------
+Run 8 elapsed: 1823.312998 ms, #iterations = 798
+rand-seed = 1540498619
+__________________________
+--------------------------
+Run 9 elapsed: 1810.819149 ms, #iterations = 798
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 1862.665844 ms
+ iterations: 798
+ min. elapsed: 1810.819149 ms
+ max. elapsed: 2119.329929 ms
+ load time: 1600.46 ms
+ preprocess time: 2762.270000 ms
+ postprocess time: 895.901918 ms
+ total time: 22385.716915 ms
+==============================================
+ batch-size=4096
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498625
+__________________________
+--------------------------
+Run 0 elapsed: 1792.419910 ms, #iterations = 399
+rand-seed = 1540498627
+__________________________
+--------------------------
+Run 1 elapsed: 1786.570072 ms, #iterations = 399
+rand-seed = 1540498629
+__________________________
+--------------------------
+Run 2 elapsed: 1781.958818 ms, #iterations = 399
+rand-seed = 1540498631
+__________________________
+--------------------------
+Run 3 elapsed: 1782.470942 ms, #iterations = 399
+rand-seed = 1540498633
+__________________________
+--------------------------
+Run 4 elapsed: 1786.731005 ms, #iterations = 399
+rand-seed = 1540498634
+__________________________
+--------------------------
+Run 5 elapsed: 1781.775951 ms, #iterations = 399
+rand-seed = 1540498636
+__________________________
+--------------------------
+Run 6 elapsed: 1782.176971 ms, #iterations = 399
+rand-seed = 1540498638
+__________________________
+--------------------------
+Run 7 elapsed: 1782.005787 ms, #iterations = 399
+rand-seed = 1540498640
+__________________________
+--------------------------
+Run 8 elapsed: 1785.963058 ms, #iterations = 399
+rand-seed = 1540498642
+__________________________
+--------------------------
+Run 9 elapsed: 1782.137156 ms, #iterations = 399
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 1784.420967 ms
+ iterations: 399
+ min. elapsed: 1781.775951 ms
+ max. elapsed: 1792.419910 ms
+ load time: 1600.46 ms
+ preprocess time: 2944.720000 ms
+ postprocess time: 1679.015160 ms
+ total time: 22566.397190 ms
+==============================================
+ batch-size=8192
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498648
+__________________________
+--------------------------
+Run 0 elapsed: 1750.032902 ms, #iterations = 200
+rand-seed = 1540498650
+__________________________
+--------------------------
+Run 1 elapsed: 1749.754906 ms, #iterations = 200
+rand-seed = 1540498651
+__________________________
+--------------------------
+Run 2 elapsed: 1750.527143 ms, #iterations = 200
+rand-seed = 1540498653
+__________________________
+--------------------------
+Run 3 elapsed: 1803.777933 ms, #iterations = 200
+rand-seed = 1540498655
+__________________________
+--------------------------
+Run 4 elapsed: 1775.213003 ms, #iterations = 200
+rand-seed = 1540498657
+__________________________
+--------------------------
+Run 5 elapsed: 1754.688025 ms, #iterations = 200
+rand-seed = 1540498659
+__________________________
+--------------------------
+Run 6 elapsed: 1764.547110 ms, #iterations = 200
+rand-seed = 1540498660
+__________________________
+--------------------------
+Run 7 elapsed: 1805.683851 ms, #iterations = 200
+rand-seed = 1540498662
+__________________________
+--------------------------
+Run 8 elapsed: 1750.873089 ms, #iterations = 200
+rand-seed = 1540498664
+__________________________
+--------------------------
+Run 9 elapsed: 1758.827925 ms, #iterations = 200
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 1766.392589 ms
+ iterations: 200
+ min. elapsed: 1749.754906 ms
+ max. elapsed: 1805.683851 ms
+ load time: 1600.46 ms
+ preprocess time: 2753.720000 ms
+ postprocess time: 1039.212942 ms
+ total time: 21555.709839 ms
+==============================================
+ batch-size=16384
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498670
+__________________________
+--------------------------
+Run 0 elapsed: 1744.359016 ms, #iterations = 100
+rand-seed = 1540498671
+__________________________
+--------------------------
+Run 1 elapsed: 1743.511915 ms, #iterations = 100
+rand-seed = 1540498673
+__________________________
+--------------------------
+Run 2 elapsed: 1744.666100 ms, #iterations = 100
+rand-seed = 1540498675
+__________________________
+--------------------------
+Run 3 elapsed: 1744.617939 ms, #iterations = 100
+rand-seed = 1540498677
+__________________________
+--------------------------
+Run 4 elapsed: 1744.620085 ms, #iterations = 100
+rand-seed = 1540498679
+__________________________
+--------------------------
+Run 5 elapsed: 1746.509075 ms, #iterations = 100
+rand-seed = 1540498680
+__________________________
+--------------------------
+Run 6 elapsed: 1745.121956 ms, #iterations = 100
+rand-seed = 1540498682
+__________________________
+--------------------------
+Run 7 elapsed: 1744.795084 ms, #iterations = 100
+rand-seed = 1540498684
+__________________________
+--------------------------
+Run 8 elapsed: 1742.672205 ms, #iterations = 100
+rand-seed = 1540498686
+__________________________
+--------------------------
+Run 9 elapsed: 1745.148897 ms, #iterations = 100
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 1744.602227 ms
+ iterations: 100
+ min. elapsed: 1742.672205 ms
+ max. elapsed: 1746.509075 ms
+ load time: 1600.46 ms
+ preprocess time: 2725.140000 ms
+ postprocess time: 752.948999 ms
+ total time: 21023.766041 ms
+==============================================
+ feature-column=64 num-children-per-source=25 num-leafs-per-child=-1
+Computing reference value ...
+__________________________
+rand-seed = 1540498690
+--------------------------
+CPU Reference elapsed: 34517.179688 ms.
+Embedding validation: PASS
+==============================================
+ batch-size=512
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498728
+__________________________
+--------------------------
+Run 0 elapsed: 4195.291996 ms, #iterations = 3190
+rand-seed = 1540498732
+__________________________
+--------------------------
+Run 1 elapsed: 4177.256107 ms, #iterations = 3190
+rand-seed = 1540498737
+__________________________
+--------------------------
+Run 2 elapsed: 4149.931908 ms, #iterations = 3190
+rand-seed = 1540498741
+__________________________
+--------------------------
+Run 3 elapsed: 4158.221960 ms, #iterations = 3190
+rand-seed = 1540498745
+__________________________
+--------------------------
+Run 4 elapsed: 4146.239996 ms, #iterations = 3190
+rand-seed = 1540498749
+__________________________
+--------------------------
+Run 5 elapsed: 4161.973000 ms, #iterations = 3190
+rand-seed = 1540498753
+__________________________
+--------------------------
+Run 6 elapsed: 4150.388002 ms, #iterations = 3190
+rand-seed = 1540498757
+__________________________
+--------------------------
+Run 7 elapsed: 4148.512125 ms, #iterations = 3190
+rand-seed = 1540498762
+__________________________
+--------------------------
+Run 8 elapsed: 4144.980907 ms, #iterations = 3190
+rand-seed = 1540498766
+__________________________
+--------------------------
+Run 9 elapsed: 4148.041964 ms, #iterations = 3190
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 4158.083797 ms
+ iterations: 3190
+ min. elapsed: 4144.980907 ms
+ max. elapsed: 4195.291996 ms
+ load time: 1600.46 ms
+ preprocess time: 2677.420000 ms
+ postprocess time: 1918.160915 ms
+ total time: 46274.541855 ms
+==============================================
+ batch-size=1024
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498775
+__________________________
+--------------------------
+Run 0 elapsed: 4009.104967 ms, #iterations = 1595
+rand-seed = 1540498779
+__________________________
+--------------------------
+Run 1 elapsed: 4391.889095 ms, #iterations = 1595
+rand-seed = 1540498783
+__________________________
+--------------------------
+Run 2 elapsed: 3992.661953 ms, #iterations = 1595
+rand-seed = 1540498787
+__________________________
+--------------------------
+Run 3 elapsed: 3995.682001 ms, #iterations = 1595
+rand-seed = 1540498791
+__________________________
+--------------------------
+Run 4 elapsed: 3996.433020 ms, #iterations = 1595
+rand-seed = 1540498795
+__________________________
+--------------------------
+Run 5 elapsed: 3995.232105 ms, #iterations = 1595
+rand-seed = 1540498799
+__________________________
+--------------------------
+Run 6 elapsed: 3995.687962 ms, #iterations = 1595
+rand-seed = 1540498803
+__________________________
+--------------------------
+Run 7 elapsed: 3991.281986 ms, #iterations = 1595
+rand-seed = 1540498807
+__________________________
+--------------------------
+Run 8 elapsed: 3991.510868 ms, #iterations = 1595
+rand-seed = 1540498811
+__________________________
+--------------------------
+Run 9 elapsed: 4254.693031 ms, #iterations = 1595
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 4061.417699 ms
+ iterations: 1595
+ min. elapsed: 3991.281986 ms
+ max. elapsed: 4391.889095 ms
+ load time: 1600.46 ms
+ preprocess time: 2737.930000 ms
+ postprocess time: 2008.523941 ms
+ total time: 45458.792925 ms
+==============================================
+ batch-size=2048
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498820
+__________________________
+--------------------------
+Run 0 elapsed: 3988.950968 ms, #iterations = 798
+rand-seed = 1540498824
+__________________________
+--------------------------
+Run 1 elapsed: 3898.221970 ms, #iterations = 798
+rand-seed = 1540498828
+__________________________
+--------------------------
+Run 2 elapsed: 3897.651911 ms, #iterations = 798
+rand-seed = 1540498832
+__________________________
+--------------------------
+Run 3 elapsed: 3898.613930 ms, #iterations = 798
+rand-seed = 1540498836
+__________________________
+--------------------------
+Run 4 elapsed: 3897.855997 ms, #iterations = 798
+rand-seed = 1540498840
+__________________________
+--------------------------
+Run 5 elapsed: 3898.772955 ms, #iterations = 798
+rand-seed = 1540498844
+__________________________
+--------------------------
+Run 6 elapsed: 3902.004004 ms, #iterations = 798
+rand-seed = 1540498848
+__________________________
+--------------------------
+Run 7 elapsed: 3897.678137 ms, #iterations = 798
+rand-seed = 1540498852
+__________________________
+--------------------------
+Run 8 elapsed: 3899.771929 ms, #iterations = 798
+rand-seed = 1540498856
+__________________________
+--------------------------
+Run 9 elapsed: 3897.244930 ms, #iterations = 798
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 3907.676673 ms
+ iterations: 798
+ min. elapsed: 3897.244930 ms
+ max. elapsed: 3988.950968 ms
+ load time: 1600.46 ms
+ preprocess time: 2704.690000 ms
+ postprocess time: 818.374157 ms
+ total time: 42698.122025 ms
+==============================================
+ batch-size=4096
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498863
+__________________________
+--------------------------
+Run 0 elapsed: 3850.784063 ms, #iterations = 399
+rand-seed = 1540498867
+__________________________
+--------------------------
+Run 1 elapsed: 3847.036839 ms, #iterations = 399
+rand-seed = 1540498871
+__________________________
+--------------------------
+Run 2 elapsed: 3852.055073 ms, #iterations = 399
+rand-seed = 1540498875
+__________________________
+--------------------------
+Run 3 elapsed: 3849.225044 ms, #iterations = 399
+rand-seed = 1540498879
+__________________________
+--------------------------
+Run 4 elapsed: 3850.149870 ms, #iterations = 399
+rand-seed = 1540498882
+__________________________
+--------------------------
+Run 5 elapsed: 3847.805977 ms, #iterations = 399
+rand-seed = 1540498886
+__________________________
+--------------------------
+Run 6 elapsed: 3848.702908 ms, #iterations = 399
+rand-seed = 1540498890
+__________________________
+--------------------------
+Run 7 elapsed: 3849.349022 ms, #iterations = 399
+rand-seed = 1540498894
+__________________________
+--------------------------
+Run 8 elapsed: 3851.436853 ms, #iterations = 399
+rand-seed = 1540498898
+__________________________
+--------------------------
+Run 9 elapsed: 3848.028898 ms, #iterations = 399
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 3849.457455 ms
+ iterations: 399
+ min. elapsed: 3847.036839 ms
+ max. elapsed: 3852.055073 ms
+ load time: 1600.46 ms
+ preprocess time: 2693.260000 ms
+ postprocess time: 1014.069080 ms
+ total time: 42300.289154 ms
+==============================================
+ batch-size=8192
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498906
+__________________________
+--------------------------
+Run 0 elapsed: 3839.698792 ms, #iterations = 200
+rand-seed = 1540498910
+__________________________
+--------------------------
+Run 1 elapsed: 3829.877138 ms, #iterations = 200
+rand-seed = 1540498913
+__________________________
+--------------------------
+Run 2 elapsed: 3828.220844 ms, #iterations = 200
+rand-seed = 1540498917
+__________________________
+--------------------------
+Run 3 elapsed: 3833.274126 ms, #iterations = 200
+rand-seed = 1540498921
+__________________________
+--------------------------
+Run 4 elapsed: 3827.363014 ms, #iterations = 200
+rand-seed = 1540498925
+__________________________
+--------------------------
+Run 5 elapsed: 3827.280998 ms, #iterations = 200
+rand-seed = 1540498929
+__________________________
+--------------------------
+Run 6 elapsed: 3827.410936 ms, #iterations = 200
+rand-seed = 1540498933
+__________________________
+--------------------------
+Run 7 elapsed: 3825.239897 ms, #iterations = 200
+rand-seed = 1540498936
+__________________________
+--------------------------
+Run 8 elapsed: 3827.256918 ms, #iterations = 200
+rand-seed = 1540498940
+__________________________
+--------------------------
+Run 9 elapsed: 3830.642939 ms, #iterations = 200
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 3829.626560 ms
+ iterations: 200
+ min. elapsed: 3825.239897 ms
+ max. elapsed: 3839.698792 ms
+ load time: 1600.46 ms
+ preprocess time: 2745.720000 ms
+ postprocess time: 918.149948 ms
+ total time: 42059.847832 ms
+==============================================
+ batch-size=16384
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498948
+__________________________
+--------------------------
+Run 0 elapsed: 3804.893017 ms, #iterations = 100
+rand-seed = 1540498952
+__________________________
+--------------------------
+Run 1 elapsed: 3804.599047 ms, #iterations = 100
+rand-seed = 1540498956
+__________________________
+--------------------------
+Run 2 elapsed: 3805.112123 ms, #iterations = 100
+rand-seed = 1540498959
+__________________________
+--------------------------
+Run 3 elapsed: 3805.046082 ms, #iterations = 100
+rand-seed = 1540498963
+__________________________
+--------------------------
+Run 4 elapsed: 3804.749012 ms, #iterations = 100
+rand-seed = 1540498967
+__________________________
+--------------------------
+Run 5 elapsed: 3804.097176 ms, #iterations = 100
+rand-seed = 1540498971
+__________________________
+--------------------------
+Run 6 elapsed: 3823.447943 ms, #iterations = 100
+rand-seed = 1540498975
+__________________________
+--------------------------
+Run 7 elapsed: 3803.853989 ms, #iterations = 100
+rand-seed = 1540498978
+__________________________
+--------------------------
+Run 8 elapsed: 3803.886890 ms, #iterations = 100
+rand-seed = 1540498982
+__________________________
+--------------------------
+Run 9 elapsed: 3804.351091 ms, #iterations = 100
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 3806.403637 ms
+ iterations: 100
+ min. elapsed: 3803.853989 ms
+ max. elapsed: 3823.447943 ms
+ load time: 1600.46 ms
+ preprocess time: 2718.790000 ms
+ postprocess time: 894.623041 ms
+ total time: 41778.641939 ms
+==============================================
+ feature-column=64 num-children-per-source=100 num-leafs-per-child=-1
+Computing reference value ...
+__________________________
+rand-seed = 1540498989
+--------------------------
+CPU Reference elapsed: 133920.000000 ms.
+Embedding validation: PASS
+==============================================
+ batch-size=512
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540499127
+__________________________
+--------------------------
+Run 0 elapsed: 17909.566879 ms, #iterations = 3190
+rand-seed = 1540499145
+__________________________
+--------------------------
+Run 1 elapsed: 17882.539034 ms, #iterations = 3190
+rand-seed = 1540499163
+__________________________
+--------------------------
+Run 2 elapsed: 17862.076044 ms, #iterations = 3190
+rand-seed = 1540499181
+__________________________
+--------------------------
+Run 3 elapsed: 17858.523846 ms, #iterations = 3190
+rand-seed = 1540499198
+__________________________
+--------------------------
+Run 4 elapsed: 17860.410929 ms, #iterations = 3190
+rand-seed = 1540499216
+__________________________
+--------------------------
+Run 5 elapsed: 17864.048004 ms, #iterations = 3190
+rand-seed = 1540499234
+__________________________
+--------------------------
+Run 6 elapsed: 17855.355978 ms, #iterations = 3190
+rand-seed = 1540499252
+__________________________
+--------------------------
+Run 7 elapsed: 17862.510204 ms, #iterations = 3190
+rand-seed = 1540499270
+__________________________
+--------------------------
+Run 8 elapsed: 17876.044035 ms, #iterations = 3190
+rand-seed = 1540499288
+__________________________
+--------------------------
+Run 9 elapsed: 17871.852875 ms, #iterations = 3190
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 17870.292783 ms
+ iterations: 3190
+ min. elapsed: 17855.355978 ms
+ max. elapsed: 17909.566879 ms
+ load time: 1600.46 ms
+ preprocess time: 3028.840000 ms
+ postprocess time: 912.256002 ms
+ total time: 182744.403839 ms
+==============================================
+ batch-size=1024
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540499310
+__________________________
+--------------------------
+Run 0 elapsed: 17597.059965 ms, #iterations = 1595
+rand-seed = 1540499327
+__________________________
+--------------------------
+Run 1 elapsed: 17571.743011 ms, #iterations = 1595
+rand-seed = 1540499345
+__________________________
+--------------------------
+Run 2 elapsed: 17548.816919 ms, #iterations = 1595
+rand-seed = 1540499362
+__________________________
+--------------------------
+Run 3 elapsed: 17550.850153 ms, #iterations = 1595
+rand-seed = 1540499380
+__________________________
+--------------------------
+Run 4 elapsed: 17538.774967 ms, #iterations = 1595
+rand-seed = 1540499397
+__________________________
+--------------------------
+Run 5 elapsed: 17682.630062 ms, #iterations = 1595
+rand-seed = 1540499415
+__________________________
+--------------------------
+Run 6 elapsed: 17560.357094 ms, #iterations = 1595
+rand-seed = 1540499433
+__________________________
+--------------------------
+Run 7 elapsed: 17551.172018 ms, #iterations = 1595
+rand-seed = 1540499450
+__________________________
+--------------------------
+Run 8 elapsed: 17550.144911 ms, #iterations = 1595
+rand-seed = 1540499468
+__________________________
+--------------------------
+Run 9 elapsed: 17537.390947 ms, #iterations = 1595
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 17568.894005 ms
+ iterations: 1595
+ min. elapsed: 17537.390947 ms
+ max. elapsed: 17682.630062 ms
+ load time: 1600.46 ms
+ preprocess time: 2689.390000 ms
+ postprocess time: 1114.164829 ms
+ total time: 179594.476938 ms
+==============================================
+ batch-size=2048
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540499489
+__________________________
+--------------------------
+Run 0 elapsed: 17506.756067 ms, #iterations = 798
+rand-seed = 1540499507
+__________________________
+--------------------------
+Run 1 elapsed: 17444.328070 ms, #iterations = 798
+rand-seed = 1540499524
+__________________________
+--------------------------
+Run 2 elapsed: 17442.281008 ms, #iterations = 798
+rand-seed = 1540499542
+__________________________
+--------------------------
+Run 3 elapsed: 17439.342022 ms, #iterations = 798
+rand-seed = 1540499559
+__________________________
+--------------------------
+Run 4 elapsed: 17457.494020 ms, #iterations = 798
+rand-seed = 1540499577
+__________________________
+--------------------------
+Run 5 elapsed: 17451.159000 ms, #iterations = 798
+rand-seed = 1540499594
+__________________________
+--------------------------
+Run 6 elapsed: 17455.132008 ms, #iterations = 798
+rand-seed = 1540499612
+__________________________
+--------------------------
+Run 7 elapsed: 17441.071033 ms, #iterations = 798
+rand-seed = 1540499629
+__________________________
+--------------------------
+Run 8 elapsed: 17667.876959 ms, #iterations = 798
+rand-seed = 1540499647
+__________________________
+--------------------------
+Run 9 elapsed: 17561.477184 ms, #iterations = 798
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 17486.691737 ms
+ iterations: 798
+ min. elapsed: 17439.342022 ms
+ max. elapsed: 17667.876959 ms
+ load time: 1600.46 ms
+ preprocess time: 2671.500000 ms
+ postprocess time: 962.140083 ms
+ total time: 178599.796057 ms
+==============================================
+ batch-size=4096
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540499668
+__________________________
+--------------------------
+Run 0 elapsed: 17701.476097 ms, #iterations = 399
+rand-seed = 1540499686
+__________________________
+--------------------------
+Run 1 elapsed: 17702.883959 ms, #iterations = 399
+rand-seed = 1540499703
+__________________________
+--------------------------
+Run 2 elapsed: 17756.309032 ms, #iterations = 399
+rand-seed = 1540499721
+__________________________
+--------------------------
+Run 3 elapsed: 17722.556114 ms, #iterations = 399
+rand-seed = 1540499739
+__________________________
+--------------------------
+Run 4 elapsed: 17701.855898 ms, #iterations = 399
+rand-seed = 1540499757
+__________________________
+--------------------------
+Run 5 elapsed: 17714.833975 ms, #iterations = 399
+rand-seed = 1540499774
+__________________________
+--------------------------
+Run 6 elapsed: 17741.373062 ms, #iterations = 399
+rand-seed = 1540499792
+__________________________
+--------------------------
+Run 7 elapsed: 17831.872940 ms, #iterations = 399
+rand-seed = 1540499810
+__________________________
+--------------------------
+Run 8 elapsed: 17714.957952 ms, #iterations = 399
+rand-seed = 1540499828
+__________________________
+--------------------------
+Run 9 elapsed: 17731.275082 ms, #iterations = 399
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 17731.939411 ms
+ iterations: 399
+ min. elapsed: 17701.476097 ms
+ max. elapsed: 17831.872940 ms
+ load time: 1600.46 ms
+ preprocess time: 2706.230000 ms
+ postprocess time: 872.795820 ms
+ total time: 181003.497839 ms
+==============================================
+ batch-size=8192
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540499849
+__________________________
+--------------------------
+Run 0 elapsed: 18431.581020 ms, #iterations = 200
+rand-seed = 1540499868
+__________________________
+--------------------------
+Run 1 elapsed: 18430.975914 ms, #iterations = 200
+rand-seed = 1540499886
+__________________________
+--------------------------
+Run 2 elapsed: 18432.348967 ms, #iterations = 200
+rand-seed = 1540499905
+__________________________
+--------------------------
+Run 3 elapsed: 18425.722122 ms, #iterations = 200
+rand-seed = 1540499923
+__________________________
+--------------------------
+Run 4 elapsed: 18421.520948 ms, #iterations = 200
+rand-seed = 1540499941
+__________________________
+--------------------------
+Run 5 elapsed: 18404.994965 ms, #iterations = 200
+rand-seed = 1540499960
+__________________________
+--------------------------
+Run 6 elapsed: 18459.230185 ms, #iterations = 200
+rand-seed = 1540499978
+__________________________
+--------------------------
+Run 7 elapsed: 18423.328876 ms, #iterations = 200
+rand-seed = 1540499997
+__________________________
+--------------------------
+Run 8 elapsed: 18411.938190 ms, #iterations = 200
+rand-seed = 1540500015
+__________________________
+--------------------------
+Run 9 elapsed: 18398.114920 ms, #iterations = 200
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 18423.975611 ms
+ iterations: 200
+ min. elapsed: 18398.114920 ms
+ max. elapsed: 18459.230185 ms
+ load time: 1600.46 ms
+ preprocess time: 2761.160000 ms
+ postprocess time: 623.225927 ms
+ total time: 187729.045868 ms
+==============================================
+ batch-size=16384
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500037
+__________________________
+--------------------------
+Run 0 elapsed: 18826.110125 ms, #iterations = 100
+rand-seed = 1540500056
+__________________________
+--------------------------
+Run 1 elapsed: 18823.715210 ms, #iterations = 100
+rand-seed = 1540500075
+__________________________
+--------------------------
+Run 2 elapsed: 18826.788902 ms, #iterations = 100
+rand-seed = 1540500094
+__________________________
+--------------------------
+Run 3 elapsed: 18835.171938 ms, #iterations = 100
+rand-seed = 1540500112
+__________________________
+--------------------------
+Run 4 elapsed: 18811.789989 ms, #iterations = 100
+rand-seed = 1540500131
+__________________________
+--------------------------
+Run 5 elapsed: 18822.754860 ms, #iterations = 100
+rand-seed = 1540500150
+__________________________
+--------------------------
+Run 6 elapsed: 18714.830160 ms, #iterations = 100
+rand-seed = 1540500169
+__________________________
+--------------------------
+Run 7 elapsed: 18656.495810 ms, #iterations = 100
+rand-seed = 1540500187
+__________________________
+--------------------------
+Run 8 elapsed: 18672.447920 ms, #iterations = 100
+rand-seed = 1540500206
+__________________________
+--------------------------
+Run 9 elapsed: 18664.745092 ms, #iterations = 100
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 18765.485001 ms
+ iterations: 100
+ min. elapsed: 18656.495810 ms
+ max. elapsed: 18835.171938 ms
+ load time: 1600.46 ms
+ preprocess time: 2654.400000 ms
+ postprocess time: 693.974972 ms
+ total time: 191111.565113 ms
+==============================================
+ feature-column=128 num-children-per-source=10 num-leafs-per-child=-1
+Computing reference value ...
+__________________________
+rand-seed = 1540500229
+--------------------------
+CPU Reference elapsed: 41414.535156 ms.
+Embedding validation: PASS
+==============================================
+ batch-size=512
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500285
+__________________________
+--------------------------
+Run 0 elapsed: 3284.346104 ms, #iterations = 3190
+rand-seed = 1540500289
+__________________________
+--------------------------
+Run 1 elapsed: 3286.089897 ms, #iterations = 3190
+rand-seed = 1540500292
+__________________________
+--------------------------
+Run 2 elapsed: 3283.169985 ms, #iterations = 3190
+rand-seed = 1540500296
+__________________________
+--------------------------
+Run 3 elapsed: 3286.273956 ms, #iterations = 3190
+rand-seed = 1540500299
+__________________________
+--------------------------
+Run 4 elapsed: 3288.913965 ms, #iterations = 3190
+rand-seed = 1540500303
+__________________________
+--------------------------
+Run 5 elapsed: 3279.788971 ms, #iterations = 3190
+rand-seed = 1540500306
+__________________________
+--------------------------
+Run 6 elapsed: 3282.845020 ms, #iterations = 3190
+rand-seed = 1540500309
+__________________________
+--------------------------
+Run 7 elapsed: 3286.223888 ms, #iterations = 3190
+rand-seed = 1540500313
+__________________________
+--------------------------
+Run 8 elapsed: 3285.347939 ms, #iterations = 3190
+rand-seed = 1540500316
+__________________________
+--------------------------
+Run 9 elapsed: 3285.906076 ms, #iterations = 3190
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 3284.890580 ms
+ iterations: 3190
+ min. elapsed: 3279.788971 ms
+ max. elapsed: 3288.913965 ms
+ load time: 1600.46 ms
+ preprocess time: 13493.700000 ms
+ postprocess time: 617.262840 ms
+ total time: 48514.609814 ms
+==============================================
+ batch-size=1024
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500325
+__________________________
+--------------------------
+Run 0 elapsed: 3133.476973 ms, #iterations = 1595
+rand-seed = 1540500328
+__________________________
+--------------------------
+Run 1 elapsed: 3131.077051 ms, #iterations = 1595
+rand-seed = 1540500332
+__________________________
+--------------------------
+Run 2 elapsed: 3131.238937 ms, #iterations = 1595
+rand-seed = 1540500335
+__________________________
+--------------------------
+Run 3 elapsed: 3130.828857 ms, #iterations = 1595
+rand-seed = 1540500338
+__________________________
+--------------------------
+Run 4 elapsed: 3134.670019 ms, #iterations = 1595
+rand-seed = 1540500341
+__________________________
+--------------------------
+Run 5 elapsed: 3133.543968 ms, #iterations = 1595
+rand-seed = 1540500345
+__________________________
+--------------------------
+Run 6 elapsed: 3130.242109 ms, #iterations = 1595
+rand-seed = 1540500348
+__________________________
+--------------------------
+Run 7 elapsed: 3134.140015 ms, #iterations = 1595
+rand-seed = 1540500351
+__________________________
+--------------------------
+Run 8 elapsed: 3131.582022 ms, #iterations = 1595
+rand-seed = 1540500355
+__________________________
+--------------------------
+Run 9 elapsed: 3133.255959 ms, #iterations = 1595
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 3132.405591 ms
+ iterations: 1595
+ min. elapsed: 3130.242109 ms
+ max. elapsed: 3134.670019 ms
+ load time: 1600.46 ms
+ preprocess time: 4453.050000 ms
+ postprocess time: 623.116970 ms
+ total time: 37954.931021 ms
+==============================================
+ batch-size=2048
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500363
+__________________________
+--------------------------
+Run 0 elapsed: 3073.348045 ms, #iterations = 798
+rand-seed = 1540500366
+__________________________
+--------------------------
+Run 1 elapsed: 3073.307037 ms, #iterations = 798
+rand-seed = 1540500370
+__________________________
+--------------------------
+Run 2 elapsed: 3051.110983 ms, #iterations = 798
+rand-seed = 1540500373
+__________________________
+--------------------------
+Run 3 elapsed: 3072.480917 ms, #iterations = 798
+rand-seed = 1540500376
+__________________________
+--------------------------
+Run 4 elapsed: 3050.632000 ms, #iterations = 798
+rand-seed = 1540500379
+__________________________
+--------------------------
+Run 5 elapsed: 3067.717075 ms, #iterations = 798
+rand-seed = 1540500383
+__________________________
+--------------------------
+Run 6 elapsed: 3050.700188 ms, #iterations = 798
+rand-seed = 1540500386
+__________________________
+--------------------------
+Run 7 elapsed: 3052.511215 ms, #iterations = 798
+rand-seed = 1540500389
+__________________________
+--------------------------
+Run 8 elapsed: 3065.243006 ms, #iterations = 798
+rand-seed = 1540500392
+__________________________
+--------------------------
+Run 9 elapsed: 3050.791025 ms, #iterations = 798
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 3060.784149 ms
+ iterations: 798
+ min. elapsed: 3050.632000 ms
+ max. elapsed: 3073.348045 ms
+ load time: 1600.46 ms
+ preprocess time: 4509.780000 ms
+ postprocess time: 836.595058 ms
+ total time: 37509.093046 ms
+==============================================
+ batch-size=4096
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500401
+__________________________
+--------------------------
+Run 0 elapsed: 2992.700100 ms, #iterations = 399
+rand-seed = 1540500404
+__________________________
+--------------------------
+Run 1 elapsed: 2991.189957 ms, #iterations = 399
+rand-seed = 1540500407
+__________________________
+--------------------------
+Run 2 elapsed: 2990.491152 ms, #iterations = 399
+rand-seed = 1540500410
+__________________________
+--------------------------
+Run 3 elapsed: 2988.878012 ms, #iterations = 399
+rand-seed = 1540500413
+__________________________
+--------------------------
+Run 4 elapsed: 2989.439964 ms, #iterations = 399
+rand-seed = 1540500417
+__________________________
+--------------------------
+Run 5 elapsed: 2994.131088 ms, #iterations = 399
+rand-seed = 1540500420
+__________________________
+--------------------------
+Run 6 elapsed: 2992.784977 ms, #iterations = 399
+rand-seed = 1540500423
+__________________________
+--------------------------
+Run 7 elapsed: 2990.777969 ms, #iterations = 399
+rand-seed = 1540500426
+__________________________
+--------------------------
+Run 8 elapsed: 2993.165970 ms, #iterations = 399
+rand-seed = 1540500429
+__________________________
+--------------------------
+Run 9 elapsed: 2993.516922 ms, #iterations = 399
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 2991.707611 ms
+ iterations: 399
+ min. elapsed: 2988.878012 ms
+ max. elapsed: 2994.131088 ms
+ load time: 1600.46 ms
+ preprocess time: 4454.000000 ms
+ postprocess time: 729.505062 ms
+ total time: 36655.807972 ms
+==============================================
+ batch-size=8192
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500438
+__________________________
+--------------------------
+Run 0 elapsed: 2982.653141 ms, #iterations = 200
+rand-seed = 1540500441
+__________________________
+--------------------------
+Run 1 elapsed: 2983.328104 ms, #iterations = 200
+rand-seed = 1540500444
+__________________________
+--------------------------
+Run 2 elapsed: 2986.820936 ms, #iterations = 200
+rand-seed = 1540500447
+__________________________
+--------------------------
+Run 3 elapsed: 2984.245062 ms, #iterations = 200
+rand-seed = 1540500450
+__________________________
+--------------------------
+Run 4 elapsed: 2995.028973 ms, #iterations = 200
+rand-seed = 1540500454
+__________________________
+--------------------------
+Run 5 elapsed: 2983.288050 ms, #iterations = 200
+rand-seed = 1540500457
+__________________________
+--------------------------
+Run 6 elapsed: 2981.752872 ms, #iterations = 200
+rand-seed = 1540500460
+__________________________
+--------------------------
+Run 7 elapsed: 2986.356974 ms, #iterations = 200
+rand-seed = 1540500463
+__________________________
+--------------------------
+Run 8 elapsed: 2982.573032 ms, #iterations = 200
+rand-seed = 1540500466
+__________________________
+--------------------------
+Run 9 elapsed: 2991.386890 ms, #iterations = 200
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 2985.743403 ms
+ iterations: 200
+ min. elapsed: 2981.752872 ms
+ max. elapsed: 2995.028973 ms
+ load time: 1600.46 ms
+ preprocess time: 4586.920000 ms
+ postprocess time: 646.049976 ms
+ total time: 36646.800041 ms
+==============================================
+ batch-size=16384
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500475
+__________________________
+--------------------------
+Run 0 elapsed: 2951.254129 ms, #iterations = 100
+rand-seed = 1540500478
+__________________________
+--------------------------
+Run 1 elapsed: 2947.937012 ms, #iterations = 100
+rand-seed = 1540500481
+__________________________
+--------------------------
+Run 2 elapsed: 2952.441931 ms, #iterations = 100
+rand-seed = 1540500484
+__________________________
+--------------------------
+Run 3 elapsed: 2952.485085 ms, #iterations = 100
+rand-seed = 1540500487
+__________________________
+--------------------------
+Run 4 elapsed: 2950.003862 ms, #iterations = 100
+rand-seed = 1540500490
+__________________________
+--------------------------
+Run 5 elapsed: 2950.185061 ms, #iterations = 100
+rand-seed = 1540500493
+__________________________
+--------------------------
+Run 6 elapsed: 2951.575041 ms, #iterations = 100
+rand-seed = 1540500496
+__________________________
+--------------------------
+Run 7 elapsed: 2950.567007 ms, #iterations = 100
+rand-seed = 1540500499
+__________________________
+--------------------------
+Run 8 elapsed: 2950.661898 ms, #iterations = 100
+rand-seed = 1540500503
+__________________________
+--------------------------
+Run 9 elapsed: 2948.950052 ms, #iterations = 100
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 2950.606108 ms
+ iterations: 100
+ min. elapsed: 2947.937012 ms
+ max. elapsed: 2952.485085 ms
+ load time: 1600.46 ms
+ preprocess time: 4446.300000 ms
+ postprocess time: 693.397045 ms
+ total time: 36203.062057 ms
+==============================================
+ feature-column=128 num-children-per-source=25 num-leafs-per-child=-1
+Computing reference value ...
+__________________________
+rand-seed = 1540500510
+--------------------------
+CPU Reference elapsed: 74983.390625 ms.
+Embedding validation: PASS
+==============================================
+ batch-size=512
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500591
+__________________________
+--------------------------
+Run 0 elapsed: 7247.766972 ms, #iterations = 3190
+rand-seed = 1540500598
+__________________________
+--------------------------
+Run 1 elapsed: 7243.320942 ms, #iterations = 3190
+rand-seed = 1540500606
+__________________________
+--------------------------
+Run 2 elapsed: 7236.745834 ms, #iterations = 3190
+rand-seed = 1540500613
+__________________________
+--------------------------
+Run 3 elapsed: 7223.760843 ms, #iterations = 3190
+rand-seed = 1540500620
+__________________________
+--------------------------
+Run 4 elapsed: 7233.141899 ms, #iterations = 3190
+rand-seed = 1540500628
+__________________________
+--------------------------
+Run 5 elapsed: 7226.000071 ms, #iterations = 3190
+rand-seed = 1540500635
+__________________________
+--------------------------
+Run 6 elapsed: 7229.212999 ms, #iterations = 3190
+rand-seed = 1540500642
+__________________________
+--------------------------
+Run 7 elapsed: 7243.454933 ms, #iterations = 3190
+rand-seed = 1540500650
+__________________________
+--------------------------
+Run 8 elapsed: 7216.057062 ms, #iterations = 3190
+rand-seed = 1540500657
+__________________________
+--------------------------
+Run 9 elapsed: 7221.614838 ms, #iterations = 3190
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 7232.107639 ms
+ iterations: 3190
+ min. elapsed: 7216.057062 ms
+ max. elapsed: 7247.766972 ms
+ load time: 1600.46 ms
+ preprocess time: 4551.650000 ms
+ postprocess time: 769.526958 ms
+ total time: 79197.143078 ms
+==============================================
+ batch-size=1024
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500670
+__________________________
+--------------------------
+Run 0 elapsed: 6938.617945 ms, #iterations = 1595
+rand-seed = 1540500677
+__________________________
+--------------------------
+Run 1 elapsed: 6938.478947 ms, #iterations = 1595
+rand-seed = 1540500684
+__________________________
+--------------------------
+Run 2 elapsed: 6937.990904 ms, #iterations = 1595
+rand-seed = 1540500691
+__________________________
+--------------------------
+Run 3 elapsed: 6935.803175 ms, #iterations = 1595
+rand-seed = 1540500699
+__________________________
+--------------------------
+Run 4 elapsed: 6934.951067 ms, #iterations = 1595
+rand-seed = 1540500706
+__________________________
+--------------------------
+Run 5 elapsed: 6939.085960 ms, #iterations = 1595
+rand-seed = 1540500713
+__________________________
+--------------------------
+Run 6 elapsed: 6934.892178 ms, #iterations = 1595
+rand-seed = 1540500720
+__________________________
+--------------------------
+Run 7 elapsed: 6938.293934 ms, #iterations = 1595
+rand-seed = 1540500727
+__________________________
+--------------------------
+Run 8 elapsed: 6941.468000 ms, #iterations = 1595
+rand-seed = 1540500734
+__________________________
+--------------------------
+Run 9 elapsed: 6936.242104 ms, #iterations = 1595
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 6937.582421 ms
+ iterations: 1595
+ min. elapsed: 6934.892178 ms
+ max. elapsed: 6941.468000 ms
+ load time: 1600.46 ms
+ preprocess time: 4569.920000 ms
+ postprocess time: 2424.134970 ms
+ total time: 77925.123930 ms
+==============================================
+ batch-size=2048
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500748
+__________________________
+--------------------------
+Run 0 elapsed: 6883.306026 ms, #iterations = 798
+rand-seed = 1540500755
+__________________________
+--------------------------
+Run 1 elapsed: 6884.953976 ms, #iterations = 798
+rand-seed = 1540500762
+__________________________
+--------------------------
+Run 2 elapsed: 6885.084152 ms, #iterations = 798
+rand-seed = 1540500769
+__________________________
+--------------------------
+Run 3 elapsed: 6884.792089 ms, #iterations = 798
+rand-seed = 1540500776
+__________________________
+--------------------------
+Run 4 elapsed: 6885.758162 ms, #iterations = 798
+rand-seed = 1540500783
+__________________________
+--------------------------
+Run 5 elapsed: 6883.435011 ms, #iterations = 798
+rand-seed = 1540500790
+__________________________
+--------------------------
+Run 6 elapsed: 6885.387897 ms, #iterations = 798
+rand-seed = 1540500798
+__________________________
+--------------------------
+Run 7 elapsed: 6884.386778 ms, #iterations = 798
+rand-seed = 1540500805
+__________________________
+--------------------------
+Run 8 elapsed: 6883.507967 ms, #iterations = 798
+rand-seed = 1540500812
+__________________________
+--------------------------
+Run 9 elapsed: 6882.954121 ms, #iterations = 798
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 6884.356618 ms
+ iterations: 798
+ min. elapsed: 6882.954121 ms
+ max. elapsed: 6885.758162 ms
+ load time: 1600.46 ms
+ preprocess time: 4520.960000 ms
+ postprocess time: 740.070105 ms
+ total time: 75659.706116 ms
+==============================================
+ batch-size=4096
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500824
+__________________________
+--------------------------
+Run 0 elapsed: 6852.962017 ms, #iterations = 399
+rand-seed = 1540500831
+__________________________
+--------------------------
+Run 1 elapsed: 6854.594946 ms, #iterations = 399
+rand-seed = 1540500838
+__________________________
+--------------------------
+Run 2 elapsed: 6856.728077 ms, #iterations = 399
+rand-seed = 1540500845
+__________________________
+--------------------------
+Run 3 elapsed: 6854.962111 ms, #iterations = 399
+rand-seed = 1540500852
+__________________________
+--------------------------
+Run 4 elapsed: 6851.400852 ms, #iterations = 399
+rand-seed = 1540500859
+__________________________
+--------------------------
+Run 5 elapsed: 6853.036165 ms, #iterations = 399
+rand-seed = 1540500866
+__________________________
+--------------------------
+Run 6 elapsed: 6854.503870 ms, #iterations = 399
+rand-seed = 1540500873
+__________________________
+--------------------------
+Run 7 elapsed: 6854.130983 ms, #iterations = 399
+rand-seed = 1540500880
+__________________________
+--------------------------
+Run 8 elapsed: 6852.381945 ms, #iterations = 399
+rand-seed = 1540500887
+__________________________
+--------------------------
+Run 9 elapsed: 6851.053953 ms, #iterations = 399
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 6853.575492 ms
+ iterations: 399
+ min. elapsed: 6851.053953 ms
+ max. elapsed: 6856.728077 ms
+ load time: 1600.46 ms
+ preprocess time: 4464.840000 ms
+ postprocess time: 655.101061 ms
+ total time: 75211.601973 ms
+==============================================
+ batch-size=8192
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500899
+__________________________
+--------------------------
+Run 0 elapsed: 6795.718908 ms, #iterations = 200
+rand-seed = 1540500906
+__________________________
+--------------------------
+Run 1 elapsed: 6791.501999 ms, #iterations = 200
+rand-seed = 1540500913
+__________________________
+--------------------------
+Run 2 elapsed: 6783.478022 ms, #iterations = 200
+rand-seed = 1540500920
+__________________________
+--------------------------
+Run 3 elapsed: 6791.607857 ms, #iterations = 200
+rand-seed = 1540500927
+__________________________
+--------------------------
+Run 4 elapsed: 6794.175863 ms, #iterations = 200
+rand-seed = 1540500934
+__________________________
+--------------------------
+Run 5 elapsed: 6794.897079 ms, #iterations = 200
+rand-seed = 1540500941
+__________________________
+--------------------------
+Run 6 elapsed: 6791.731834 ms, #iterations = 200
+rand-seed = 1540500948
+__________________________
+--------------------------
+Run 7 elapsed: 6789.750099 ms, #iterations = 200
+rand-seed = 1540500955
+__________________________
+--------------------------
+Run 8 elapsed: 6793.123960 ms, #iterations = 200
+rand-seed = 1540500962
+__________________________
+--------------------------
+Run 9 elapsed: 6792.306900 ms, #iterations = 200
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 6791.829252 ms
+ iterations: 200
+ min. elapsed: 6783.478022 ms
+ max. elapsed: 6795.718908 ms
+ load time: 1600.46 ms
+ preprocess time: 4407.220000 ms
+ postprocess time: 913.371801 ms
+ total time: 74796.306849 ms
+==============================================
+ batch-size=16384
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540500975
+__________________________
+--------------------------
+Run 0 elapsed: 6798.689127 ms, #iterations = 100
+rand-seed = 1540500981
+__________________________
+--------------------------
+Run 1 elapsed: 6790.095091 ms, #iterations = 100
+rand-seed = 1540500988
+__________________________
+--------------------------
+Run 2 elapsed: 6793.315887 ms, #iterations = 100
+rand-seed = 1540500995
+__________________________
+--------------------------
+Run 3 elapsed: 6794.689178 ms, #iterations = 100
+rand-seed = 1540501002
+__________________________
+--------------------------
+Run 4 elapsed: 6798.094988 ms, #iterations = 100
+rand-seed = 1540501009
+__________________________
+--------------------------
+Run 5 elapsed: 6792.628050 ms, #iterations = 100
+rand-seed = 1540501016
+__________________________
+--------------------------
+Run 6 elapsed: 6796.228170 ms, #iterations = 100
+rand-seed = 1540501023
+__________________________
+--------------------------
+Run 7 elapsed: 6792.741060 ms, #iterations = 100
+rand-seed = 1540501030
+__________________________
+--------------------------
+Run 8 elapsed: 6794.559956 ms, #iterations = 100
+rand-seed = 1540501037
+__________________________
+--------------------------
+Run 9 elapsed: 6797.588110 ms, #iterations = 100
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 6794.862962 ms
+ iterations: 100
+ min. elapsed: 6790.095091 ms
+ max. elapsed: 6798.689127 ms
+ load time: 1600.46 ms
+ preprocess time: 4543.580000 ms
+ postprocess time: 1049.288034 ms
+ total time: 75101.804972 ms
+==============================================
+ feature-column=128 num-children-per-source=100 num-leafs-per-child=-1
+Computing reference value ...
+__________________________
+rand-seed = 1540501049
+--------------------------
+CPU Reference elapsed: 297979.437500 ms.
+Embedding validation: PASS
+==============================================
+ batch-size=512
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540501352
+__________________________
+--------------------------
+Run 0 elapsed: 32475.769997 ms, #iterations = 3190
+rand-seed = 1540501385
+__________________________
+--------------------------
+Run 1 elapsed: 32443.546057 ms, #iterations = 3190
+rand-seed = 1540501418
+__________________________
+--------------------------
+Run 2 elapsed: 32450.685024 ms, #iterations = 3190
+rand-seed = 1540501450
+__________________________
+--------------------------
+Run 3 elapsed: 32442.947149 ms, #iterations = 3190
+rand-seed = 1540501483
+__________________________
+--------------------------
+Run 4 elapsed: 32478.775978 ms, #iterations = 3190
+rand-seed = 1540501516
+__________________________
+--------------------------
+Run 5 elapsed: 32366.704941 ms, #iterations = 3190
+rand-seed = 1540501548
+__________________________
+--------------------------
+Run 6 elapsed: 32367.801905 ms, #iterations = 3190
+rand-seed = 1540501581
+__________________________
+--------------------------
+Run 7 elapsed: 32366.479874 ms, #iterations = 3190
+rand-seed = 1540501613
+__________________________
+--------------------------
+Run 8 elapsed: 32356.957912 ms, #iterations = 3190
+rand-seed = 1540501646
+__________________________
+--------------------------
+Run 9 elapsed: 32349.493027 ms, #iterations = 3190
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 32409.916186 ms
+ iterations: 3190
+ min. elapsed: 32349.493027 ms
+ max. elapsed: 32478.775978 ms
+ load time: 1600.46 ms
+ preprocess time: 4548.390000 ms
+ postprocess time: 1751.482964 ms
+ total time: 331954.913139 ms
+==============================================
+ batch-size=1024
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540501685
+__________________________
+--------------------------
+Run 0 elapsed: 32285.485029 ms, #iterations = 1595
+rand-seed = 1540501717
+__________________________
+--------------------------
+Run 1 elapsed: 32279.293060 ms, #iterations = 1595
+rand-seed = 1540501750
+__________________________
+--------------------------
+Run 2 elapsed: 32291.272879 ms, #iterations = 1595
+rand-seed = 1540501782
+__________________________
+--------------------------
+Run 3 elapsed: 32291.821003 ms, #iterations = 1595
+rand-seed = 1540501814
+__________________________
+--------------------------
+Run 4 elapsed: 32286.571026 ms, #iterations = 1595
+rand-seed = 1540501847
+__________________________
+--------------------------
+Run 5 elapsed: 32279.504061 ms, #iterations = 1595
+rand-seed = 1540501879
+__________________________
+--------------------------
+Run 6 elapsed: 32286.356211 ms, #iterations = 1595
+rand-seed = 1540501912
+__________________________
+--------------------------
+Run 7 elapsed: 32275.065899 ms, #iterations = 1595
+rand-seed = 1540501944
+__________________________
+--------------------------
+Run 8 elapsed: 32301.450968 ms, #iterations = 1595
+rand-seed = 1540501977
+__________________________
+--------------------------
+Run 9 elapsed: 32283.936977 ms, #iterations = 1595
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 32286.075711 ms
+ iterations: 1595
+ min. elapsed: 32275.065899 ms
+ max. elapsed: 32301.450968 ms
+ load time: 1600.46 ms
+ preprocess time: 4535.190000 ms
+ postprocess time: 728.632927 ms
+ total time: 329680.912971 ms
+==============================================
+ batch-size=2048
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540502015
+__________________________
+--------------------------
+Run 0 elapsed: 32103.947163 ms, #iterations = 798
+rand-seed = 1540502047
+__________________________
+--------------------------
+Run 1 elapsed: 31983.649969 ms, #iterations = 798
+rand-seed = 1540502079
+__________________________
+--------------------------
+Run 2 elapsed: 31986.176014 ms, #iterations = 798
+rand-seed = 1540502111
+__________________________
+--------------------------
+Run 3 elapsed: 31989.006996 ms, #iterations = 798
+rand-seed = 1540502143
+__________________________
+--------------------------
+Run 4 elapsed: 31993.278980 ms, #iterations = 798
+rand-seed = 1540502175
+__________________________
+--------------------------
+Run 5 elapsed: 31998.629808 ms, #iterations = 798
+rand-seed = 1540502208
+__________________________
+--------------------------
+Run 6 elapsed: 31988.006115 ms, #iterations = 798
+rand-seed = 1540502240
+__________________________
+--------------------------
+Run 7 elapsed: 31995.653868 ms, #iterations = 798
+rand-seed = 1540502272
+__________________________
+--------------------------
+Run 8 elapsed: 31996.596098 ms, #iterations = 798
+rand-seed = 1540502304
+__________________________
+--------------------------
+Run 9 elapsed: 31988.838196 ms, #iterations = 798
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 32002.378321 ms
+ iterations: 798
+ min. elapsed: 31983.649969 ms
+ max. elapsed: 32103.947163 ms
+ load time: 1600.46 ms
+ preprocess time: 4535.230000 ms
+ postprocess time: 659.054995 ms
+ total time: 326774.919987 ms
+==============================================
+ batch-size=4096
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540502342
+__________________________
+--------------------------
+Run 0 elapsed: 32307.278872 ms, #iterations = 399
+rand-seed = 1540502374
+__________________________
+--------------------------
+Run 1 elapsed: 32221.555948 ms, #iterations = 399
+rand-seed = 1540502406
+__________________________
+--------------------------
+Run 2 elapsed: 32236.965895 ms, #iterations = 399
+rand-seed = 1540502439
+__________________________
+--------------------------
+Run 3 elapsed: 32226.882935 ms, #iterations = 399
+rand-seed = 1540502471
+__________________________
+--------------------------
+Run 4 elapsed: 32227.993011 ms, #iterations = 399
+rand-seed = 1540502504
+__________________________
+--------------------------
+Run 5 elapsed: 32218.969107 ms, #iterations = 399
+rand-seed = 1540502536
+__________________________
+--------------------------
+Run 6 elapsed: 32216.062069 ms, #iterations = 399
+rand-seed = 1540502568
+__________________________
+--------------------------
+Run 7 elapsed: 32214.502096 ms, #iterations = 399
+rand-seed = 1540502601
+__________________________
+--------------------------
+Run 8 elapsed: 32222.985029 ms, #iterations = 399
+rand-seed = 1540502633
+__________________________
+--------------------------
+Run 9 elapsed: 32217.491150 ms, #iterations = 399
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 32231.068611 ms
+ iterations: 399
+ min. elapsed: 32214.502096 ms
+ max. elapsed: 32307.278872 ms
+ load time: 1600.46 ms
+ preprocess time: 4599.940000 ms
+ postprocess time: 772.186041 ms
+ total time: 329242.249966 ms
+==============================================
+ batch-size=8192
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540502671
+__________________________
+--------------------------
+Run 0 elapsed: 32629.334927 ms, #iterations = 200
+rand-seed = 1540502704
+__________________________
+--------------------------
+Run 1 elapsed: 32620.944977 ms, #iterations = 200
+rand-seed = 1540502736
+__________________________
+--------------------------
+Run 2 elapsed: 32632.930040 ms, #iterations = 200
+rand-seed = 1540502769
+__________________________
+--------------------------
+Run 3 elapsed: 32631.572962 ms, #iterations = 200
+rand-seed = 1540502802
+__________________________
+--------------------------
+Run 4 elapsed: 32634.195805 ms, #iterations = 200
+rand-seed = 1540502835
+__________________________
+--------------------------
+Run 5 elapsed: 32633.695841 ms, #iterations = 200
+rand-seed = 1540502868
+__________________________
+--------------------------
+Run 6 elapsed: 32639.033079 ms, #iterations = 200
+rand-seed = 1540502900
+__________________________
+--------------------------
+Run 7 elapsed: 32642.670155 ms, #iterations = 200
+rand-seed = 1540502933
+__________________________
+--------------------------
+Run 8 elapsed: 32640.778065 ms, #iterations = 200
+rand-seed = 1540502966
+__________________________
+--------------------------
+Run 9 elapsed: 32636.353016 ms, #iterations = 200
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 32634.150887 ms
+ iterations: 200
+ min. elapsed: 32620.944977 ms
+ max. elapsed: 32642.670155 ms
+ load time: 1600.46 ms
+ preprocess time: 4480.350000 ms
+ postprocess time: 688.034058 ms
+ total time: 333074.048996 ms
+==============================================
+ batch-size=16384
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540503004
+__________________________
+--------------------------
+Run 0 elapsed: 33275.630951 ms, #iterations = 100
+rand-seed = 1540503037
+__________________________
+--------------------------
+Run 1 elapsed: 33269.455194 ms, #iterations = 100
+rand-seed = 1540503071
+__________________________
+--------------------------
+Run 2 elapsed: 33273.165941 ms, #iterations = 100
+rand-seed = 1540503104
+__________________________
+--------------------------
+Run 3 elapsed: 33276.403904 ms, #iterations = 100
+rand-seed = 1540503138
+__________________________
+--------------------------
+Run 4 elapsed: 33271.953821 ms, #iterations = 100
+rand-seed = 1540503171
+__________________________
+--------------------------
+Run 5 elapsed: 33278.072119 ms, #iterations = 100
+rand-seed = 1540503205
+__________________________
+--------------------------
+Run 6 elapsed: 33287.710905 ms, #iterations = 100
+rand-seed = 1540503238
+__________________________
+--------------------------
+Run 7 elapsed: 33277.040005 ms, #iterations = 100
+rand-seed = 1540503272
+__________________________
+--------------------------
+Run 8 elapsed: 33276.362181 ms, #iterations = 100
+rand-seed = 1540503305
+__________________________
+--------------------------
+Run 9 elapsed: 33275.779009 ms, #iterations = 100
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 33276.157403 ms
+ iterations: 100
+ min. elapsed: 33269.455194 ms
+ max. elapsed: 33287.710905 ms
+ load time: 1600.46 ms
+ preprocess time: 4402.360000 ms
+ postprocess time: 920.671940 ms
+ total time: 339658.740044 ms

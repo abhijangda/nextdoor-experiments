@@ -1,0 +1,1494 @@
+Loading Matrix-market coordinate-formatted graph ...
+  Reading meta data from /raid/data/hive/ca/ca.mtx.meta
+  Reading edge lists from /raid/data/hive/ca/ca.mtx.coo_edge_pairs
+  Assigning 1 to all 186936 edges
+  Substracting 1 from node Ids...
+  Removed 58 duplicate edges and self circles.
+  graph loaded as COO in 0.072637s.
+Converting 108299 vertices, 186878 directed edges ( ordered tuples) to CSR format...Done (0s).
+Degree Histogram (108299 vertices, 186878 edges):
+    Degree 0: 85166 (78.639692 %)
+    Degree 2^0: 2373 (2.191156 %)
+    Degree 2^1: 6117 (5.648252 %)
+    Degree 2^2: 7070 (6.528223 %)
+    Degree 2^3: 4743 (4.379542 %)
+    Degree 2^4: 2103 (1.941846 %)
+    Degree 2^5: 597 (0.551252 %)
+    Degree 2^6: 117 (0.108034 %)
+    Degree 2^7: 12 (0.011080 %)
+    Degree 2^8: 1 (0.000923 %)
+
+Computing reference value ...
+__________________________
+pass 0, pre-iter, elapsed = 1.963854
+pass 0, iter 1, q = 0.381353, iter_gain = 0.381471, pass_gain = 0.381471, elapsed = 3.986120
+pass 0, iter 2, q = 0.508173, iter_gain = 0.126820, pass_gain = 0.508291, elapsed = 3.715038
+pass 0, iter 3, q = 0.535113, iter_gain = 0.026940, pass_gain = 0.535231, elapsed = 3.670931
+pass 0, iter 4, q = 0.544691, iter_gain = 0.009578, pass_gain = 0.544809, elapsed = 3.437042
+pass 0, iter 5, q = 0.548132, iter_gain = 0.003441, pass_gain = 0.548250, elapsed = 3.407955
+pass 0, iter 6, q = 0.549828, iter_gain = 0.001697, pass_gain = 0.549946, elapsed = 3.386974
+pass 0, iter 7, q = 0.551122, iter_gain = 0.001293, pass_gain = 0.551240, elapsed = 3.375053
+pass 0, iter 8, q = 0.551959, iter_gain = 0.000837, pass_gain = 0.552077, elapsed = 3.339052
+pass 0, iter 9, q = 0.552954, iter_gain = 0.000995, pass_gain = 0.553072, elapsed = 3.342152
+pass 0, iter 10, q = 0.553291, iter_gain = 0.000337, pass_gain = 0.553409, elapsed = 3.424883
+pass 0, graph compaction, elapsed = 8.632898
+pass 0, #v = 108299 -> 89469, #e = 186878 -> 39109, #iter = 10, q = 0.553291, pass_gain = 0.553409, elapsed = 45.773029
+pass 1, pre-iter, elapsed = 0.468969
+pass 1, iter 1, q = 0.679875, iter_gain = 0.126584, pass_gain = 0.126584, elapsed = 1.023054
+pass 1, iter 2, q = 0.697552, iter_gain = 0.017676, pass_gain = 0.144261, elapsed = 1.019001
+pass 1, iter 3, q = 0.700100, iter_gain = 0.002549, pass_gain = 0.146809, elapsed = 1.010895
+pass 1, iter 4, q = 0.700494, iter_gain = 0.000394, pass_gain = 0.147203, elapsed = 1.006126
+pass 1, iter 5, q = 0.700751, iter_gain = 0.000257, pass_gain = 0.147460, elapsed = 1.010895
+pass 1, iter 6, q = 0.700800, iter_gain = 0.000049, pass_gain = 0.147509, elapsed = 1.007080
+pass 1, iter 7, q = 0.700800, iter_gain = 0.000000, pass_gain = 0.147509, elapsed = 1.005888
+pass 1, graph compaction, elapsed = 2.207041
+pass 1, #v = 89469 -> 86337, #e = 39109 -> 14303, #iter = 7, q = 0.700800, pass_gain = 0.147509, elapsed = 9.805918
+pass 2, pre-iter, elapsed = 0.265121
+pass 2, iter 1, q = 0.725554, iter_gain = 0.024754, pass_gain = 0.024754, elapsed = 0.615835
+pass 2, iter 2, q = 0.728586, iter_gain = 0.003031, pass_gain = 0.027785, elapsed = 0.620127
+pass 2, iter 3, q = 0.729092, iter_gain = 0.000506, pass_gain = 0.028292, elapsed = 0.618935
+pass 2, iter 4, q = 0.729126, iter_gain = 0.000034, pass_gain = 0.028326, elapsed = 0.617981
+pass 2, iter 5, q = 0.729126, iter_gain = 0.000000, pass_gain = 0.028326, elapsed = 0.720978
+pass 2, graph compaction, elapsed = 0.928879
+pass 2, #v = 86337 -> 85830, #e = 14303 -> 4470, #iter = 5, q = 0.729126, pass_gain = 0.028326, elapsed = 4.421949
+pass 3, pre-iter, elapsed = 0.255108
+pass 3, iter 1, q = 0.731160, iter_gain = 0.002034, pass_gain = 0.002034, elapsed = 0.494957
+pass 3, iter 2, q = 0.731287, iter_gain = 0.000127, pass_gain = 0.002161, elapsed = 0.497818
+pass 3, iter 3, q = 0.731287, iter_gain = 0.000000, pass_gain = 0.002161, elapsed = 0.498056
+pass 3, graph compaction, elapsed = 0.730038
+pass 3, #v = 85830 -> 85784, #e = 4470 -> 2494, #iter = 3, q = 0.731287, pass_gain = 0.002161, elapsed = 2.498150
+pass 4, pre-iter, elapsed = 0.254154
+pass 4, iter 1, q = 0.731292, iter_gain = 0.000006, pass_gain = 0.000006, elapsed = 0.479937
+pass 4, iter 2, q = 0.731292, iter_gain = 0.000000, pass_gain = 0.000006, elapsed = 0.477076
+pass 4, graph compaction, elapsed = 0.629902
+pass 4, #v = 85784 -> 85783, #e = 2494 -> 2443, #iter = 2, q = 0.731292, pass_gain = 0.000006, elapsed = 1.866102
+--------------------------
+Run 0 elapsed: 64.987900 ms, q = 0.731292
+==============================================
+ unify-segments=true advance-mode=ALL_EDGES omp-threads=32 1st-th=0.0001 neighborcomm-th=-1
+__________________________
+#threads = 32, 1st-th = 0.000100
+pass 0, pre-iter, elapsed = 0.241041
+pass 0, iter 0, q = 0.391514, iter_gain = 0.391632, pass_gain = 0.391632, elapsed = 0.590086
+pass 0, iter 1, q = 0.511732, iter_gain = 0.120218, pass_gain = 0.511850, elapsed = 0.295877
+pass 0, iter 2, q = 0.540472, iter_gain = 0.028740, pass_gain = 0.540590, elapsed = 0.245094
+pass 0, iter 3, q = 0.548935, iter_gain = 0.008464, pass_gain = 0.549054, elapsed = 0.229836
+pass 0, iter 4, q = 0.551902, iter_gain = 0.002966, pass_gain = 0.552020, elapsed = 0.223160
+pass 0, iter 5, q = 0.552974, iter_gain = 0.001072, pass_gain = 0.553092, elapsed = 0.220776
+pass 0, iter 6, q = 0.553527, iter_gain = 0.000553, pass_gain = 0.553645, elapsed = 0.221014
+pass 0, iter 7, q = 0.553653, iter_gain = 0.000125, pass_gain = 0.553771, elapsed = 0.220060
+pass 0, iter 8, q = 0.553674, iter_gain = 0.000021, pass_gain = 0.553792, elapsed = 0.219107
+pass 0, graph compaction, elapsed = 7.737875
+pass 0, #v = 108299 -> 89409, #e = 186878 -> 39837, #iter = 9, q = 0.553674, pass_gain = 0.553792, elapsed = 10.516882
+pass 1, pre-iter, elapsed = 0.097036
+pass 1, iter 0, q = 0.677332, iter_gain = 0.123658, pass_gain = 0.123658, elapsed = 0.163078
+pass 1, iter 1, q = 0.702019, iter_gain = 0.024688, pass_gain = 0.148345, elapsed = 0.113010
+pass 1, iter 2, q = 0.704856, iter_gain = 0.002837, pass_gain = 0.151182, elapsed = 0.101805
+pass 1, iter 3, q = 0.705263, iter_gain = 0.000407, pass_gain = 0.151589, elapsed = 0.097990
+pass 1, iter 4, q = 0.705373, iter_gain = 0.000110, pass_gain = 0.151699, elapsed = 0.097036
+pass 1, iter 5, q = 0.705394, iter_gain = 0.000021, pass_gain = 0.151720, elapsed = 0.094891
+pass 1, iter 6, q = 0.705405, iter_gain = 0.000011, pass_gain = 0.151731, elapsed = 0.096083
+pass 1, iter 7, q = 0.705405, iter_gain = 0.000000, pass_gain = 0.151731, elapsed = 0.095844
+pass 1, graph compaction, elapsed = 3.222942
+pass 1, #v = 89409 -> 86300, #e = 39837 -> 14376, #iter = 8, q = 0.705405, pass_gain = 0.151731, elapsed = 4.228115
+pass 2, pre-iter, elapsed = 0.073910
+pass 2, iter 0, q = 0.736233, iter_gain = 0.030828, pass_gain = 0.030828, elapsed = 0.092030
+pass 2, iter 1, q = 0.745703, iter_gain = 0.009470, pass_gain = 0.040298, elapsed = 0.078917
+pass 2, iter 2, q = 0.746360, iter_gain = 0.000657, pass_gain = 0.040955, elapsed = 0.074863
+pass 2, iter 3, q = 0.746770, iter_gain = 0.000411, pass_gain = 0.041365, elapsed = 0.072956
+pass 2, iter 4, q = 0.746872, iter_gain = 0.000102, pass_gain = 0.041467, elapsed = 0.072956
+pass 2, iter 5, q = 0.746872, iter_gain = 0.000000, pass_gain = 0.041467, elapsed = 0.072002
+pass 2, graph compaction, elapsed = 3.149986
+pass 2, #v = 86300 -> 85822, #e = 14376 -> 4164, #iter = 6, q = 0.746872, pass_gain = 0.041467, elapsed = 3.723860
+pass 3, pre-iter, elapsed = 0.082970
+pass 3, iter 0, q = 0.753697, iter_gain = 0.006824, pass_gain = 0.006824, elapsed = 0.065804
+pass 3, iter 1, q = 0.758033, iter_gain = 0.004336, pass_gain = 0.011160, elapsed = 0.061035
+pass 3, iter 2, q = 0.758197, iter_gain = 0.000164, pass_gain = 0.011324, elapsed = 0.060081
+pass 3, iter 3, q = 0.758205, iter_gain = 0.000009, pass_gain = 0.011333, elapsed = 0.060081
+pass 3, iter 4, q = 0.758213, iter_gain = 0.000008, pass_gain = 0.011341, elapsed = 0.061035
+pass 3, iter 5, q = 0.758217, iter_gain = 0.000004, pass_gain = 0.011345, elapsed = 0.059128
+pass 3, iter 6, q = 0.758217, iter_gain = 0.000000, pass_gain = 0.011345, elapsed = 0.058889
+pass 3, graph compaction, elapsed = 2.898932
+pass 3, #v = 85822 -> 85782, #e = 4164 -> 2422, #iter = 7, q = 0.758217, pass_gain = 0.011345, elapsed = 3.447056
+pass 4, pre-iter, elapsed = 0.091076
+pass 4, iter 0, q = 0.758217, iter_gain = 0.000000, pass_gain = 0.000000, elapsed = 0.059128
+pass 4, graph compaction, elapsed = 2.820015
+pass 4, #v = 85782 -> 85782, #e = 2422 -> 2422, #iter = 1, q = 0.758217, pass_gain = 0.000000, elapsed = 2.985001
+--------------------------
+Run 0 elapsed: 25.678873 ms
+Community Validity: PASS
+Computed: #communities = 85782.000000, modularity = 0.730217
+Reference: #communities = 85783.000000, modularity = 0.731292
+Using advance mode ALL_EDGES
+Using filter mode CULL
+__________________________
+-1	 -1	 -1	 scanned_edges 	 oversize :	 0 ->	 3
+Pass 0, pre-iter, elapsed = 0.019073
+pass 0, iter 0, q = 0.198383, iter_gain = 0.198501, pass_gain = 0.198501, #neighbor_comms = 186878, elapsed = 1.760006
+pass 0, iter 1, q = 0.380586, iter_gain = 0.182203, pass_gain = 0.380704, #neighbor_comms = 144576, elapsed = 1.260042
+pass 0, iter 2, q = 0.521150, iter_gain = 0.140564, pass_gain = 0.521268, #neighbor_comms = 116654, elapsed = 1.222849
+pass 0, iter 3, q = 0.625150, iter_gain = 0.104001, pass_gain = 0.625268, #neighbor_comms = 103284, elapsed = 1.205921
+pass 0, iter 4, q = 0.710227, iter_gain = 0.085077, pass_gain = 0.710345, #neighbor_comms = 97188, elapsed = 1.199007
+pass 0, iter 5, q = 0.784822, iter_gain = 0.074594, pass_gain = 0.784940, #neighbor_comms = 93593, elapsed = 1.196861
+pass 0, iter 6, q = 0.852113, iter_gain = 0.067291, pass_gain = 0.852231, #neighbor_comms = 91248, elapsed = 1.194000
+pass 0, iter 7, q = 0.915744, iter_gain = 0.063630, pass_gain = 0.915862, #neighbor_comms = 89589, elapsed = 1.191139
+pass 0, iter 8, q = 0.975334, iter_gain = 0.059591, pass_gain = 0.975452, #neighbor_comms = 88524, elapsed = 1.205921
+pass 0, iter 9, q = 1.033899, iter_gain = 0.058565, pass_gain = 1.034017, #neighbor_comms = 87778, elapsed = 1.195908
+pass 0, graph compaction, elapsed = 1.397133
+pass 0, #v = 108299 -> 91013, #e = 186878 -> 46748, #iter = 10, q = 1.033899, pass_gain = 1.034017, elapsed = 14.140844
+-1	 -1	 -1	 scanned_edges 	 oversize :	 3 ->	 108301
+Pass 1, pre-iter, elapsed = 0.012875
+pass 1, iter 0, q = 1.229680, iter_gain = 0.195780, pass_gain = 0.195780, #neighbor_comms = 46748, elapsed = 1.016855
+pass 1, iter 1, q = 1.347684, iter_gain = 0.118005, pass_gain = 0.313785, #neighbor_comms = 38658, elapsed = 0.930071
+pass 1, iter 2, q = 1.467610, iter_gain = 0.119926, pass_gain = 0.433711, #neighbor_comms = 35836, elapsed = 0.931978
+pass 1, iter 3, q = 1.574280, iter_gain = 0.106670, pass_gain = 0.540381, #neighbor_comms = 34500, elapsed = 0.912905
+pass 1, iter 4, q = 1.679285, iter_gain = 0.105005, pass_gain = 0.645385, #neighbor_comms = 34064, elapsed = 0.936031
+pass 1, iter 5, q = 1.769178, iter_gain = 0.089893, pass_gain = 0.735278, #neighbor_comms = 33405, elapsed = 0.915766
+pass 1, iter 6, q = 1.864222, iter_gain = 0.095044, pass_gain = 0.830323, #neighbor_comms = 33288, elapsed = 0.934839
+pass 1, iter 7, q = 1.951810, iter_gain = 0.087588, pass_gain = 0.917911, #neighbor_comms = 33066, elapsed = 0.910044
+pass 1, iter 8, q = 2.038042, iter_gain = 0.086231, pass_gain = 1.004142, #neighbor_comms = 32905, elapsed = 0.922918
+pass 1, iter 9, q = 2.122362, iter_gain = 0.084321, pass_gain = 1.088463, #neighbor_comms = 32673, elapsed = 0.905037
+pass 1, graph compaction, elapsed = 0.798941
+pass 1, #v = 91013 -> 87779, #e = 46748 -> 21873, #iter = 10, q = 2.122362, pass_gain = 1.088463, elapsed = 10.210037
+Pass 2, pre-iter, elapsed = 0.011921
+pass 2, iter 0, q = 2.219864, iter_gain = 0.097502, pass_gain = 0.097502, #neighbor_comms = 21873, elapsed = 1.075983
+pass 2, iter 1, q = 2.272720, iter_gain = 0.052856, pass_gain = 0.150357, #neighbor_comms = 17566, elapsed = 0.998974
+pass 2, iter 2, q = 2.322952, iter_gain = 0.050233, pass_gain = 0.200590, #neighbor_comms = 16377, elapsed = 0.993013
+pass 2, iter 3, q = 2.367759, iter_gain = 0.044806, pass_gain = 0.245396, #neighbor_comms = 15905, elapsed = 0.987053
+pass 2, iter 4, q = 2.412906, iter_gain = 0.045147, pass_gain = 0.290544, #neighbor_comms = 15763, elapsed = 0.993013
+pass 2, iter 5, q = 2.454275, iter_gain = 0.041369, pass_gain = 0.331913, #neighbor_comms = 15680, elapsed = 0.990152
+pass 2, iter 6, q = 2.496036, iter_gain = 0.041761, pass_gain = 0.373674, #neighbor_comms = 15581, elapsed = 0.985146
+pass 2, iter 7, q = 2.537003, iter_gain = 0.040966, pass_gain = 0.414641, #neighbor_comms = 15589, elapsed = 0.986099
+pass 2, iter 8, q = 2.578669, iter_gain = 0.041666, pass_gain = 0.456306, #neighbor_comms = 15563, elapsed = 0.986099
+pass 2, iter 9, q = 2.619609, iter_gain = 0.040940, pass_gain = 0.497247, #neighbor_comms = 15592, elapsed = 0.980854
+pass 2, graph compaction, elapsed = 0.825882
+pass 2, #v = 87779 -> 86881, #e = 21873 -> 9995, #iter = 10, q = 2.619609, pass_gain = 0.497247, elapsed = 10.902882
+Pass 3, pre-iter, elapsed = 0.012875
+pass 3, iter 0, q = 2.660268, iter_gain = 0.040659, pass_gain = 0.040659, #neighbor_comms = 9995, elapsed = 1.063108
+pass 3, iter 1, q = 2.684186, iter_gain = 0.023918, pass_gain = 0.064577, #neighbor_comms = 8133, elapsed = 1.013041
+pass 3, iter 2, q = 2.708558, iter_gain = 0.024371, pass_gain = 0.088949, #neighbor_comms = 7737, elapsed = 1.006126
+pass 3, iter 3, q = 2.730521, iter_gain = 0.021964, pass_gain = 0.110912, #neighbor_comms = 7563, elapsed = 0.994921
+pass 3, iter 4, q = 2.752389, iter_gain = 0.021868, pass_gain = 0.132780, #neighbor_comms = 7482, elapsed = 1.004934
+pass 3, iter 5, q = 2.773892, iter_gain = 0.021504, pass_gain = 0.154283, #neighbor_comms = 7455, elapsed = 1.001120
+pass 3, iter 6, q = 2.796326, iter_gain = 0.022434, pass_gain = 0.176717, #neighbor_comms = 7482, elapsed = 1.003027
+pass 3, iter 7, q = 2.818885, iter_gain = 0.022558, pass_gain = 0.199275, #neighbor_comms = 7431, elapsed = 1.002073
+pass 3, iter 8, q = 2.841266, iter_gain = 0.022382, pass_gain = 0.221657, #neighbor_comms = 7406, elapsed = 1.003981
+pass 3, iter 9, q = 2.863803, iter_gain = 0.022537, pass_gain = 0.244194, #neighbor_comms = 7423, elapsed = 1.000166
+pass 3, graph compaction, elapsed = 0.837088
+pass 3, #v = 86881 -> 86649, #e = 9995 -> 5367, #iter = 10, q = 2.863803, pass_gain = 0.244194, elapsed = 11.018991
+Pass 4, pre-iter, elapsed = 0.011921
+pass 4, iter 0, q = 2.885045, iter_gain = 0.021242, pass_gain = 0.021242, #neighbor_comms = 5367, elapsed = 1.091957
+pass 4, iter 1, q = 2.900926, iter_gain = 0.015881, pass_gain = 0.037123, #neighbor_comms = 4798, elapsed = 1.019955
+pass 4, iter 2, q = 2.916162, iter_gain = 0.015236, pass_gain = 0.052359, #neighbor_comms = 4798, elapsed = 1.023054
+pass 4, iter 3, q = 2.932527, iter_gain = 0.016365, pass_gain = 0.068724, #neighbor_comms = 4638, elapsed = 1.019001
+pass 4, iter 4, q = 2.948435, iter_gain = 0.015908, pass_gain = 0.084632, #neighbor_comms = 4603, elapsed = 1.013994
+pass 4, iter 5, q = 2.964415, iter_gain = 0.015980, pass_gain = 0.100612, #neighbor_comms = 4632, elapsed = 1.018047
+pass 4, iter 6, q = 2.980298, iter_gain = 0.015883, pass_gain = 0.116495, #neighbor_comms = 4600, elapsed = 1.008987
+pass 4, iter 7, q = 2.996212, iter_gain = 0.015914, pass_gain = 0.132409, #neighbor_comms = 4600, elapsed = 1.008987
+pass 4, iter 8, q = 3.012095, iter_gain = 0.015883, pass_gain = 0.148292, #neighbor_comms = 4600, elapsed = 1.011133
+pass 4, iter 9, q = 3.028009, iter_gain = 0.015914, pass_gain = 0.164206, #neighbor_comms = 4600, elapsed = 1.013041
+pass 4, graph compaction, elapsed = 0.842094
+pass 4, #v = 86649 -> 86506, #e = 5367 -> 3952, #iter = 10, q = 3.028009, pass_gain = 0.164206, elapsed = 11.158943
+Pass 5, pre-iter, elapsed = 0.010967
+pass 5, iter 0, q = 3.042782, iter_gain = 0.014773, pass_gain = 0.014773, #neighbor_comms = 3952, elapsed = 1.095057
+pass 5, iter 1, q = 3.053836, iter_gain = 0.011053, pass_gain = 0.025827, #neighbor_comms = 3680, elapsed = 1.027107
+pass 5, iter 2, q = 3.064304, iter_gain = 0.010469, pass_gain = 0.036295, #neighbor_comms = 3602, elapsed = 1.029015
+pass 5, iter 3, q = 3.074715, iter_gain = 0.010411, pass_gain = 0.046706, #neighbor_comms = 3642, elapsed = 1.024961
+pass 5, iter 4, q = 3.085122, iter_gain = 0.010407, pass_gain = 0.057113, #neighbor_comms = 3653, elapsed = 1.026869
+pass 5, iter 5, q = 3.095529, iter_gain = 0.010407, pass_gain = 0.067520, #neighbor_comms = 3653, elapsed = 1.034975
+pass 5, iter 6, q = 3.105936, iter_gain = 0.010407, pass_gain = 0.077927, #neighbor_comms = 3653, elapsed = 1.034021
+pass 5, iter 7, q = 3.116344, iter_gain = 0.010407, pass_gain = 0.088335, #neighbor_comms = 3653, elapsed = 1.024008
+pass 5, iter 8, q = 3.126751, iter_gain = 0.010407, pass_gain = 0.098742, #neighbor_comms = 3653, elapsed = 1.024961
+pass 5, iter 9, q = 3.137158, iter_gain = 0.010407, pass_gain = 0.109149, #neighbor_comms = 3653, elapsed = 1.024961
+pass 5, graph compaction, elapsed = 0.859022
+pass 5, #v = 86506 -> 86431, #e = 3952 -> 3417, #iter = 10, q = 3.137158, pass_gain = 0.109149, elapsed = 11.296988
+Pass 6, pre-iter, elapsed = 0.013113
+pass 6, iter 0, q = 3.148415, iter_gain = 0.011257, pass_gain = 0.011257, #neighbor_comms = 3417, elapsed = 1.141071
+pass 6, iter 1, q = 3.158118, iter_gain = 0.009703, pass_gain = 0.020960, #neighbor_comms = 3380, elapsed = 1.065969
+pass 6, iter 2, q = 3.167396, iter_gain = 0.009278, pass_gain = 0.030238, #neighbor_comms = 3340, elapsed = 1.070023
+pass 6, iter 3, q = 3.176653, iter_gain = 0.009257, pass_gain = 0.039495, #neighbor_comms = 3339, elapsed = 1.067877
+pass 6, iter 4, q = 3.185910, iter_gain = 0.009257, pass_gain = 0.048752, #neighbor_comms = 3339, elapsed = 1.075983
+pass 6, iter 5, q = 3.195166, iter_gain = 0.009257, pass_gain = 0.058008, #neighbor_comms = 3339, elapsed = 1.077890
+pass 6, iter 6, q = 3.204423, iter_gain = 0.009257, pass_gain = 0.067265, #neighbor_comms = 3339, elapsed = 1.073122
+pass 6, iter 7, q = 3.213680, iter_gain = 0.009257, pass_gain = 0.076522, #neighbor_comms = 3339, elapsed = 1.079082
+pass 6, iter 8, q = 3.222937, iter_gain = 0.009257, pass_gain = 0.085779, #neighbor_comms = 3339, elapsed = 1.080036
+pass 6, iter 9, q = 3.232193, iter_gain = 0.009257, pass_gain = 0.095036, #neighbor_comms = 3339, elapsed = 1.071930
+pass 6, graph compaction, elapsed = 0.880003
+pass 6, #v = 86431 -> 86378, #e = 3417 -> 3283, #iter = 10, q = 3.232193, pass_gain = 0.095036, elapsed = 11.773109
+Pass 7, pre-iter, elapsed = 0.010967
+pass 7, iter 0, q = 3.242022, iter_gain = 0.009829, pass_gain = 0.009829, #neighbor_comms = 3283, elapsed = 1.153946
+pass 7, iter 1, q = 3.254937, iter_gain = 0.012914, pass_gain = 0.022743, #neighbor_comms = 3208, elapsed = 1.096010
+pass 7, iter 2, q = 3.263424, iter_gain = 0.008488, pass_gain = 0.031231, #neighbor_comms = 3234, elapsed = 1.109123
+pass 7, iter 3, q = 3.276106, iter_gain = 0.012682, pass_gain = 0.043912, #neighbor_comms = 3193, elapsed = 1.103878
+pass 7, iter 4, q = 3.284613, iter_gain = 0.008508, pass_gain = 0.052420, #neighbor_comms = 3233, elapsed = 1.098871
+pass 7, iter 5, q = 3.297295, iter_gain = 0.012682, pass_gain = 0.065101, #neighbor_comms = 3193, elapsed = 1.093149
+pass 7, iter 6, q = 3.305802, iter_gain = 0.008508, pass_gain = 0.073609, #neighbor_comms = 3233, elapsed = 1.106977
+pass 7, iter 7, q = 3.318484, iter_gain = 0.012682, pass_gain = 0.086291, #neighbor_comms = 3193, elapsed = 1.102209
+pass 7, iter 8, q = 3.326992, iter_gain = 0.008508, pass_gain = 0.094798, #neighbor_comms = 3233, elapsed = 1.102924
+pass 7, iter 9, q = 3.339673, iter_gain = 0.012682, pass_gain = 0.107480, #neighbor_comms = 3193, elapsed = 1.103163
+pass 7, graph compaction, elapsed = 0.916958
+pass 7, #v = 86378 -> 86336, #e = 3283 -> 3188, #iter = 10, q = 3.339673, pass_gain = 0.107480, elapsed = 12.074947
+Pass 8, pre-iter, elapsed = 0.012159
+pass 8, iter 0, q = 3.348773, iter_gain = 0.009100, pass_gain = 0.009100, #neighbor_comms = 3188, elapsed = 1.142025
+pass 8, iter 1, q = 3.361126, iter_gain = 0.012353, pass_gain = 0.021453, #neighbor_comms = 3117, elapsed = 1.072884
+pass 8, iter 2, q = 3.369238, iter_gain = 0.008112, pass_gain = 0.029565, #neighbor_comms = 3153, elapsed = 1.070023
+pass 8, iter 3, q = 3.381548, iter_gain = 0.012310, pass_gain = 0.041875, #neighbor_comms = 3110, elapsed = 1.085997
+pass 8, iter 4, q = 3.389609, iter_gain = 0.008061, pass_gain = 0.049936, #neighbor_comms = 3150, elapsed = 1.073122
+pass 8, iter 5, q = 3.397658, iter_gain = 0.008049, pass_gain = 0.057985, #neighbor_comms = 3148, elapsed = 1.075029
+pass 8, iter 6, q = 3.405708, iter_gain = 0.008049, pass_gain = 0.066035, #neighbor_comms = 3148, elapsed = 1.060963
+pass 8, iter 7, q = 3.413757, iter_gain = 0.008049, pass_gain = 0.074084, #neighbor_comms = 3148, elapsed = 1.068115
+pass 8, iter 8, q = 3.421806, iter_gain = 0.008049, pass_gain = 0.082133, #neighbor_comms = 3148, elapsed = 1.076937
+pass 8, iter 9, q = 3.429856, iter_gain = 0.008049, pass_gain = 0.090183, #neighbor_comms = 3148, elapsed = 1.080036
+pass 8, graph compaction, elapsed = 0.898838
+pass 8, #v = 86336 -> 86304, #e = 3188 -> 3114, #iter = 10, q = 3.429856, pass_gain = 0.090183, elapsed = 11.801004
+Pass 9, pre-iter, elapsed = 0.013828
+pass 9, iter 0, q = 3.438320, iter_gain = 0.008464, pass_gain = 0.008464, #neighbor_comms = 3114, elapsed = 1.154900
+pass 9, iter 1, q = 3.445970, iter_gain = 0.007650, pass_gain = 0.016115, #neighbor_comms = 3085, elapsed = 1.101971
+pass 9, iter 2, q = 3.453418, iter_gain = 0.007448, pass_gain = 0.023562, #neighbor_comms = 3065, elapsed = 1.083851
+pass 9, iter 3, q = 3.460866, iter_gain = 0.007448, pass_gain = 0.031010, #neighbor_comms = 3065, elapsed = 1.085997
+pass 9, iter 4, q = 3.468313, iter_gain = 0.007448, pass_gain = 0.038458, #neighbor_comms = 3065, elapsed = 1.101971
+pass 9, iter 5, q = 3.475761, iter_gain = 0.007448, pass_gain = 0.045905, #neighbor_comms = 3065, elapsed = 1.095057
+pass 9, iter 6, q = 3.483209, iter_gain = 0.007448, pass_gain = 0.053353, #neighbor_comms = 3065, elapsed = 1.094103
+pass 9, iter 7, q = 3.490656, iter_gain = 0.007448, pass_gain = 0.060801, #neighbor_comms = 3065, elapsed = 1.087189
+pass 9, iter 8, q = 3.498104, iter_gain = 0.007448, pass_gain = 0.068248, #neighbor_comms = 3065, elapsed = 1.091003
+pass 9, iter 9, q = 3.505552, iter_gain = 0.007448, pass_gain = 0.075696, #neighbor_comms = 3065, elapsed = 1.095057
+pass 9, graph compaction, elapsed = 0.916004
+pass 9, #v = 86304 -> 86267, #e = 3114 -> 3026, #iter = 10, q = 3.505552, pass_gain = 0.075696, elapsed = 11.998892
+--------------------------
+Run 0 elapsed: 118.952990 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86267.000000, modularity = 0.716291
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.013113
+pass 0, iter 0, q = 3.704020, iter_gain = 0.198468, pass_gain = 0.198468, #neighbor_comms = 186878, elapsed = 1.395941
+pass 0, iter 1, q = 3.886137, iter_gain = 0.182117, pass_gain = 0.380586, #neighbor_comms = 144562, elapsed = 1.250982
+pass 0, iter 2, q = 4.026977, iter_gain = 0.140839, pass_gain = 0.521425, #neighbor_comms = 116599, elapsed = 1.212120
+pass 0, iter 3, q = 4.131158, iter_gain = 0.104181, pass_gain = 0.625606, #neighbor_comms = 103398, elapsed = 1.184940
+pass 0, iter 4, q = 4.215446, iter_gain = 0.084289, pass_gain = 0.709895, #neighbor_comms = 97217, elapsed = 1.115799
+pass 0, iter 5, q = 4.289465, iter_gain = 0.074018, pass_gain = 0.783913, #neighbor_comms = 93481, elapsed = 1.107931
+pass 0, iter 6, q = 4.356534, iter_gain = 0.067069, pass_gain = 0.850982, #neighbor_comms = 91119, elapsed = 1.116991
+pass 0, iter 7, q = 4.419384, iter_gain = 0.062850, pass_gain = 0.913832, #neighbor_comms = 89488, elapsed = 1.107931
+pass 0, iter 8, q = 4.478518, iter_gain = 0.059134, pass_gain = 0.972966, #neighbor_comms = 88392, elapsed = 1.105070
+pass 0, iter 9, q = 4.537725, iter_gain = 0.059207, pass_gain = 1.032174, #neighbor_comms = 87619, elapsed = 1.104116
+pass 0, graph compaction, elapsed = 1.251936
+pass 0, #v = 108299 -> 90995, #e = 186878 -> 46593, #iter = 10, q = 4.537725, pass_gain = 1.032174, elapsed = 13.048172
+Pass 1, pre-iter, elapsed = 0.011921
+pass 1, iter 0, q = 4.732896, iter_gain = 0.195170, pass_gain = 0.195170, #neighbor_comms = 46593, elapsed = 0.938177
+pass 1, iter 1, q = 4.849307, iter_gain = 0.116412, pass_gain = 0.311582, #neighbor_comms = 38558, elapsed = 0.855923
+pass 1, iter 2, q = 4.967394, iter_gain = 0.118086, pass_gain = 0.429668, #neighbor_comms = 35753, elapsed = 0.865221
+pass 1, iter 3, q = 5.069650, iter_gain = 0.102256, pass_gain = 0.531924, #neighbor_comms = 34565, elapsed = 0.838995
+pass 1, iter 4, q = 5.163823, iter_gain = 0.094173, pass_gain = 0.626097, #neighbor_comms = 34021, elapsed = 0.859976
+pass 1, iter 5, q = 5.253152, iter_gain = 0.089329, pass_gain = 0.715426, #neighbor_comms = 33545, elapsed = 0.838995
+pass 1, iter 6, q = 5.339985, iter_gain = 0.086833, pass_gain = 0.802259, #neighbor_comms = 33349, elapsed = 0.860214
+pass 1, iter 7, q = 5.427747, iter_gain = 0.087762, pass_gain = 0.890021, #neighbor_comms = 33248, elapsed = 0.834942
+pass 1, iter 8, q = 5.513789, iter_gain = 0.086043, pass_gain = 0.976064, #neighbor_comms = 33232, elapsed = 0.859022
+pass 1, iter 9, q = 5.597995, iter_gain = 0.084205, pass_gain = 1.060269, #neighbor_comms = 33131, elapsed = 0.838041
+pass 1, graph compaction, elapsed = 0.718117
+pass 1, #v = 90995 -> 87792, #e = 46593 -> 22747, #iter = 10, q = 5.597995, pass_gain = 1.060269, elapsed = 9.398937
+Pass 2, pre-iter, elapsed = 0.010967
+pass 2, iter 0, q = 5.696964, iter_gain = 0.098970, pass_gain = 0.098970, #neighbor_comms = 22747, elapsed = 0.964165
+pass 2, iter 1, q = 5.751127, iter_gain = 0.054162, pass_gain = 0.153132, #neighbor_comms = 18417, elapsed = 0.889063
+pass 2, iter 2, q = 5.801746, iter_gain = 0.050619, pass_gain = 0.203751, #neighbor_comms = 17186, elapsed = 0.894070
+pass 2, iter 3, q = 5.846593, iter_gain = 0.044847, pass_gain = 0.248598, #neighbor_comms = 16512, elapsed = 0.881910
+pass 2, iter 4, q = 5.889555, iter_gain = 0.042962, pass_gain = 0.291561, #neighbor_comms = 16430, elapsed = 0.885010
+pass 2, iter 5, q = 5.931066, iter_gain = 0.041511, pass_gain = 0.333071, #neighbor_comms = 16205, elapsed = 0.883818
+pass 2, iter 6, q = 5.973862, iter_gain = 0.042796, pass_gain = 0.375867, #neighbor_comms = 16323, elapsed = 0.887156
+pass 2, iter 7, q = 6.015493, iter_gain = 0.041632, pass_gain = 0.417499, #neighbor_comms = 16178, elapsed = 0.889063
+pass 2, iter 8, q = 6.058255, iter_gain = 0.042761, pass_gain = 0.460260, #neighbor_comms = 16304, elapsed = 0.886917
+pass 2, iter 9, q = 6.099843, iter_gain = 0.041588, pass_gain = 0.501848, #neighbor_comms = 16174, elapsed = 0.883818
+pass 2, graph compaction, elapsed = 0.739813
+pass 2, #v = 87792 -> 86879, #e = 22747 -> 10678, #iter = 10, q = 6.099843, pass_gain = 0.501848, elapsed = 9.772062
+Pass 3, pre-iter, elapsed = 0.010967
+pass 3, iter 0, q = 6.142916, iter_gain = 0.043073, pass_gain = 0.043073, #neighbor_comms = 10678, elapsed = 0.987053
+pass 3, iter 1, q = 6.172457, iter_gain = 0.029541, pass_gain = 0.072615, #neighbor_comms = 8857, elapsed = 0.927925
+pass 3, iter 2, q = 6.201925, iter_gain = 0.029468, pass_gain = 0.102083, #neighbor_comms = 8448, elapsed = 0.918150
+pass 3, iter 3, q = 6.235470, iter_gain = 0.033545, pass_gain = 0.135627, #neighbor_comms = 8316, elapsed = 0.921965
+pass 3, iter 4, q = 6.265297, iter_gain = 0.029827, pass_gain = 0.165454, #neighbor_comms = 8321, elapsed = 0.925064
+pass 3, iter 5, q = 6.298535, iter_gain = 0.033238, pass_gain = 0.198692, #neighbor_comms = 8213, elapsed = 0.920057
+pass 3, iter 6, q = 6.328254, iter_gain = 0.029719, pass_gain = 0.228412, #neighbor_comms = 8267, elapsed = 0.925064
+pass 3, iter 7, q = 6.361455, iter_gain = 0.033201, pass_gain = 0.261612, #neighbor_comms = 8205, elapsed = 0.920057
+pass 3, iter 8, q = 6.391174, iter_gain = 0.029719, pass_gain = 0.291331, #neighbor_comms = 8267, elapsed = 0.926018
+pass 3, iter 9, q = 6.424375, iter_gain = 0.033201, pass_gain = 0.324532, #neighbor_comms = 8205, elapsed = 0.926971
+pass 3, graph compaction, elapsed = 0.778913
+pass 3, #v = 86879 -> 86647, #e = 10678 -> 6131, #iter = 10, q = 6.424375, pass_gain = 0.324532, elapsed = 10.164022
+Pass 4, pre-iter, elapsed = 0.012159
+pass 4, iter 0, q = 6.449795, iter_gain = 0.025420, pass_gain = 0.025420, #neighbor_comms = 6131, elapsed = 0.983000
+pass 4, iter 1, q = 6.474147, iter_gain = 0.024353, pass_gain = 0.049772, #neighbor_comms = 5111, elapsed = 0.939131
+pass 4, iter 2, q = 6.493702, iter_gain = 0.019555, pass_gain = 0.069327, #neighbor_comms = 5305, elapsed = 0.946999
+pass 4, iter 3, q = 6.518472, iter_gain = 0.024769, pass_gain = 0.094097, #neighbor_comms = 5025, elapsed = 0.941038
+pass 4, iter 4, q = 6.537539, iter_gain = 0.019067, pass_gain = 0.113164, #neighbor_comms = 5093, elapsed = 0.936985
+pass 4, iter 5, q = 6.559648, iter_gain = 0.022109, pass_gain = 0.135273, #neighbor_comms = 5066, elapsed = 0.944138
+pass 4, iter 6, q = 6.578431, iter_gain = 0.018783, pass_gain = 0.154056, #neighbor_comms = 5070, elapsed = 0.938892
+pass 4, iter 7, q = 6.600316, iter_gain = 0.021885, pass_gain = 0.175941, #neighbor_comms = 5025, elapsed = 0.938177
+pass 4, iter 8, q = 6.619009, iter_gain = 0.018693, pass_gain = 0.194634, #neighbor_comms = 5070, elapsed = 0.936985
+pass 4, iter 9, q = 6.640894, iter_gain = 0.021885, pass_gain = 0.216519, #neighbor_comms = 5025, elapsed = 0.939131
+pass 4, graph compaction, elapsed = 0.782967
+pass 4, #v = 86647 -> 86535, #e = 6131 -> 4246, #iter = 10, q = 6.640894, pass_gain = 0.216519, elapsed = 10.318995
+Pass 5, pre-iter, elapsed = 0.012875
+pass 5, iter 0, q = 6.656629, iter_gain = 0.015735, pass_gain = 0.015735, #neighbor_comms = 4246, elapsed = 1.004934
+pass 5, iter 1, q = 6.670912, iter_gain = 0.014283, pass_gain = 0.030018, #neighbor_comms = 4000, elapsed = 0.962019
+pass 5, iter 2, q = 6.682166, iter_gain = 0.011254, pass_gain = 0.041272, #neighbor_comms = 3950, elapsed = 0.949144
+pass 5, iter 3, q = 6.696390, iter_gain = 0.014224, pass_gain = 0.055496, #neighbor_comms = 3902, elapsed = 0.941992
+pass 5, iter 4, q = 6.710502, iter_gain = 0.014112, pass_gain = 0.069608, #neighbor_comms = 3901, elapsed = 0.957966
+pass 5, iter 5, q = 6.724705, iter_gain = 0.014203, pass_gain = 0.083811, #neighbor_comms = 3901, elapsed = 0.943899
+pass 5, iter 6, q = 6.738817, iter_gain = 0.014112, pass_gain = 0.097923, #neighbor_comms = 3901, elapsed = 0.946045
+pass 5, iter 7, q = 6.753020, iter_gain = 0.014203, pass_gain = 0.112126, #neighbor_comms = 3901, elapsed = 0.946999
+pass 5, iter 8, q = 6.767132, iter_gain = 0.014112, pass_gain = 0.126238, #neighbor_comms = 3901, elapsed = 0.957966
+pass 5, iter 9, q = 6.781335, iter_gain = 0.014203, pass_gain = 0.140441, #neighbor_comms = 3901, elapsed = 0.949860
+pass 5, graph compaction, elapsed = 0.800848
+pass 5, #v = 86535 -> 86433, #e = 4246 -> 3627, #iter = 10, q = 6.781335, pass_gain = 0.140441, elapsed = 10.450840
+Pass 6, pre-iter, elapsed = 0.011921
+pass 6, iter 0, q = 6.793254, iter_gain = 0.011920, pass_gain = 0.011920, #neighbor_comms = 3627, elapsed = 1.045942
+pass 6, iter 1, q = 6.803042, iter_gain = 0.009788, pass_gain = 0.021707, #neighbor_comms = 3566, elapsed = 0.987053
+pass 6, iter 2, q = 6.812544, iter_gain = 0.009502, pass_gain = 0.031209, #neighbor_comms = 3505, elapsed = 0.993013
+pass 6, iter 3, q = 6.822046, iter_gain = 0.009502, pass_gain = 0.040711, #neighbor_comms = 3505, elapsed = 0.996113
+pass 6, iter 4, q = 6.831548, iter_gain = 0.009502, pass_gain = 0.050213, #neighbor_comms = 3505, elapsed = 1.002073
+pass 6, iter 5, q = 6.841050, iter_gain = 0.009502, pass_gain = 0.059715, #neighbor_comms = 3505, elapsed = 0.993013
+pass 6, iter 6, q = 6.850552, iter_gain = 0.009502, pass_gain = 0.069217, #neighbor_comms = 3505, elapsed = 1.003027
+pass 6, iter 7, q = 6.860053, iter_gain = 0.009502, pass_gain = 0.078719, #neighbor_comms = 3505, elapsed = 0.998020
+pass 6, iter 8, q = 6.869555, iter_gain = 0.009502, pass_gain = 0.088221, #neighbor_comms = 3505, elapsed = 0.998974
+pass 6, iter 9, q = 6.879057, iter_gain = 0.009502, pass_gain = 0.097723, #neighbor_comms = 3505, elapsed = 0.995874
+pass 6, graph compaction, elapsed = 0.837088
+pass 6, #v = 86433 -> 86376, #e = 3627 -> 3405, #iter = 10, q = 6.879057, pass_gain = 0.097723, elapsed = 10.938883
+Pass 7, pre-iter, elapsed = 0.010967
+pass 7, iter 0, q = 6.889239, iter_gain = 0.010182, pass_gain = 0.010182, #neighbor_comms = 3405, elapsed = 1.008034
+pass 7, iter 1, q = 6.898206, iter_gain = 0.008967, pass_gain = 0.019149, #neighbor_comms = 3367, elapsed = 0.975847
+pass 7, iter 2, q = 6.906784, iter_gain = 0.008578, pass_gain = 0.027727, #neighbor_comms = 3351, elapsed = 0.975847
+pass 7, iter 3, q = 6.915272, iter_gain = 0.008488, pass_gain = 0.036214, #neighbor_comms = 3352, elapsed = 0.972986
+pass 7, iter 4, q = 6.923723, iter_gain = 0.008452, pass_gain = 0.044666, #neighbor_comms = 3348, elapsed = 0.979900
+pass 7, iter 5, q = 6.932134, iter_gain = 0.008411, pass_gain = 0.053077, #neighbor_comms = 3347, elapsed = 0.967979
+pass 7, iter 6, q = 6.940545, iter_gain = 0.008411, pass_gain = 0.061488, #neighbor_comms = 3347, elapsed = 0.972033
+pass 7, iter 7, q = 6.948956, iter_gain = 0.008411, pass_gain = 0.069899, #neighbor_comms = 3347, elapsed = 0.969887
+pass 7, iter 8, q = 6.957368, iter_gain = 0.008411, pass_gain = 0.078310, #neighbor_comms = 3347, elapsed = 0.978231
+pass 7, iter 9, q = 6.965779, iter_gain = 0.008411, pass_gain = 0.086721, #neighbor_comms = 3347, elapsed = 0.975847
+pass 7, graph compaction, elapsed = 0.818968
+pass 7, #v = 86376 -> 86330, #e = 3405 -> 3297, #iter = 10, q = 6.965779, pass_gain = 0.086721, elapsed = 10.689020
+Pass 8, pre-iter, elapsed = 0.011921
+pass 8, iter 0, q = 6.974801, iter_gain = 0.009022, pass_gain = 0.009022, #neighbor_comms = 3297, elapsed = 1.044989
+pass 8, iter 1, q = 6.982718, iter_gain = 0.007917, pass_gain = 0.016939, #neighbor_comms = 3238, elapsed = 0.988960
+pass 8, iter 2, q = 6.990508, iter_gain = 0.007790, pass_gain = 0.024729, #neighbor_comms = 3192, elapsed = 1.000166
+pass 8, iter 3, q = 6.998298, iter_gain = 0.007790, pass_gain = 0.032520, #neighbor_comms = 3192, elapsed = 0.988007
+pass 8, iter 4, q = 7.006088, iter_gain = 0.007790, pass_gain = 0.040310, #neighbor_comms = 3192, elapsed = 0.999928
+pass 8, iter 5, q = 7.013879, iter_gain = 0.007790, pass_gain = 0.048100, #neighbor_comms = 3192, elapsed = 0.983000
+pass 8, iter 6, q = 7.021669, iter_gain = 0.007790, pass_gain = 0.055890, #neighbor_comms = 3192, elapsed = 0.998020
+pass 8, iter 7, q = 7.029459, iter_gain = 0.007790, pass_gain = 0.063681, #neighbor_comms = 3192, elapsed = 0.988960
+pass 8, iter 8, q = 7.037249, iter_gain = 0.007790, pass_gain = 0.071471, #neighbor_comms = 3192, elapsed = 0.988007
+pass 8, iter 9, q = 7.045040, iter_gain = 0.007790, pass_gain = 0.079261, #neighbor_comms = 3192, elapsed = 0.988960
+pass 8, graph compaction, elapsed = 0.832081
+pass 8, #v = 86330 -> 86288, #e = 3297 -> 3099, #iter = 10, q = 7.045040, pass_gain = 0.079261, elapsed = 10.886908
+Pass 9, pre-iter, elapsed = 0.012159
+pass 9, iter 0, q = 7.053323, iter_gain = 0.008283, pass_gain = 0.008283, #neighbor_comms = 3099, elapsed = 1.039982
+pass 9, iter 1, q = 7.060693, iter_gain = 0.007370, pass_gain = 0.015653, #neighbor_comms = 3049, elapsed = 1.040936
+pass 9, iter 2, q = 7.067887, iter_gain = 0.007194, pass_gain = 0.022847, #neighbor_comms = 3028, elapsed = 1.004934
+pass 9, iter 3, q = 7.075081, iter_gain = 0.007194, pass_gain = 0.030041, #neighbor_comms = 3028, elapsed = 1.003981
+pass 9, iter 4, q = 7.082275, iter_gain = 0.007194, pass_gain = 0.037236, #neighbor_comms = 3028, elapsed = 1.001835
+pass 9, iter 5, q = 7.089469, iter_gain = 0.007194, pass_gain = 0.044430, #neighbor_comms = 3028, elapsed = 1.008987
+pass 9, iter 6, q = 7.096664, iter_gain = 0.007194, pass_gain = 0.051624, #neighbor_comms = 3028, elapsed = 1.007080
+pass 9, iter 7, q = 7.103858, iter_gain = 0.007194, pass_gain = 0.058818, #neighbor_comms = 3028, elapsed = 1.008987
+pass 9, iter 8, q = 7.111052, iter_gain = 0.007194, pass_gain = 0.066012, #neighbor_comms = 3028, elapsed = 1.003027
+pass 9, iter 9, q = 7.118246, iter_gain = 0.007194, pass_gain = 0.073207, #neighbor_comms = 3028, elapsed = 1.055956
+pass 9, graph compaction, elapsed = 0.839949
+pass 9, #v = 86288 -> 86248, #e = 3099 -> 2969, #iter = 10, q = 7.118246, pass_gain = 0.073207, elapsed = 11.106968
+--------------------------
+Run 1 elapsed: 108.386993 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86248.000000, modularity = 0.712063
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.019789
+pass 0, iter 0, q = 7.316736, iter_gain = 0.198490, pass_gain = 0.198490, #neighbor_comms = 186878, elapsed = 1.292944
+pass 0, iter 1, q = 7.498876, iter_gain = 0.182139, pass_gain = 0.380629, #neighbor_comms = 144682, elapsed = 1.168013
+pass 0, iter 2, q = 7.639816, iter_gain = 0.140940, pass_gain = 0.521570, #neighbor_comms = 116628, elapsed = 1.120806
+pass 0, iter 3, q = 7.744309, iter_gain = 0.104493, pass_gain = 0.626063, #neighbor_comms = 103255, elapsed = 1.112938
+pass 0, iter 4, q = 7.829284, iter_gain = 0.084975, pass_gain = 0.711038, #neighbor_comms = 97061, elapsed = 1.109123
+pass 0, iter 5, q = 7.903822, iter_gain = 0.074538, pass_gain = 0.785576, #neighbor_comms = 93355, elapsed = 1.108885
+pass 0, iter 6, q = 7.971535, iter_gain = 0.067712, pass_gain = 0.853288, #neighbor_comms = 91160, elapsed = 1.104832
+pass 0, iter 7, q = 8.035431, iter_gain = 0.063896, pass_gain = 0.917184, #neighbor_comms = 89500, elapsed = 1.103878
+pass 0, iter 8, q = 8.095535, iter_gain = 0.060105, pass_gain = 0.977289, #neighbor_comms = 88489, elapsed = 1.096010
+pass 0, iter 9, q = 8.155419, iter_gain = 0.059884, pass_gain = 1.037173, #neighbor_comms = 87853, elapsed = 1.104116
+pass 0, graph compaction, elapsed = 0.967026
+pass 0, #v = 108299 -> 91021, #e = 186878 -> 46693, #iter = 10, q = 8.155419, pass_gain = 1.037173, elapsed = 12.391806
+Pass 1, pre-iter, elapsed = 0.011921
+pass 1, iter 0, q = 8.353836, iter_gain = 0.198417, pass_gain = 0.198417, #neighbor_comms = 46693, elapsed = 0.921965
+pass 1, iter 1, q = 8.476300, iter_gain = 0.122464, pass_gain = 0.320881, #neighbor_comms = 38539, elapsed = 0.840902
+pass 1, iter 2, q = 8.596678, iter_gain = 0.120377, pass_gain = 0.441259, #neighbor_comms = 35915, elapsed = 0.851870
+pass 1, iter 3, q = 8.703591, iter_gain = 0.106913, pass_gain = 0.548172, #neighbor_comms = 34269, elapsed = 0.825882
+pass 1, iter 4, q = 8.809869, iter_gain = 0.106278, pass_gain = 0.654450, #neighbor_comms = 33864, elapsed = 0.845909
+pass 1, iter 5, q = 8.905298, iter_gain = 0.095429, pass_gain = 0.749879, #neighbor_comms = 33182, elapsed = 0.823021
+pass 1, iter 6, q = 8.998131, iter_gain = 0.092834, pass_gain = 0.842712, #neighbor_comms = 32947, elapsed = 0.843048
+pass 1, iter 7, q = 9.086288, iter_gain = 0.088157, pass_gain = 0.930869, #neighbor_comms = 32560, elapsed = 0.822783
+pass 1, iter 8, q = 9.174536, iter_gain = 0.088248, pass_gain = 1.019117, #neighbor_comms = 32610, elapsed = 0.836849
+pass 1, iter 9, q = 9.260713, iter_gain = 0.086177, pass_gain = 1.105293, #neighbor_comms = 32359, elapsed = 0.824928
+pass 1, graph compaction, elapsed = 0.702143
+pass 1, #v = 91021 -> 87769, #e = 46693 -> 21754, #iter = 10, q = 9.260713, pass_gain = 1.105293, elapsed = 9.232044
+Pass 2, pre-iter, elapsed = 0.013113
+pass 2, iter 0, q = 9.359520, iter_gain = 0.098807, pass_gain = 0.098807, #neighbor_comms = 21754, elapsed = 0.978947
+pass 2, iter 1, q = 9.411306, iter_gain = 0.051786, pass_gain = 0.150593, #neighbor_comms = 17633, elapsed = 0.908136
+pass 2, iter 2, q = 9.467005, iter_gain = 0.055699, pass_gain = 0.206293, #neighbor_comms = 16592, elapsed = 0.905991
+pass 2, iter 3, q = 9.530340, iter_gain = 0.063334, pass_gain = 0.269627, #neighbor_comms = 16117, elapsed = 0.915051
+pass 2, iter 4, q = 9.588495, iter_gain = 0.058155, pass_gain = 0.327782, #neighbor_comms = 15997, elapsed = 0.895023
+pass 2, iter 5, q = 9.644842, iter_gain = 0.056347, pass_gain = 0.384129, #neighbor_comms = 15866, elapsed = 0.908852
+pass 2, iter 6, q = 9.702274, iter_gain = 0.057432, pass_gain = 0.441561, #neighbor_comms = 15837, elapsed = 0.902176
+pass 2, iter 7, q = 9.758860, iter_gain = 0.056587, pass_gain = 0.498148, #neighbor_comms = 15826, elapsed = 0.908136
+pass 2, iter 8, q = 9.816012, iter_gain = 0.057151, pass_gain = 0.555299, #neighbor_comms = 15828, elapsed = 0.895977
+pass 2, iter 9, q = 9.872524, iter_gain = 0.056513, pass_gain = 0.611812, #neighbor_comms = 15828, elapsed = 0.909090
+pass 2, graph compaction, elapsed = 0.753880
+pass 2, #v = 87769 -> 86884, #e = 21754 -> 10406, #iter = 10, q = 9.872524, pass_gain = 0.611812, elapsed = 9.969950
+Pass 3, pre-iter, elapsed = 0.011921
+pass 3, iter 0, q = 9.919451, iter_gain = 0.046927, pass_gain = 0.046927, #neighbor_comms = 10406, elapsed = 0.982046
+pass 3, iter 1, q = 9.952378, iter_gain = 0.032927, pass_gain = 0.079854, #neighbor_comms = 8303, elapsed = 0.917912
+pass 3, iter 2, q = 9.984245, iter_gain = 0.031867, pass_gain = 0.111721, #neighbor_comms = 7960, elapsed = 0.909090
+pass 3, iter 3, q = 10.016168, iter_gain = 0.031923, pass_gain = 0.143644, #neighbor_comms = 7824, elapsed = 0.911951
+pass 3, iter 4, q = 10.047896, iter_gain = 0.031728, pass_gain = 0.175372, #neighbor_comms = 7847, elapsed = 0.915051
+pass 3, iter 5, q = 10.079545, iter_gain = 0.031649, pass_gain = 0.207021, #neighbor_comms = 7776, elapsed = 0.905037
+pass 3, iter 6, q = 10.111278, iter_gain = 0.031733, pass_gain = 0.238754, #neighbor_comms = 7840, elapsed = 0.917196
+pass 3, iter 7, q = 10.142916, iter_gain = 0.031638, pass_gain = 0.270392, #neighbor_comms = 7775, elapsed = 0.905991
+pass 3, iter 8, q = 10.174639, iter_gain = 0.031723, pass_gain = 0.302115, #neighbor_comms = 7839, elapsed = 0.922918
+pass 3, iter 9, q = 10.206266, iter_gain = 0.031627, pass_gain = 0.333742, #neighbor_comms = 7774, elapsed = 0.907898
+pass 3, graph compaction, elapsed = 0.773907
+pass 3, #v = 86884 -> 86640, #e = 10406 -> 5730, #iter = 10, q = 10.206266, pass_gain = 0.333742, elapsed = 10.064840
+Pass 4, pre-iter, elapsed = 0.012159
+pass 4, iter 0, q = 10.231556, iter_gain = 0.025290, pass_gain = 0.025290, #neighbor_comms = 5730, elapsed = 0.977039
+pass 4, iter 1, q = 10.252046, iter_gain = 0.020490, pass_gain = 0.045780, #neighbor_comms = 4986, elapsed = 0.930071
+pass 4, iter 2, q = 10.272156, iter_gain = 0.020109, pass_gain = 0.065889, #neighbor_comms = 4952, elapsed = 0.926018
+pass 4, iter 3, q = 10.295390, iter_gain = 0.023235, pass_gain = 0.089124, #neighbor_comms = 4832, elapsed = 0.919819
+pass 4, iter 4, q = 10.315811, iter_gain = 0.020420, pass_gain = 0.109544, #neighbor_comms = 4844, elapsed = 0.921011
+pass 4, iter 5, q = 10.338290, iter_gain = 0.022479, pass_gain = 0.132023, #neighbor_comms = 4785, elapsed = 0.916958
+pass 4, iter 6, q = 10.358574, iter_gain = 0.020284, pass_gain = 0.152308, #neighbor_comms = 4844, elapsed = 0.924826
+pass 4, iter 7, q = 10.381053, iter_gain = 0.022479, pass_gain = 0.174787, #neighbor_comms = 4785, elapsed = 0.917912
+pass 4, iter 8, q = 10.401337, iter_gain = 0.020284, pass_gain = 0.195071, #neighbor_comms = 4844, elapsed = 0.919104
+pass 4, iter 9, q = 10.423816, iter_gain = 0.022479, pass_gain = 0.217550, #neighbor_comms = 4785, elapsed = 0.918150
+pass 4, graph compaction, elapsed = 0.774860
+pass 4, #v = 86640 -> 86522, #e = 5730 -> 4107, #iter = 10, q = 10.423816, pass_gain = 0.217550, elapsed = 10.139227
+Pass 5, pre-iter, elapsed = 0.011206
+pass 5, iter 0, q = 10.440804, iter_gain = 0.016988, pass_gain = 0.016988, #neighbor_comms = 4107, elapsed = 1.000881
+pass 5, iter 1, q = 10.454080, iter_gain = 0.013276, pass_gain = 0.030263, #neighbor_comms = 3802, elapsed = 0.967979
+pass 5, iter 2, q = 10.466420, iter_gain = 0.012341, pass_gain = 0.042604, #neighbor_comms = 3818, elapsed = 0.966072
+pass 5, iter 3, q = 10.480162, iter_gain = 0.013742, pass_gain = 0.056346, #neighbor_comms = 3751, elapsed = 0.954866
+pass 5, iter 4, q = 10.492207, iter_gain = 0.012044, pass_gain = 0.068390, #neighbor_comms = 3785, elapsed = 0.966072
+pass 5, iter 5, q = 10.505949, iter_gain = 0.013742, pass_gain = 0.082132, #neighbor_comms = 3751, elapsed = 0.962973
+pass 5, iter 6, q = 10.517993, iter_gain = 0.012044, pass_gain = 0.094177, #neighbor_comms = 3785, elapsed = 0.964165
+pass 5, iter 7, q = 10.531735, iter_gain = 0.013742, pass_gain = 0.107919, #neighbor_comms = 3751, elapsed = 0.965118
+pass 5, iter 8, q = 10.543779, iter_gain = 0.012044, pass_gain = 0.119963, #neighbor_comms = 3785, elapsed = 0.958920
+pass 5, iter 9, q = 10.557521, iter_gain = 0.013742, pass_gain = 0.133705, #neighbor_comms = 3751, elapsed = 0.969887
+pass 5, graph compaction, elapsed = 0.798225
+pass 5, #v = 86522 -> 86442, #e = 4107 -> 3528, #iter = 10, q = 10.557521, pass_gain = 0.133705, elapsed = 10.567188
+Pass 6, pre-iter, elapsed = 0.011921
+pass 6, iter 0, q = 10.569987, iter_gain = 0.012466, pass_gain = 0.012466, #neighbor_comms = 3528, elapsed = 1.044035
+pass 6, iter 1, q = 10.581671, iter_gain = 0.011684, pass_gain = 0.024150, #neighbor_comms = 3397, elapsed = 0.987053
+pass 6, iter 2, q = 10.592274, iter_gain = 0.010604, pass_gain = 0.034753, #neighbor_comms = 3439, elapsed = 0.987053
+pass 6, iter 3, q = 10.605871, iter_gain = 0.013596, pass_gain = 0.048350, #neighbor_comms = 3399, elapsed = 0.976086
+pass 6, iter 4, q = 10.619336, iter_gain = 0.013465, pass_gain = 0.061815, #neighbor_comms = 3396, elapsed = 0.988960
+pass 6, iter 5, q = 10.632922, iter_gain = 0.013586, pass_gain = 0.075401, #neighbor_comms = 3397, elapsed = 0.983000
+pass 6, iter 6, q = 10.646387, iter_gain = 0.013465, pass_gain = 0.088866, #neighbor_comms = 3396, elapsed = 0.987053
+pass 6, iter 7, q = 10.659973, iter_gain = 0.013586, pass_gain = 0.102452, #neighbor_comms = 3397, elapsed = 0.988007
+pass 6, iter 8, q = 10.673438, iter_gain = 0.013465, pass_gain = 0.115917, #neighbor_comms = 3396, elapsed = 0.997066
+pass 6, iter 9, q = 10.687024, iter_gain = 0.013586, pass_gain = 0.129503, #neighbor_comms = 3397, elapsed = 0.977039
+pass 6, graph compaction, elapsed = 0.809193
+pass 6, #v = 86442 -> 86392, #e = 3528 -> 3282, #iter = 10, q = 10.687024, pass_gain = 0.129503, elapsed = 10.817051
+Pass 7, pre-iter, elapsed = 0.011921
+pass 7, iter 0, q = 10.698144, iter_gain = 0.011120, pass_gain = 0.011120, #neighbor_comms = 3282, elapsed = 1.023054
+pass 7, iter 1, q = 10.707460, iter_gain = 0.009316, pass_gain = 0.020436, #neighbor_comms = 3190, elapsed = 0.993013
+pass 7, iter 2, q = 10.716295, iter_gain = 0.008836, pass_gain = 0.029272, #neighbor_comms = 3169, elapsed = 0.992060
+pass 7, iter 3, q = 10.725099, iter_gain = 0.008804, pass_gain = 0.038075, #neighbor_comms = 3167, elapsed = 0.983953
+pass 7, iter 4, q = 10.733903, iter_gain = 0.008804, pass_gain = 0.046879, #neighbor_comms = 3167, elapsed = 0.985861
+pass 7, iter 5, q = 10.742707, iter_gain = 0.008804, pass_gain = 0.055683, #neighbor_comms = 3167, elapsed = 0.990868
+pass 7, iter 6, q = 10.751510, iter_gain = 0.008804, pass_gain = 0.064486, #neighbor_comms = 3167, elapsed = 0.987768
+pass 7, iter 7, q = 10.760314, iter_gain = 0.008804, pass_gain = 0.073290, #neighbor_comms = 3167, elapsed = 0.982046
+pass 7, iter 8, q = 10.769118, iter_gain = 0.008804, pass_gain = 0.082094, #neighbor_comms = 3167, elapsed = 0.988007
+pass 7, iter 9, q = 10.777921, iter_gain = 0.008804, pass_gain = 0.090898, #neighbor_comms = 3167, elapsed = 1.012087
+pass 7, graph compaction, elapsed = 0.821829
+pass 7, #v = 86392 -> 86351, #e = 3282 -> 3062, #iter = 10, q = 10.777921, pass_gain = 0.090898, elapsed = 10.856867
+Pass 8, pre-iter, elapsed = 0.012159
+pass 8, iter 0, q = 10.787353, iter_gain = 0.009431, pass_gain = 0.009431, #neighbor_comms = 3062, elapsed = 1.065969
+pass 8, iter 1, q = 10.795642, iter_gain = 0.008289, pass_gain = 0.017721, #neighbor_comms = 3021, elapsed = 0.993013
+pass 8, iter 2, q = 10.803841, iter_gain = 0.008199, pass_gain = 0.025920, #neighbor_comms = 3011, elapsed = 0.989199
+pass 8, iter 3, q = 10.812040, iter_gain = 0.008199, pass_gain = 0.034119, #neighbor_comms = 3011, elapsed = 0.993967
+pass 8, iter 4, q = 10.820239, iter_gain = 0.008199, pass_gain = 0.042318, #neighbor_comms = 3011, elapsed = 0.998974
+pass 8, iter 5, q = 10.828438, iter_gain = 0.008199, pass_gain = 0.050516, #neighbor_comms = 3011, elapsed = 0.998974
+pass 8, iter 6, q = 10.836637, iter_gain = 0.008199, pass_gain = 0.058715, #neighbor_comms = 3011, elapsed = 0.995159
+pass 8, iter 7, q = 10.844836, iter_gain = 0.008199, pass_gain = 0.066914, #neighbor_comms = 3011, elapsed = 0.993967
+pass 8, iter 8, q = 10.853035, iter_gain = 0.008199, pass_gain = 0.075113, #neighbor_comms = 3011, elapsed = 0.992775
+pass 8, iter 9, q = 10.861234, iter_gain = 0.008199, pass_gain = 0.083312, #neighbor_comms = 3011, elapsed = 1.003981
+pass 8, graph compaction, elapsed = 0.834942
+pass 8, #v = 86351 -> 86318, #e = 3062 -> 2975, #iter = 10, q = 10.861234, pass_gain = 0.083312, elapsed = 10.955095
+Pass 9, pre-iter, elapsed = 0.011921
+pass 9, iter 0, q = 10.869838, iter_gain = 0.008605, pass_gain = 0.008605, #neighbor_comms = 2975, elapsed = 1.013994
+pass 9, iter 1, q = 10.877759, iter_gain = 0.007920, pass_gain = 0.016525, #neighbor_comms = 2944, elapsed = 0.972986
+pass 9, iter 2, q = 10.885578, iter_gain = 0.007819, pass_gain = 0.024344, #neighbor_comms = 2931, elapsed = 0.975132
+pass 9, iter 3, q = 10.893376, iter_gain = 0.007798, pass_gain = 0.032142, #neighbor_comms = 2930, elapsed = 0.972986
+pass 9, iter 4, q = 10.901174, iter_gain = 0.007798, pass_gain = 0.039940, #neighbor_comms = 2930, elapsed = 0.977039
+pass 9, iter 5, q = 10.908972, iter_gain = 0.007798, pass_gain = 0.047738, #neighbor_comms = 2930, elapsed = 0.974894
+pass 9, iter 6, q = 10.916770, iter_gain = 0.007798, pass_gain = 0.055536, #neighbor_comms = 2930, elapsed = 0.960112
+pass 9, iter 7, q = 10.924568, iter_gain = 0.007798, pass_gain = 0.063334, #neighbor_comms = 2930, elapsed = 0.969172
+pass 9, iter 8, q = 10.932366, iter_gain = 0.007798, pass_gain = 0.071132, #neighbor_comms = 2930, elapsed = 0.973940
+pass 9, iter 9, q = 10.940164, iter_gain = 0.007798, pass_gain = 0.078930, #neighbor_comms = 2930, elapsed = 0.966787
+pass 9, graph compaction, elapsed = 0.813007
+pass 9, #v = 86318 -> 86287, #e = 2975 -> 2895, #iter = 10, q = 10.940164, pass_gain = 0.078930, elapsed = 10.663033
+--------------------------
+Run 2 elapsed: 107.299089 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86287.000000, modularity = 0.709827
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.013113
+pass 0, iter 0, q = 11.138622, iter_gain = 0.198458, pass_gain = 0.198458, #neighbor_comms = 186878, elapsed = 1.298904
+pass 0, iter 1, q = 11.321222, iter_gain = 0.182600, pass_gain = 0.381057, #neighbor_comms = 144543, elapsed = 1.163006
+pass 0, iter 2, q = 11.462769, iter_gain = 0.141547, pass_gain = 0.522605, #neighbor_comms = 116560, elapsed = 1.125097
+pass 0, iter 3, q = 11.567437, iter_gain = 0.104668, pass_gain = 0.627273, #neighbor_comms = 103269, elapsed = 1.116037
+pass 0, iter 4, q = 11.652557, iter_gain = 0.085120, pass_gain = 0.712392, #neighbor_comms = 97159, elapsed = 1.103163
+pass 0, iter 5, q = 11.727646, iter_gain = 0.075090, pass_gain = 0.787482, #neighbor_comms = 93501, elapsed = 1.102924
+pass 0, iter 6, q = 11.795533, iter_gain = 0.067887, pass_gain = 0.855369, #neighbor_comms = 91373, elapsed = 1.104832
+pass 0, iter 7, q = 11.859309, iter_gain = 0.063776, pass_gain = 0.919145, #neighbor_comms = 89613, elapsed = 1.099110
+pass 0, iter 8, q = 11.919167, iter_gain = 0.059858, pass_gain = 0.979003, #neighbor_comms = 88437, elapsed = 1.094103
+pass 0, iter 9, q = 11.978547, iter_gain = 0.059380, pass_gain = 1.038383, #neighbor_comms = 87635, elapsed = 1.099110
+pass 0, graph compaction, elapsed = 0.966072
+pass 0, #v = 108299 -> 91009, #e = 186878 -> 46746, #iter = 10, q = 11.978547, pass_gain = 1.038383, elapsed = 12.365103
+Pass 1, pre-iter, elapsed = 0.021219
+pass 1, iter 0, q = 12.174817, iter_gain = 0.196270, pass_gain = 0.196270, #neighbor_comms = 46746, elapsed = 0.919819
+pass 1, iter 1, q = 12.300290, iter_gain = 0.125473, pass_gain = 0.321743, #neighbor_comms = 38543, elapsed = 0.839949
+pass 1, iter 2, q = 12.424931, iter_gain = 0.124641, pass_gain = 0.446384, #neighbor_comms = 35880, elapsed = 0.849009
+pass 1, iter 3, q = 12.536264, iter_gain = 0.111333, pass_gain = 0.557717, #neighbor_comms = 34387, elapsed = 0.822783
+pass 1, iter 4, q = 12.646491, iter_gain = 0.110226, pass_gain = 0.667944, #neighbor_comms = 34204, elapsed = 0.855923
+pass 1, iter 5, q = 12.747420, iter_gain = 0.100929, pass_gain = 0.768873, #neighbor_comms = 33547, elapsed = 0.822067
+pass 1, iter 6, q = 12.845978, iter_gain = 0.098558, pass_gain = 0.867431, #neighbor_comms = 33570, elapsed = 0.847816
+pass 1, iter 7, q = 12.942067, iter_gain = 0.096090, pass_gain = 0.963520, #neighbor_comms = 33127, elapsed = 0.823975
+pass 1, iter 8, q = 13.038101, iter_gain = 0.096034, pass_gain = 1.059554, #neighbor_comms = 33405, elapsed = 0.851154
+pass 1, iter 9, q = 13.134088, iter_gain = 0.095987, pass_gain = 1.155541, #neighbor_comms = 33090, elapsed = 0.822067
+pass 1, graph compaction, elapsed = 0.703096
+pass 1, #v = 91009 -> 87810, #e = 46746 -> 23134, #iter = 10, q = 13.134088, pass_gain = 1.155541, elapsed = 9.266138
+Pass 2, pre-iter, elapsed = 0.010967
+pass 2, iter 0, q = 13.239471, iter_gain = 0.105383, pass_gain = 0.105383, #neighbor_comms = 23134, elapsed = 0.957966
+pass 2, iter 1, q = 13.296921, iter_gain = 0.057449, pass_gain = 0.162833, #neighbor_comms = 18769, elapsed = 0.883102
+pass 2, iter 2, q = 13.357607, iter_gain = 0.060686, pass_gain = 0.223519, #neighbor_comms = 17292, elapsed = 0.880003
+pass 2, iter 3, q = 13.411623, iter_gain = 0.054016, pass_gain = 0.277535, #neighbor_comms = 16872, elapsed = 0.875950
+pass 2, iter 4, q = 13.467855, iter_gain = 0.056232, pass_gain = 0.333767, #neighbor_comms = 16788, elapsed = 0.872135
+pass 2, iter 5, q = 13.519541, iter_gain = 0.051686, pass_gain = 0.385453, #neighbor_comms = 16643, elapsed = 0.871897
+pass 2, iter 6, q = 13.574747, iter_gain = 0.055206, pass_gain = 0.440659, #neighbor_comms = 16752, elapsed = 0.869989
+pass 2, iter 7, q = 13.626107, iter_gain = 0.051360, pass_gain = 0.492019, #neighbor_comms = 16578, elapsed = 0.874043
+pass 2, iter 8, q = 13.681257, iter_gain = 0.055150, pass_gain = 0.547169, #neighbor_comms = 16723, elapsed = 0.870943
+pass 2, iter 9, q = 13.732628, iter_gain = 0.051371, pass_gain = 0.598540, #neighbor_comms = 16576, elapsed = 0.872850
+pass 2, graph compaction, elapsed = 0.730991
+pass 2, #v = 87810 -> 86893, #e = 23134 -> 10929, #iter = 10, q = 13.732628, pass_gain = 0.598540, elapsed = 9.650946
+Pass 3, pre-iter, elapsed = 0.012159
+pass 3, iter 0, q = 13.781456, iter_gain = 0.048828, pass_gain = 0.048828, #neighbor_comms = 10929, elapsed = 0.982046
+pass 3, iter 1, q = 13.810635, iter_gain = 0.029179, pass_gain = 0.078007, #neighbor_comms = 8600, elapsed = 0.914812
+pass 3, iter 2, q = 13.837571, iter_gain = 0.026936, pass_gain = 0.104943, #neighbor_comms = 8150, elapsed = 0.915051
+pass 3, iter 3, q = 13.866548, iter_gain = 0.028976, pass_gain = 0.133919, #neighbor_comms = 7939, elapsed = 0.929117
+pass 3, iter 4, q = 13.893007, iter_gain = 0.026459, pass_gain = 0.160379, #neighbor_comms = 8011, elapsed = 0.921011
+pass 3, iter 5, q = 13.920148, iter_gain = 0.027141, pass_gain = 0.187520, #neighbor_comms = 7936, elapsed = 0.921965
+pass 3, iter 6, q = 13.946471, iter_gain = 0.026323, pass_gain = 0.213843, #neighbor_comms = 7995, elapsed = 0.917912
+pass 3, iter 7, q = 13.973364, iter_gain = 0.026893, pass_gain = 0.240735, #neighbor_comms = 8011, elapsed = 0.927210
+pass 3, iter 8, q = 13.999675, iter_gain = 0.026311, pass_gain = 0.267047, #neighbor_comms = 7996, elapsed = 0.916958
+pass 3, iter 9, q = 14.026557, iter_gain = 0.026882, pass_gain = 0.293929, #neighbor_comms = 8010, elapsed = 0.933170
+pass 3, graph compaction, elapsed = 0.777006
+pass 3, #v = 86893 -> 86639, #e = 10929 -> 5650, #iter = 10, q = 14.026557, pass_gain = 0.293929, elapsed = 10.154009
+Pass 4, pre-iter, elapsed = 0.012159
+pass 4, iter 0, q = 14.049386, iter_gain = 0.022829, pass_gain = 0.022829, #neighbor_comms = 5650, elapsed = 0.967026
+pass 4, iter 1, q = 14.069317, iter_gain = 0.019931, pass_gain = 0.042760, #neighbor_comms = 4936, elapsed = 0.932932
+pass 4, iter 2, q = 14.085762, iter_gain = 0.016445, pass_gain = 0.059205, #neighbor_comms = 4975, elapsed = 0.916004
+pass 4, iter 3, q = 14.103479, iter_gain = 0.017717, pass_gain = 0.076923, #neighbor_comms = 4810, elapsed = 0.930071
+pass 4, iter 4, q = 14.119325, iter_gain = 0.015845, pass_gain = 0.092768, #neighbor_comms = 4920, elapsed = 0.922918
+pass 4, iter 5, q = 14.134417, iter_gain = 0.015092, pass_gain = 0.107860, #neighbor_comms = 4853, elapsed = 0.925064
+pass 4, iter 6, q = 14.148863, iter_gain = 0.014447, pass_gain = 0.122307, #neighbor_comms = 4855, elapsed = 0.926018
+pass 4, iter 7, q = 14.163751, iter_gain = 0.014887, pass_gain = 0.137194, #neighbor_comms = 4810, elapsed = 0.922203
+pass 4, iter 8, q = 14.178181, iter_gain = 0.014431, pass_gain = 0.151625, #neighbor_comms = 4883, elapsed = 0.926971
+pass 4, iter 9, q = 14.193058, iter_gain = 0.014876, pass_gain = 0.166501, #neighbor_comms = 4808, elapsed = 0.920057
+pass 4, graph compaction, elapsed = 0.771046
+pass 4, #v = 86639 -> 86506, #e = 5650 -> 4225, #iter = 10, q = 14.193058, pass_gain = 0.166501, elapsed = 10.157108
+Pass 5, pre-iter, elapsed = 0.011921
+pass 5, iter 0, q = 14.206996, iter_gain = 0.013939, pass_gain = 0.013939, #neighbor_comms = 4225, elapsed = 0.997066
+pass 5, iter 1, q = 14.219130, iter_gain = 0.012133, pass_gain = 0.026072, #neighbor_comms = 3984, elapsed = 0.944853
+pass 5, iter 2, q = 14.229246, iter_gain = 0.010117, pass_gain = 0.036188, #neighbor_comms = 3852, elapsed = 0.940800
+pass 5, iter 3, q = 14.239219, iter_gain = 0.009973, pass_gain = 0.046161, #neighbor_comms = 3900, elapsed = 0.935793
+pass 5, iter 4, q = 14.249265, iter_gain = 0.010046, pass_gain = 0.056207, #neighbor_comms = 3896, elapsed = 0.936985
+pass 5, iter 5, q = 14.259228, iter_gain = 0.009963, pass_gain = 0.066170, #neighbor_comms = 3892, elapsed = 0.941992
+pass 5, iter 6, q = 14.269274, iter_gain = 0.010046, pass_gain = 0.076216, #neighbor_comms = 3896, elapsed = 0.941038
+pass 5, iter 7, q = 14.279237, iter_gain = 0.009963, pass_gain = 0.086179, #neighbor_comms = 3892, elapsed = 0.942945
+pass 5, iter 8, q = 14.289283, iter_gain = 0.010046, pass_gain = 0.096225, #neighbor_comms = 3896, elapsed = 0.941992
+pass 5, iter 9, q = 14.299246, iter_gain = 0.009963, pass_gain = 0.106188, #neighbor_comms = 3892, elapsed = 0.942945
+pass 5, graph compaction, elapsed = 0.787973
+pass 5, #v = 86506 -> 86398, #e = 4225 -> 3635, #iter = 10, q = 14.299246, pass_gain = 0.106188, elapsed = 10.350943
+Pass 6, pre-iter, elapsed = 0.011921
+pass 6, iter 0, q = 14.310032, iter_gain = 0.010786, pass_gain = 0.010786, #neighbor_comms = 3635, elapsed = 1.019955
+pass 6, iter 1, q = 14.319202, iter_gain = 0.009169, pass_gain = 0.019956, #neighbor_comms = 3557, elapsed = 0.961065
+pass 6, iter 2, q = 14.328183, iter_gain = 0.008981, pass_gain = 0.028937, #neighbor_comms = 3549, elapsed = 0.969887
+pass 6, iter 3, q = 14.337143, iter_gain = 0.008960, pass_gain = 0.037897, #neighbor_comms = 3549, elapsed = 0.964165
+pass 6, iter 4, q = 14.346103, iter_gain = 0.008960, pass_gain = 0.046857, #neighbor_comms = 3549, elapsed = 0.962973
+pass 6, iter 5, q = 14.355062, iter_gain = 0.008960, pass_gain = 0.055816, #neighbor_comms = 3549, elapsed = 0.973940
+pass 6, iter 6, q = 14.364022, iter_gain = 0.008960, pass_gain = 0.064776, #neighbor_comms = 3549, elapsed = 0.964165
+pass 6, iter 7, q = 14.372982, iter_gain = 0.008960, pass_gain = 0.073736, #neighbor_comms = 3549, elapsed = 0.953913
+pass 6, iter 8, q = 14.381942, iter_gain = 0.008960, pass_gain = 0.082696, #neighbor_comms = 3549, elapsed = 0.963926
+pass 6, iter 9, q = 14.390902, iter_gain = 0.008960, pass_gain = 0.091656, #neighbor_comms = 3549, elapsed = 0.961781
+pass 6, graph compaction, elapsed = 0.816107
+pass 6, #v = 86398 -> 86358, #e = 3635 -> 3473, #iter = 10, q = 14.390902, pass_gain = 0.091656, elapsed = 10.607958
+Pass 7, pre-iter, elapsed = 0.011921
+pass 7, iter 0, q = 14.400520, iter_gain = 0.009618, pass_gain = 0.009618, #neighbor_comms = 3473, elapsed = 1.031160
+pass 7, iter 1, q = 14.413003, iter_gain = 0.012483, pass_gain = 0.022102, #neighbor_comms = 3393, elapsed = 0.990152
+pass 7, iter 2, q = 14.421135, iter_gain = 0.008132, pass_gain = 0.030233, #neighbor_comms = 3428, elapsed = 0.995874
+pass 7, iter 3, q = 14.433312, iter_gain = 0.012177, pass_gain = 0.042411, #neighbor_comms = 3380, elapsed = 0.995874
+pass 7, iter 4, q = 14.441371, iter_gain = 0.008059, pass_gain = 0.050470, #neighbor_comms = 3424, elapsed = 0.990868
+pass 7, iter 5, q = 14.453549, iter_gain = 0.012177, pass_gain = 0.062647, #neighbor_comms = 3380, elapsed = 0.995159
+pass 7, iter 6, q = 14.461608, iter_gain = 0.008059, pass_gain = 0.070706, #neighbor_comms = 3424, elapsed = 0.992060
+pass 7, iter 7, q = 14.473785, iter_gain = 0.012177, pass_gain = 0.082884, #neighbor_comms = 3380, elapsed = 0.994205
+pass 7, iter 8, q = 14.481844, iter_gain = 0.008059, pass_gain = 0.090943, #neighbor_comms = 3424, elapsed = 0.991821
+pass 7, iter 9, q = 14.494022, iter_gain = 0.012177, pass_gain = 0.103120, #neighbor_comms = 3380, elapsed = 0.993013
+pass 7, graph compaction, elapsed = 0.823975
+pass 7, #v = 86358 -> 86315, #e = 3473 -> 3378, #iter = 10, q = 14.494022, pass_gain = 0.103120, elapsed = 10.893106
+Pass 8, pre-iter, elapsed = 0.012159
+pass 8, iter 0, q = 14.502701, iter_gain = 0.008679, pass_gain = 0.008679, #neighbor_comms = 3378, elapsed = 1.013041
+pass 8, iter 1, q = 14.514383, iter_gain = 0.011682, pass_gain = 0.020361, #neighbor_comms = 3296, elapsed = 0.977039
+pass 8, iter 2, q = 14.521886, iter_gain = 0.007503, pass_gain = 0.027865, #neighbor_comms = 3333, elapsed = 0.977039
+pass 8, iter 3, q = 14.533488, iter_gain = 0.011602, pass_gain = 0.039467, #neighbor_comms = 3288, elapsed = 0.983000
+pass 8, iter 4, q = 14.540992, iter_gain = 0.007503, pass_gain = 0.046970, #neighbor_comms = 3333, elapsed = 0.978947
+pass 8, iter 5, q = 14.552594, iter_gain = 0.011602, pass_gain = 0.058572, #neighbor_comms = 3288, elapsed = 0.971079
+pass 8, iter 6, q = 14.560097, iter_gain = 0.007503, pass_gain = 0.066075, #neighbor_comms = 3333, elapsed = 0.983000
+pass 8, iter 7, q = 14.571699, iter_gain = 0.011602, pass_gain = 0.077677, #neighbor_comms = 3288, elapsed = 0.980139
+pass 8, iter 8, q = 14.579202, iter_gain = 0.007503, pass_gain = 0.085181, #neighbor_comms = 3333, elapsed = 0.976086
+pass 8, iter 9, q = 14.590804, iter_gain = 0.011602, pass_gain = 0.096782, #neighbor_comms = 3288, elapsed = 0.983000
+pass 8, graph compaction, elapsed = 0.819206
+pass 8, #v = 86315 -> 86278, #e = 3378 -> 3296, #iter = 10, q = 14.590804, pass_gain = 0.096782, elapsed = 10.732174
+Pass 9, pre-iter, elapsed = 0.010967
+pass 9, iter 0, q = 14.598754, iter_gain = 0.007949, pass_gain = 0.007949, #neighbor_comms = 3296, elapsed = 1.024008
+pass 9, iter 1, q = 14.609981, iter_gain = 0.011227, pass_gain = 0.019177, #neighbor_comms = 3222, elapsed = 0.990868
+pass 9, iter 2, q = 14.617049, iter_gain = 0.007068, pass_gain = 0.026245, #neighbor_comms = 3224, elapsed = 0.989914
+pass 9, iter 3, q = 14.628210, iter_gain = 0.011162, pass_gain = 0.037406, #neighbor_comms = 3176, elapsed = 0.990152
+pass 9, iter 4, q = 14.635180, iter_gain = 0.006969, pass_gain = 0.044375, #neighbor_comms = 3216, elapsed = 0.990152
+pass 9, iter 5, q = 14.642144, iter_gain = 0.006964, pass_gain = 0.051340, #neighbor_comms = 3213, elapsed = 0.981092
+pass 9, iter 6, q = 14.649108, iter_gain = 0.006964, pass_gain = 0.058304, #neighbor_comms = 3213, elapsed = 0.984907
+pass 9, iter 7, q = 14.656073, iter_gain = 0.006964, pass_gain = 0.065269, #neighbor_comms = 3213, elapsed = 0.987053
+pass 9, iter 8, q = 14.663037, iter_gain = 0.006964, pass_gain = 0.072233, #neighbor_comms = 3213, elapsed = 0.985861
+pass 9, iter 9, q = 14.670001, iter_gain = 0.006964, pass_gain = 0.079197, #neighbor_comms = 3213, elapsed = 0.978947
+pass 9, graph compaction, elapsed = 0.818014
+pass 9, #v = 86278 -> 86238, #e = 3296 -> 3139, #iter = 10, q = 14.670001, pass_gain = 0.079197, elapsed = 10.812998
+--------------------------
+Run 3 elapsed: 106.596947 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86238.000000, modularity = 0.711785
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.012159
+pass 0, iter 0, q = 14.868513, iter_gain = 0.198511, pass_gain = 0.198511, #neighbor_comms = 186878, elapsed = 1.286030
+pass 0, iter 1, q = 15.050769, iter_gain = 0.182257, pass_gain = 0.380768, #neighbor_comms = 144498, elapsed = 1.166105
+pass 0, iter 2, q = 15.191502, iter_gain = 0.140732, pass_gain = 0.521500, #neighbor_comms = 116456, elapsed = 1.110077
+pass 0, iter 3, q = 15.295952, iter_gain = 0.104451, pass_gain = 0.625951, #neighbor_comms = 103263, elapsed = 1.111031
+pass 0, iter 4, q = 15.380706, iter_gain = 0.084754, pass_gain = 0.710705, #neighbor_comms = 97061, elapsed = 1.106024
+pass 0, iter 5, q = 15.454836, iter_gain = 0.074130, pass_gain = 0.784835, #neighbor_comms = 93425, elapsed = 1.100063
+pass 0, iter 6, q = 15.522648, iter_gain = 0.067812, pass_gain = 0.852646, #neighbor_comms = 91142, elapsed = 1.096964
+pass 0, iter 7, q = 15.586429, iter_gain = 0.063781, pass_gain = 0.916428, #neighbor_comms = 89449, elapsed = 1.094103
+pass 0, iter 8, q = 15.646189, iter_gain = 0.059760, pass_gain = 0.976188, #neighbor_comms = 88351, elapsed = 1.097918
+pass 0, iter 9, q = 15.705860, iter_gain = 0.059671, pass_gain = 1.035859, #neighbor_comms = 87602, elapsed = 1.100063
+pass 0, graph compaction, elapsed = 0.962019
+pass 0, #v = 108299 -> 91006, #e = 186878 -> 46529, #iter = 10, q = 15.705860, pass_gain = 1.035859, elapsed = 12.329102
+Pass 1, pre-iter, elapsed = 0.011921
+pass 1, iter 0, q = 15.901596, iter_gain = 0.195735, pass_gain = 0.195735, #neighbor_comms = 46529, elapsed = 0.901937
+pass 1, iter 1, q = 16.021058, iter_gain = 0.119463, pass_gain = 0.315198, #neighbor_comms = 38437, elapsed = 0.833988
+pass 1, iter 2, q = 16.141318, iter_gain = 0.120260, pass_gain = 0.435458, #neighbor_comms = 35772, elapsed = 0.838041
+pass 1, iter 3, q = 16.245748, iter_gain = 0.104430, pass_gain = 0.539887, #neighbor_comms = 34444, elapsed = 0.815153
+pass 1, iter 4, q = 16.342420, iter_gain = 0.096672, pass_gain = 0.636559, #neighbor_comms = 33836, elapsed = 0.833035
+pass 1, iter 5, q = 16.432832, iter_gain = 0.090412, pass_gain = 0.726971, #neighbor_comms = 33249, elapsed = 0.813961
+pass 1, iter 6, q = 16.521144, iter_gain = 0.088312, pass_gain = 0.815284, #neighbor_comms = 33225, elapsed = 0.828981
+pass 1, iter 7, q = 16.602575, iter_gain = 0.081430, pass_gain = 0.896714, #neighbor_comms = 32810, elapsed = 0.812054
+pass 1, iter 8, q = 16.688259, iter_gain = 0.085684, pass_gain = 0.982398, #neighbor_comms = 33022, elapsed = 0.831127
+pass 1, iter 9, q = 16.769376, iter_gain = 0.081117, pass_gain = 1.063515, #neighbor_comms = 32726, elapsed = 0.810862
+pass 1, graph compaction, elapsed = 0.691891
+pass 1, #v = 91006 -> 87788, #e = 46529 -> 22582, #iter = 10, q = 16.769376, pass_gain = 1.063515, elapsed = 9.103775
+Pass 2, pre-iter, elapsed = 0.012875
+pass 2, iter 0, q = 16.866397, iter_gain = 0.097021, pass_gain = 0.097021, #neighbor_comms = 22582, elapsed = 0.941038
+pass 2, iter 1, q = 16.918657, iter_gain = 0.052260, pass_gain = 0.149281, #neighbor_comms = 18341, elapsed = 0.872850
+pass 2, iter 2, q = 16.973077, iter_gain = 0.054420, pass_gain = 0.203702, #neighbor_comms = 17347, elapsed = 0.866890
+pass 2, iter 3, q = 17.027108, iter_gain = 0.054031, pass_gain = 0.257732, #neighbor_comms = 16895, elapsed = 0.872135
+pass 2, iter 4, q = 17.081261, iter_gain = 0.054153, pass_gain = 0.311885, #neighbor_comms = 16735, elapsed = 0.871897
+pass 2, iter 5, q = 17.132454, iter_gain = 0.051193, pass_gain = 0.363078, #neighbor_comms = 16622, elapsed = 0.871897
+pass 2, iter 6, q = 17.185678, iter_gain = 0.053224, pass_gain = 0.416302, #neighbor_comms = 16657, elapsed = 0.865936
+pass 2, iter 7, q = 17.236953, iter_gain = 0.051276, pass_gain = 0.467578, #neighbor_comms = 16599, elapsed = 0.869036
+pass 2, iter 8, q = 17.290169, iter_gain = 0.053216, pass_gain = 0.520794, #neighbor_comms = 16660, elapsed = 0.865936
+pass 2, iter 9, q = 17.341424, iter_gain = 0.051254, pass_gain = 0.572048, #neighbor_comms = 16597, elapsed = 0.870943
+pass 2, graph compaction, elapsed = 0.723839
+pass 2, #v = 87788 -> 86881, #e = 22582 -> 11165, #iter = 10, q = 17.341424, pass_gain = 0.572048, elapsed = 9.584904
+Pass 3, pre-iter, elapsed = 0.010967
+pass 3, iter 0, q = 17.387048, iter_gain = 0.045625, pass_gain = 0.045625, #neighbor_comms = 11165, elapsed = 0.976086
+pass 3, iter 1, q = 17.413357, iter_gain = 0.026309, pass_gain = 0.071934, #neighbor_comms = 8811, elapsed = 0.907183
+pass 3, iter 2, q = 17.440526, iter_gain = 0.027169, pass_gain = 0.099103, #neighbor_comms = 8582, elapsed = 0.912905
+pass 3, iter 3, q = 17.466555, iter_gain = 0.026029, pass_gain = 0.125132, #neighbor_comms = 8236, elapsed = 0.905991
+pass 3, iter 4, q = 17.491465, iter_gain = 0.024910, pass_gain = 0.150041, #neighbor_comms = 8282, elapsed = 0.906944
+pass 3, iter 5, q = 17.516503, iter_gain = 0.025039, pass_gain = 0.175080, #neighbor_comms = 8150, elapsed = 0.911951
+pass 3, iter 6, q = 17.541014, iter_gain = 0.024511, pass_gain = 0.199591, #neighbor_comms = 8260, elapsed = 0.906944
+pass 3, iter 7, q = 17.565735, iter_gain = 0.024721, pass_gain = 0.224311, #neighbor_comms = 8154, elapsed = 0.907898
+pass 3, iter 8, q = 17.590331, iter_gain = 0.024596, pass_gain = 0.248908, #neighbor_comms = 8256, elapsed = 0.908852
+pass 3, iter 9, q = 17.615052, iter_gain = 0.024721, pass_gain = 0.273629, #neighbor_comms = 8154, elapsed = 0.907898
+pass 3, graph compaction, elapsed = 0.777006
+pass 3, #v = 86881 -> 86649, #e = 11165 -> 5909, #iter = 10, q = 17.615052, pass_gain = 0.273629, elapsed = 10.026932
+Pass 4, pre-iter, elapsed = 0.011921
+pass 4, iter 0, q = 17.637155, iter_gain = 0.022103, pass_gain = 0.022103, #neighbor_comms = 5909, elapsed = 0.983953
+pass 4, iter 1, q = 17.652686, iter_gain = 0.015531, pass_gain = 0.037634, #neighbor_comms = 5085, elapsed = 0.937939
+pass 4, iter 2, q = 17.667689, iter_gain = 0.015003, pass_gain = 0.052637, #neighbor_comms = 5102, elapsed = 0.933886
+pass 4, iter 3, q = 17.684678, iter_gain = 0.016989, pass_gain = 0.069626, #neighbor_comms = 4963, elapsed = 0.936985
+pass 4, iter 4, q = 17.698944, iter_gain = 0.014266, pass_gain = 0.083892, #neighbor_comms = 5038, elapsed = 0.966072
+pass 4, iter 5, q = 17.715514, iter_gain = 0.016570, pass_gain = 0.100462, #neighbor_comms = 4912, elapsed = 0.936985
+pass 4, iter 6, q = 17.729645, iter_gain = 0.014130, pass_gain = 0.114592, #neighbor_comms = 4969, elapsed = 0.935078
+pass 4, iter 7, q = 17.746198, iter_gain = 0.016553, pass_gain = 0.131146, #neighbor_comms = 4935, elapsed = 0.920057
+pass 4, iter 8, q = 17.760342, iter_gain = 0.014144, pass_gain = 0.145290, #neighbor_comms = 4968, elapsed = 0.938177
+pass 4, iter 9, q = 17.776895, iter_gain = 0.016553, pass_gain = 0.161843, #neighbor_comms = 4935, elapsed = 0.931978
+pass 4, graph compaction, elapsed = 0.782967
+pass 4, #v = 86649 -> 86520, #e = 5909 -> 4179, #iter = 10, q = 17.776895, pass_gain = 0.161843, elapsed = 10.299921
+Pass 5, pre-iter, elapsed = 0.012159
+pass 5, iter 0, q = 17.791594, iter_gain = 0.014699, pass_gain = 0.014699, #neighbor_comms = 4179, elapsed = 0.993013
+pass 5, iter 1, q = 17.803013, iter_gain = 0.011419, pass_gain = 0.026118, #neighbor_comms = 4017, elapsed = 0.951052
+pass 5, iter 2, q = 17.813551, iter_gain = 0.010538, pass_gain = 0.036656, #neighbor_comms = 3946, elapsed = 0.941038
+pass 5, iter 3, q = 17.824059, iter_gain = 0.010508, pass_gain = 0.047164, #neighbor_comms = 3914, elapsed = 0.949860
+pass 5, iter 4, q = 17.834525, iter_gain = 0.010466, pass_gain = 0.057630, #neighbor_comms = 3914, elapsed = 0.954866
+pass 5, iter 5, q = 17.844991, iter_gain = 0.010466, pass_gain = 0.068096, #neighbor_comms = 3914, elapsed = 0.957012
+pass 5, iter 6, q = 17.855456, iter_gain = 0.010466, pass_gain = 0.078561, #neighbor_comms = 3914, elapsed = 0.950098
+pass 5, iter 7, q = 17.865922, iter_gain = 0.010466, pass_gain = 0.089027, #neighbor_comms = 3914, elapsed = 0.952959
+pass 5, iter 8, q = 17.876388, iter_gain = 0.010466, pass_gain = 0.099493, #neighbor_comms = 3914, elapsed = 0.948906
+pass 5, iter 9, q = 17.886853, iter_gain = 0.010466, pass_gain = 0.109958, #neighbor_comms = 3914, elapsed = 0.952005
+pass 5, graph compaction, elapsed = 0.777960
+pass 5, #v = 86520 -> 86439, #e = 4179 -> 3694, #iter = 10, q = 17.886853, pass_gain = 0.109958, elapsed = 10.426044
+Pass 6, pre-iter, elapsed = 0.011921
+pass 6, iter 0, q = 17.898347, iter_gain = 0.011494, pass_gain = 0.011494, #neighbor_comms = 3694, elapsed = 1.055002
+pass 6, iter 1, q = 17.908058, iter_gain = 0.009711, pass_gain = 0.021205, #neighbor_comms = 3646, elapsed = 1.008987
+pass 6, iter 2, q = 17.917534, iter_gain = 0.009476, pass_gain = 0.030681, #neighbor_comms = 3589, elapsed = 0.998974
+pass 6, iter 3, q = 17.927010, iter_gain = 0.009476, pass_gain = 0.040156, #neighbor_comms = 3589, elapsed = 0.998020
+pass 6, iter 4, q = 17.936485, iter_gain = 0.009476, pass_gain = 0.049632, #neighbor_comms = 3589, elapsed = 1.003981
+pass 6, iter 5, q = 17.945961, iter_gain = 0.009476, pass_gain = 0.059108, #neighbor_comms = 3589, elapsed = 0.998020
+pass 6, iter 6, q = 17.955437, iter_gain = 0.009476, pass_gain = 0.068583, #neighbor_comms = 3589, elapsed = 0.996113
+pass 6, iter 7, q = 17.964912, iter_gain = 0.009476, pass_gain = 0.078059, #neighbor_comms = 3589, elapsed = 1.002073
+pass 6, iter 8, q = 17.974388, iter_gain = 0.009476, pass_gain = 0.087535, #neighbor_comms = 3589, elapsed = 0.993967
+pass 6, iter 9, q = 17.983864, iter_gain = 0.009476, pass_gain = 0.097010, #neighbor_comms = 3589, elapsed = 0.993967
+pass 6, graph compaction, elapsed = 0.830173
+pass 6, #v = 86439 -> 86385, #e = 3694 -> 3504, #iter = 10, q = 17.983864, pass_gain = 0.097010, elapsed = 10.977030
+Pass 7, pre-iter, elapsed = 0.010967
+pass 7, iter 0, q = 17.993952, iter_gain = 0.010088, pass_gain = 0.010088, #neighbor_comms = 3504, elapsed = 1.012087
+pass 7, iter 1, q = 18.002820, iter_gain = 0.008868, pass_gain = 0.018956, #neighbor_comms = 3419, elapsed = 0.968933
+pass 7, iter 2, q = 18.011587, iter_gain = 0.008767, pass_gain = 0.027723, #neighbor_comms = 3406, elapsed = 0.981808
+pass 7, iter 3, q = 18.020322, iter_gain = 0.008735, pass_gain = 0.036458, #neighbor_comms = 3404, elapsed = 0.968933
+pass 7, iter 4, q = 18.029049, iter_gain = 0.008728, pass_gain = 0.045186, #neighbor_comms = 3432, elapsed = 0.966072
+pass 7, iter 5, q = 18.037770, iter_gain = 0.008721, pass_gain = 0.053906, #neighbor_comms = 3403, elapsed = 0.972986
+pass 7, iter 6, q = 18.046491, iter_gain = 0.008721, pass_gain = 0.062627, #neighbor_comms = 3403, elapsed = 0.983000
+pass 7, iter 7, q = 18.055211, iter_gain = 0.008721, pass_gain = 0.071348, #neighbor_comms = 3403, elapsed = 0.962973
+pass 7, iter 8, q = 18.063932, iter_gain = 0.008721, pass_gain = 0.080068, #neighbor_comms = 3403, elapsed = 0.976086
+pass 7, iter 9, q = 18.072653, iter_gain = 0.008721, pass_gain = 0.088789, #neighbor_comms = 3403, elapsed = 0.979185
+pass 7, graph compaction, elapsed = 0.814915
+pass 7, #v = 86385 -> 86342, #e = 3504 -> 3314, #iter = 10, q = 18.072653, pass_gain = 0.088789, elapsed = 10.677814
+Pass 8, pre-iter, elapsed = 0.010967
+pass 8, iter 0, q = 18.081897, iter_gain = 0.009244, pass_gain = 0.009244, #neighbor_comms = 3314, elapsed = 1.013041
+pass 8, iter 1, q = 18.090116, iter_gain = 0.008219, pass_gain = 0.017463, #neighbor_comms = 3279, elapsed = 0.945807
+pass 8, iter 2, q = 18.098177, iter_gain = 0.008061, pass_gain = 0.025524, #neighbor_comms = 3253, elapsed = 0.950098
+pass 8, iter 3, q = 18.106238, iter_gain = 0.008061, pass_gain = 0.033585, #neighbor_comms = 3253, elapsed = 0.943899
+pass 8, iter 4, q = 18.114299, iter_gain = 0.008061, pass_gain = 0.041646, #neighbor_comms = 3253, elapsed = 0.950813
+pass 8, iter 5, q = 18.122360, iter_gain = 0.008061, pass_gain = 0.049707, #neighbor_comms = 3253, elapsed = 0.942945
+pass 8, iter 6, q = 18.130421, iter_gain = 0.008061, pass_gain = 0.057768, #neighbor_comms = 3253, elapsed = 0.946999
+pass 8, iter 7, q = 18.138482, iter_gain = 0.008061, pass_gain = 0.065829, #neighbor_comms = 3253, elapsed = 0.952005
+pass 8, iter 8, q = 18.146543, iter_gain = 0.008061, pass_gain = 0.073890, #neighbor_comms = 3253, elapsed = 0.946045
+pass 8, iter 9, q = 18.154604, iter_gain = 0.008061, pass_gain = 0.081951, #neighbor_comms = 3253, elapsed = 0.946045
+pass 8, graph compaction, elapsed = 0.804901
+pass 8, #v = 86342 -> 86299, #e = 3314 -> 3207, #iter = 10, q = 18.154604, pass_gain = 0.081951, elapsed = 10.437965
+Pass 9, pre-iter, elapsed = 0.012159
+pass 9, iter 0, q = 18.163086, iter_gain = 0.008482, pass_gain = 0.008482, #neighbor_comms = 3207, elapsed = 1.065969
+pass 9, iter 1, q = 18.170778, iter_gain = 0.007692, pass_gain = 0.016174, #neighbor_comms = 3176, elapsed = 1.022100
+pass 9, iter 2, q = 18.178073, iter_gain = 0.007295, pass_gain = 0.023469, #neighbor_comms = 3161, elapsed = 1.029015
+pass 9, iter 3, q = 18.185369, iter_gain = 0.007295, pass_gain = 0.030765, #neighbor_comms = 3161, elapsed = 1.024961
+pass 9, iter 4, q = 18.192664, iter_gain = 0.007295, pass_gain = 0.038060, #neighbor_comms = 3161, elapsed = 1.035929
+pass 9, iter 5, q = 18.199960, iter_gain = 0.007295, pass_gain = 0.045356, #neighbor_comms = 3161, elapsed = 1.019955
+pass 9, iter 6, q = 18.207255, iter_gain = 0.007295, pass_gain = 0.052651, #neighbor_comms = 3161, elapsed = 1.032114
+pass 9, iter 7, q = 18.214551, iter_gain = 0.007295, pass_gain = 0.059947, #neighbor_comms = 3161, elapsed = 1.029968
+pass 9, iter 8, q = 18.221846, iter_gain = 0.007295, pass_gain = 0.067242, #neighbor_comms = 3161, elapsed = 1.031160
+pass 9, iter 9, q = 18.229142, iter_gain = 0.007295, pass_gain = 0.074538, #neighbor_comms = 3161, elapsed = 1.017094
+pass 9, graph compaction, elapsed = 0.848055
+pass 9, #v = 86299 -> 86262, #e = 3207 -> 3123, #iter = 10, q = 18.229142, pass_gain = 0.074538, elapsed = 11.254072
+--------------------------
+Run 4 elapsed: 106.703997 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86262.000000, modularity = 0.712551
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.012875
+pass 0, iter 0, q = 18.427578, iter_gain = 0.198436, pass_gain = 0.198436, #neighbor_comms = 186878, elapsed = 1.290083
+pass 0, iter 1, q = 18.610230, iter_gain = 0.182652, pass_gain = 0.381089, #neighbor_comms = 144497, elapsed = 1.159191
+pass 0, iter 2, q = 18.751389, iter_gain = 0.141159, pass_gain = 0.522248, #neighbor_comms = 116615, elapsed = 1.122952
+pass 0, iter 3, q = 18.856200, iter_gain = 0.104811, pass_gain = 0.627058, #neighbor_comms = 103359, elapsed = 1.111031
+pass 0, iter 4, q = 18.941714, iter_gain = 0.085514, pass_gain = 0.712572, #neighbor_comms = 97303, elapsed = 1.102924
+pass 0, iter 5, q = 19.016956, iter_gain = 0.075242, pass_gain = 0.787814, #neighbor_comms = 93551, elapsed = 1.097918
+pass 0, iter 6, q = 19.085110, iter_gain = 0.068155, pass_gain = 0.855969, #neighbor_comms = 91319, elapsed = 1.094103
+pass 0, iter 7, q = 19.149294, iter_gain = 0.064184, pass_gain = 0.920153, #neighbor_comms = 89559, elapsed = 1.096010
+pass 0, iter 8, q = 19.209326, iter_gain = 0.060032, pass_gain = 0.980185, #neighbor_comms = 88516, elapsed = 1.097918
+pass 0, iter 9, q = 19.269428, iter_gain = 0.060102, pass_gain = 1.040286, #neighbor_comms = 87823, elapsed = 1.103163
+pass 0, graph compaction, elapsed = 0.961065
+pass 0, #v = 108299 -> 91008, #e = 186878 -> 46687, #iter = 10, q = 19.269428, pass_gain = 1.040286, elapsed = 12.332916
+Pass 1, pre-iter, elapsed = 0.010967
+pass 1, iter 0, q = 19.467493, iter_gain = 0.198065, pass_gain = 0.198065, #neighbor_comms = 46687, elapsed = 0.912905
+pass 1, iter 1, q = 19.589461, iter_gain = 0.121967, pass_gain = 0.320033, #neighbor_comms = 38543, elapsed = 0.839949
+pass 1, iter 2, q = 19.715962, iter_gain = 0.126501, pass_gain = 0.446534, #neighbor_comms = 35916, elapsed = 0.842094
+pass 1, iter 3, q = 19.824133, iter_gain = 0.108171, pass_gain = 0.554705, #neighbor_comms = 34459, elapsed = 0.818968
+pass 1, iter 4, q = 19.925903, iter_gain = 0.101770, pass_gain = 0.656475, #neighbor_comms = 34097, elapsed = 0.835896
+pass 1, iter 5, q = 20.018219, iter_gain = 0.092316, pass_gain = 0.748791, #neighbor_comms = 33406, elapsed = 0.813961
+pass 1, iter 6, q = 20.111635, iter_gain = 0.093416, pass_gain = 0.842207, #neighbor_comms = 33382, elapsed = 0.837088
+pass 1, iter 7, q = 20.200407, iter_gain = 0.088772, pass_gain = 0.930979, #neighbor_comms = 32938, elapsed = 0.813961
+pass 1, iter 8, q = 20.290642, iter_gain = 0.090235, pass_gain = 1.021214, #neighbor_comms = 33083, elapsed = 0.833035
+pass 1, iter 9, q = 20.376795, iter_gain = 0.086153, pass_gain = 1.107367, #neighbor_comms = 32677, elapsed = 0.816822
+pass 1, graph compaction, elapsed = 0.697851
+pass 1, #v = 91008 -> 87795, #e = 46687 -> 22418, #iter = 10, q = 20.376795, pass_gain = 1.107367, elapsed = 9.155035
+Pass 2, pre-iter, elapsed = 0.011921
+pass 2, iter 0, q = 20.478366, iter_gain = 0.101571, pass_gain = 0.101571, #neighbor_comms = 22418, elapsed = 0.954151
+pass 2, iter 1, q = 20.533641, iter_gain = 0.055275, pass_gain = 0.156846, #neighbor_comms = 18347, elapsed = 0.896931
+pass 2, iter 2, q = 20.590009, iter_gain = 0.056368, pass_gain = 0.213214, #neighbor_comms = 17146, elapsed = 0.896931
+pass 2, iter 3, q = 20.654112, iter_gain = 0.064103, pass_gain = 0.277317, #neighbor_comms = 16485, elapsed = 0.885010
+pass 2, iter 4, q = 20.719188, iter_gain = 0.065076, pass_gain = 0.342393, #neighbor_comms = 16277, elapsed = 0.891209
+pass 2, iter 5, q = 20.783419, iter_gain = 0.064231, pass_gain = 0.406624, #neighbor_comms = 16058, elapsed = 0.890017
+pass 2, iter 6, q = 20.848083, iter_gain = 0.064664, pass_gain = 0.471287, #neighbor_comms = 16135, elapsed = 0.895977
+pass 2, iter 7, q = 20.911607, iter_gain = 0.063524, pass_gain = 0.534811, #neighbor_comms = 15984, elapsed = 0.889063
+pass 2, iter 8, q = 20.975440, iter_gain = 0.063834, pass_gain = 0.598645, #neighbor_comms = 16062, elapsed = 0.892878
+pass 2, iter 9, q = 21.038753, iter_gain = 0.063313, pass_gain = 0.661958, #neighbor_comms = 15945, elapsed = 0.887156
+pass 2, graph compaction, elapsed = 0.757933
+pass 2, #v = 87795 -> 86892, #e = 22418 -> 10407, #iter = 10, q = 21.038753, pass_gain = 0.661958, elapsed = 9.832859
+Pass 3, pre-iter, elapsed = 0.011921
+pass 3, iter 0, q = 21.086035, iter_gain = 0.047282, pass_gain = 0.047282, #neighbor_comms = 10407, elapsed = 0.959158
+pass 3, iter 1, q = 21.109000, iter_gain = 0.022965, pass_gain = 0.070247, #neighbor_comms = 8260, elapsed = 0.906944
+pass 3, iter 2, q = 21.131718, iter_gain = 0.022719, pass_gain = 0.092965, #neighbor_comms = 7862, elapsed = 0.910044
+pass 3, iter 3, q = 21.151490, iter_gain = 0.019771, pass_gain = 0.112736, #neighbor_comms = 7670, elapsed = 0.891924
+pass 3, iter 4, q = 21.171607, iter_gain = 0.020117, pass_gain = 0.132854, #neighbor_comms = 7698, elapsed = 0.896931
+pass 3, iter 5, q = 21.189859, iter_gain = 0.018253, pass_gain = 0.151106, #neighbor_comms = 7594, elapsed = 0.894070
+pass 3, iter 6, q = 21.209331, iter_gain = 0.019471, pass_gain = 0.170578, #neighbor_comms = 7622, elapsed = 0.892162
+pass 3, iter 7, q = 21.227633, iter_gain = 0.018302, pass_gain = 0.188879, #neighbor_comms = 7574, elapsed = 0.896931
+pass 3, iter 8, q = 21.247104, iter_gain = 0.019471, pass_gain = 0.208351, #neighbor_comms = 7622, elapsed = 0.891924
+pass 3, iter 9, q = 21.265406, iter_gain = 0.018302, pass_gain = 0.226653, #neighbor_comms = 7574, elapsed = 0.893116
+pass 3, graph compaction, elapsed = 0.762939
+pass 3, #v = 86892 -> 86644, #e = 10407 -> 5392, #iter = 10, q = 21.265406, pass_gain = 0.226653, elapsed = 9.887934
+Pass 4, pre-iter, elapsed = 0.012159
+pass 4, iter 0, q = 21.285008, iter_gain = 0.019602, pass_gain = 0.019602, #neighbor_comms = 5392, elapsed = 0.972033
+pass 4, iter 1, q = 21.303839, iter_gain = 0.018831, pass_gain = 0.038433, #neighbor_comms = 4809, elapsed = 0.924110
+pass 4, iter 2, q = 21.319917, iter_gain = 0.016078, pass_gain = 0.054511, #neighbor_comms = 4865, elapsed = 0.921011
+pass 4, iter 3, q = 21.338000, iter_gain = 0.018083, pass_gain = 0.072595, #neighbor_comms = 4738, elapsed = 0.923872
+pass 4, iter 4, q = 21.354788, iter_gain = 0.016788, pass_gain = 0.089382, #neighbor_comms = 4808, elapsed = 0.916958
+pass 4, iter 5, q = 21.370377, iter_gain = 0.015588, pass_gain = 0.104971, #neighbor_comms = 4732, elapsed = 0.920057
+pass 4, iter 6, q = 21.386853, iter_gain = 0.016476, pass_gain = 0.121447, #neighbor_comms = 4821, elapsed = 0.916958
+pass 4, iter 7, q = 21.402336, iter_gain = 0.015483, pass_gain = 0.136930, #neighbor_comms = 4729, elapsed = 0.919819
+pass 4, iter 8, q = 21.418774, iter_gain = 0.016438, pass_gain = 0.153368, #neighbor_comms = 4780, elapsed = 0.918865
+pass 4, iter 9, q = 21.434311, iter_gain = 0.015537, pass_gain = 0.168905, #neighbor_comms = 4724, elapsed = 0.921011
+pass 4, graph compaction, elapsed = 0.765085
+pass 4, #v = 86644 -> 86505, #e = 5392 -> 4243, #iter = 10, q = 21.434311, pass_gain = 0.168905, elapsed = 10.115147
+Pass 5, pre-iter, elapsed = 0.011921
+pass 5, iter 0, q = 21.449518, iter_gain = 0.015207, pass_gain = 0.015207, #neighbor_comms = 4243, elapsed = 0.976086
+pass 5, iter 1, q = 21.462367, iter_gain = 0.012849, pass_gain = 0.028055, #neighbor_comms = 4002, elapsed = 0.926018
+pass 5, iter 2, q = 21.473777, iter_gain = 0.011411, pass_gain = 0.039466, #neighbor_comms = 3920, elapsed = 0.929117
+pass 5, iter 3, q = 21.485096, iter_gain = 0.011319, pass_gain = 0.050785, #neighbor_comms = 3912, elapsed = 0.932932
+pass 5, iter 4, q = 21.496415, iter_gain = 0.011319, pass_gain = 0.062103, #neighbor_comms = 3912, elapsed = 0.928164
+pass 5, iter 5, q = 21.507734, iter_gain = 0.011319, pass_gain = 0.073422, #neighbor_comms = 3912, elapsed = 0.934124
+pass 5, iter 6, q = 21.519052, iter_gain = 0.011319, pass_gain = 0.084741, #neighbor_comms = 3912, elapsed = 0.924110
+pass 5, iter 7, q = 21.530371, iter_gain = 0.011319, pass_gain = 0.096060, #neighbor_comms = 3912, elapsed = 0.927925
+pass 5, iter 8, q = 21.541690, iter_gain = 0.011319, pass_gain = 0.107378, #neighbor_comms = 3912, elapsed = 0.931978
+pass 5, iter 9, q = 21.553008, iter_gain = 0.011319, pass_gain = 0.118697, #neighbor_comms = 3912, elapsed = 0.927925
+pass 5, graph compaction, elapsed = 0.771046
+pass 5, #v = 86505 -> 86449, #e = 4243 -> 3627, #iter = 10, q = 21.553008, pass_gain = 0.118697, elapsed = 10.204792
+Pass 6, pre-iter, elapsed = 0.010967
+pass 6, iter 0, q = 21.565207, iter_gain = 0.012199, pass_gain = 0.012199, #neighbor_comms = 3627, elapsed = 1.070023
+pass 6, iter 1, q = 21.575777, iter_gain = 0.010570, pass_gain = 0.022769, #neighbor_comms = 3560, elapsed = 1.008034
+pass 6, iter 2, q = 21.585598, iter_gain = 0.009821, pass_gain = 0.032590, #neighbor_comms = 3488, elapsed = 1.003981
+pass 6, iter 3, q = 21.595060, iter_gain = 0.009462, pass_gain = 0.042052, #neighbor_comms = 3474, elapsed = 0.994921
+pass 6, iter 4, q = 21.604523, iter_gain = 0.009462, pass_gain = 0.051514, #neighbor_comms = 3474, elapsed = 0.995159
+pass 6, iter 5, q = 21.613985, iter_gain = 0.009462, pass_gain = 0.060976, #neighbor_comms = 3474, elapsed = 1.000166
+pass 6, iter 6, q = 21.623447, iter_gain = 0.009462, pass_gain = 0.070439, #neighbor_comms = 3474, elapsed = 0.998020
+pass 6, iter 7, q = 21.632909, iter_gain = 0.009462, pass_gain = 0.079901, #neighbor_comms = 3474, elapsed = 0.998020
+pass 6, iter 8, q = 21.642372, iter_gain = 0.009462, pass_gain = 0.089363, #neighbor_comms = 3474, elapsed = 0.992060
+pass 6, iter 9, q = 21.651834, iter_gain = 0.009462, pass_gain = 0.098826, #neighbor_comms = 3474, elapsed = 0.992060
+pass 6, graph compaction, elapsed = 0.833988
+pass 6, #v = 86449 -> 86380, #e = 3627 -> 3360, #iter = 10, q = 21.651834, pass_gain = 0.098826, elapsed = 10.980129
+Pass 7, pre-iter, elapsed = 0.011921
+pass 7, iter 0, q = 21.662009, iter_gain = 0.010175, pass_gain = 0.010175, #neighbor_comms = 3360, elapsed = 1.033068
+pass 7, iter 1, q = 21.670957, iter_gain = 0.008948, pass_gain = 0.019123, #neighbor_comms = 3326, elapsed = 0.985146
+pass 7, iter 2, q = 21.679799, iter_gain = 0.008843, pass_gain = 0.027965, #neighbor_comms = 3312, elapsed = 0.985146
+pass 7, iter 3, q = 21.688642, iter_gain = 0.008843, pass_gain = 0.036808, #neighbor_comms = 3312, elapsed = 0.978947
+pass 7, iter 4, q = 21.697485, iter_gain = 0.008843, pass_gain = 0.045650, #neighbor_comms = 3312, elapsed = 0.984907
+pass 7, iter 5, q = 21.706327, iter_gain = 0.008843, pass_gain = 0.054493, #neighbor_comms = 3312, elapsed = 0.984192
+pass 7, iter 6, q = 21.715170, iter_gain = 0.008843, pass_gain = 0.063336, #neighbor_comms = 3312, elapsed = 0.983000
+pass 7, iter 7, q = 21.724013, iter_gain = 0.008843, pass_gain = 0.072178, #neighbor_comms = 3312, elapsed = 0.979900
+pass 7, iter 8, q = 21.732855, iter_gain = 0.008843, pass_gain = 0.081021, #neighbor_comms = 3312, elapsed = 0.983000
+pass 7, iter 9, q = 21.741698, iter_gain = 0.008843, pass_gain = 0.089864, #neighbor_comms = 3312, elapsed = 0.989199
+pass 7, graph compaction, elapsed = 0.818968
+pass 7, #v = 86380 -> 86344, #e = 3360 -> 3275, #iter = 10, q = 21.741698, pass_gain = 0.089864, elapsed = 10.798931
+Pass 8, pre-iter, elapsed = 0.011921
+pass 8, iter 0, q = 21.750997, iter_gain = 0.009299, pass_gain = 0.009299, #neighbor_comms = 3275, elapsed = 1.024961
+pass 8, iter 1, q = 21.759488, iter_gain = 0.008491, pass_gain = 0.017790, #neighbor_comms = 3245, elapsed = 0.961065
+pass 8, iter 2, q = 21.767884, iter_gain = 0.008396, pass_gain = 0.026186, #neighbor_comms = 3236, elapsed = 0.964880
+pass 8, iter 3, q = 21.776259, iter_gain = 0.008375, pass_gain = 0.034561, #neighbor_comms = 3235, elapsed = 0.962019
+pass 8, iter 4, q = 21.784591, iter_gain = 0.008332, pass_gain = 0.042893, #neighbor_comms = 3235, elapsed = 0.964880
+pass 8, iter 5, q = 21.792923, iter_gain = 0.008332, pass_gain = 0.051225, #neighbor_comms = 3235, elapsed = 0.962973
+pass 8, iter 6, q = 21.801254, iter_gain = 0.008332, pass_gain = 0.059557, #neighbor_comms = 3235, elapsed = 0.967979
+pass 8, iter 7, q = 21.809586, iter_gain = 0.008332, pass_gain = 0.067888, #neighbor_comms = 3235, elapsed = 0.964165
+pass 8, iter 8, q = 21.817918, iter_gain = 0.008332, pass_gain = 0.076220, #neighbor_comms = 3235, elapsed = 0.967979
+pass 8, iter 9, q = 21.826250, iter_gain = 0.008332, pass_gain = 0.084552, #neighbor_comms = 3235, elapsed = 0.964880
+pass 8, graph compaction, elapsed = 0.807047
+pass 8, #v = 86344 -> 86315, #e = 3275 -> 3201, #iter = 10, q = 21.826250, pass_gain = 0.084552, elapsed = 10.612011
+Pass 9, pre-iter, elapsed = 0.012875
+pass 9, iter 0, q = 21.834973, iter_gain = 0.008723, pass_gain = 0.008723, #neighbor_comms = 3201, elapsed = 1.022100
+pass 9, iter 1, q = 21.842941, iter_gain = 0.007969, pass_gain = 0.016691, #neighbor_comms = 3175, elapsed = 0.968933
+pass 9, iter 2, q = 21.850889, iter_gain = 0.007947, pass_gain = 0.024639, #neighbor_comms = 3174, elapsed = 0.980854
+pass 9, iter 3, q = 21.858836, iter_gain = 0.007947, pass_gain = 0.032586, #neighbor_comms = 3174, elapsed = 0.984907
+pass 9, iter 4, q = 21.866784, iter_gain = 0.007947, pass_gain = 0.040534, #neighbor_comms = 3174, elapsed = 0.975847
+pass 9, iter 5, q = 21.874731, iter_gain = 0.007947, pass_gain = 0.048481, #neighbor_comms = 3174, elapsed = 0.972986
+pass 9, iter 6, q = 21.882679, iter_gain = 0.007947, pass_gain = 0.056429, #neighbor_comms = 3174, elapsed = 0.972033
+pass 9, iter 7, q = 21.890626, iter_gain = 0.007947, pass_gain = 0.064376, #neighbor_comms = 3174, elapsed = 0.979185
+pass 9, iter 8, q = 21.898574, iter_gain = 0.007947, pass_gain = 0.072324, #neighbor_comms = 3174, elapsed = 0.971079
+pass 9, iter 9, q = 21.906521, iter_gain = 0.007947, pass_gain = 0.080271, #neighbor_comms = 3174, elapsed = 0.983953
+pass 9, graph compaction, elapsed = 0.804901
+pass 9, #v = 86315 -> 86288, #e = 3201 -> 3146, #iter = 10, q = 21.906521, pass_gain = 0.080271, elapsed = 10.712862
+--------------------------
+Run 5 elapsed: 106.243849 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86288.000000, modularity = 0.712934
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.012875
+pass 0, iter 0, q = 22.104947, iter_gain = 0.198426, pass_gain = 0.198426, #neighbor_comms = 186878, elapsed = 1.291037
+pass 0, iter 1, q = 22.287171, iter_gain = 0.182224, pass_gain = 0.380650, #neighbor_comms = 144508, elapsed = 1.159906
+pass 0, iter 2, q = 22.427701, iter_gain = 0.140530, pass_gain = 0.521180, #neighbor_comms = 116456, elapsed = 1.123905
+pass 0, iter 3, q = 22.532139, iter_gain = 0.104438, pass_gain = 0.625617, #neighbor_comms = 103312, elapsed = 1.108170
+pass 0, iter 4, q = 22.617679, iter_gain = 0.085540, pass_gain = 0.711158, #neighbor_comms = 97216, elapsed = 1.102924
+pass 0, iter 5, q = 22.692066, iter_gain = 0.074388, pass_gain = 0.785545, #neighbor_comms = 93596, elapsed = 1.103878
+pass 0, iter 6, q = 22.760692, iter_gain = 0.068625, pass_gain = 0.854170, #neighbor_comms = 91537, elapsed = 1.094818
+pass 0, iter 7, q = 22.824539, iter_gain = 0.063847, pass_gain = 0.918018, #neighbor_comms = 89843, elapsed = 1.101017
+pass 0, iter 8, q = 22.884134, iter_gain = 0.059595, pass_gain = 0.977612, #neighbor_comms = 88696, elapsed = 1.095057
+pass 0, iter 9, q = 22.943400, iter_gain = 0.059266, pass_gain = 1.036879, #neighbor_comms = 87953, elapsed = 1.096010
+pass 0, graph compaction, elapsed = 0.960827
+pass 0, #v = 108299 -> 91005, #e = 186878 -> 46520, #iter = 10, q = 22.943400, pass_gain = 1.036879, elapsed = 12.340784
+Pass 1, pre-iter, elapsed = 0.012875
+pass 1, iter 0, q = 23.139961, iter_gain = 0.196561, pass_gain = 0.196561, #neighbor_comms = 46520, elapsed = 0.923157
+pass 1, iter 1, q = 23.260269, iter_gain = 0.120308, pass_gain = 0.316870, #neighbor_comms = 38263, elapsed = 0.848055
+pass 1, iter 2, q = 23.380669, iter_gain = 0.120399, pass_gain = 0.437269, #neighbor_comms = 35576, elapsed = 0.844955
+pass 1, iter 3, q = 23.489262, iter_gain = 0.108593, pass_gain = 0.545862, #neighbor_comms = 34134, elapsed = 0.828028
+pass 1, iter 4, q = 23.588994, iter_gain = 0.099732, pass_gain = 0.645594, #neighbor_comms = 33609, elapsed = 0.837088
+pass 1, iter 5, q = 23.686165, iter_gain = 0.097172, pass_gain = 0.742766, #neighbor_comms = 33084, elapsed = 0.824928
+pass 1, iter 6, q = 23.777223, iter_gain = 0.091058, pass_gain = 0.833824, #neighbor_comms = 32941, elapsed = 0.837088
+pass 1, iter 7, q = 23.870302, iter_gain = 0.093078, pass_gain = 0.926902, #neighbor_comms = 32671, elapsed = 0.822067
+pass 1, iter 8, q = 23.958481, iter_gain = 0.088179, pass_gain = 1.015081, #neighbor_comms = 32748, elapsed = 0.833035
+pass 1, iter 9, q = 24.048709, iter_gain = 0.090228, pass_gain = 1.105309, #neighbor_comms = 32530, elapsed = 0.825167
+pass 1, graph compaction, elapsed = 0.697136
+pass 1, #v = 91005 -> 87768, #e = 46520 -> 22080, #iter = 10, q = 24.048709, pass_gain = 1.105309, elapsed = 9.217978
+Pass 2, pre-iter, elapsed = 0.011206
+pass 2, iter 0, q = 24.148179, iter_gain = 0.099470, pass_gain = 0.099470, #neighbor_comms = 22080, elapsed = 0.936985
+pass 2, iter 1, q = 24.201460, iter_gain = 0.053280, pass_gain = 0.152751, #neighbor_comms = 17762, elapsed = 0.879049
+pass 2, iter 2, q = 24.260359, iter_gain = 0.058899, pass_gain = 0.211650, #neighbor_comms = 16909, elapsed = 0.875950
+pass 2, iter 3, q = 24.307355, iter_gain = 0.046996, pass_gain = 0.258646, #neighbor_comms = 16129, elapsed = 0.864983
+pass 2, iter 4, q = 24.355460, iter_gain = 0.048105, pass_gain = 0.306751, #neighbor_comms = 15998, elapsed = 0.872135
+pass 2, iter 5, q = 24.400036, iter_gain = 0.044576, pass_gain = 0.351326, #neighbor_comms = 15708, elapsed = 0.864029
+pass 2, iter 6, q = 24.446875, iter_gain = 0.046840, pass_gain = 0.398166, #neighbor_comms = 15831, elapsed = 0.872850
+pass 2, iter 7, q = 24.491007, iter_gain = 0.044131, pass_gain = 0.442297, #neighbor_comms = 15609, elapsed = 0.867128
+pass 2, iter 8, q = 24.537920, iter_gain = 0.046913, pass_gain = 0.489211, #neighbor_comms = 15799, elapsed = 0.871897
+pass 2, iter 9, q = 24.582068, iter_gain = 0.044148, pass_gain = 0.533359, #neighbor_comms = 15601, elapsed = 0.869989
+pass 2, graph compaction, elapsed = 0.742912
+pass 2, #v = 87768 -> 86867, #e = 22080 -> 10176, #iter = 10, q = 24.582068, pass_gain = 0.533359, elapsed = 9.613037
+Pass 3, pre-iter, elapsed = 0.011921
+pass 3, iter 0, q = 24.623582, iter_gain = 0.041514, pass_gain = 0.041514, #neighbor_comms = 10176, elapsed = 0.937939
+pass 3, iter 1, q = 24.649385, iter_gain = 0.025803, pass_gain = 0.067317, #neighbor_comms = 8222, elapsed = 0.895023
+pass 3, iter 2, q = 24.673524, iter_gain = 0.024139, pass_gain = 0.091456, #neighbor_comms = 7810, elapsed = 0.885010
+pass 3, iter 3, q = 24.698904, iter_gain = 0.025380, pass_gain = 0.116836, #neighbor_comms = 7678, elapsed = 0.887871
+pass 3, iter 4, q = 24.722186, iter_gain = 0.023282, pass_gain = 0.140118, #neighbor_comms = 7635, elapsed = 0.887871
+pass 3, iter 5, q = 24.744373, iter_gain = 0.022186, pass_gain = 0.162305, #neighbor_comms = 7639, elapsed = 0.888109
+pass 3, iter 6, q = 24.767476, iter_gain = 0.023103, pass_gain = 0.185408, #neighbor_comms = 7576, elapsed = 0.888824
+pass 3, iter 7, q = 24.789881, iter_gain = 0.022405, pass_gain = 0.207813, #neighbor_comms = 7625, elapsed = 0.891924
+pass 3, iter 8, q = 24.812962, iter_gain = 0.023082, pass_gain = 0.230894, #neighbor_comms = 7574, elapsed = 0.890017
+pass 3, iter 9, q = 24.835346, iter_gain = 0.022384, pass_gain = 0.253278, #neighbor_comms = 7622, elapsed = 0.891924
+pass 3, graph compaction, elapsed = 0.752926
+pass 3, #v = 86867 -> 86627, #e = 10176 -> 5478, #iter = 10, q = 24.835346, pass_gain = 0.253278, elapsed = 9.795904
+Pass 4, pre-iter, elapsed = 0.012159
+pass 4, iter 0, q = 24.856078, iter_gain = 0.020732, pass_gain = 0.020732, #neighbor_comms = 5478, elapsed = 0.979900
+pass 4, iter 1, q = 24.876881, iter_gain = 0.020802, pass_gain = 0.041535, #neighbor_comms = 4768, elapsed = 0.917912
+pass 4, iter 2, q = 24.889715, iter_gain = 0.012834, pass_gain = 0.054369, #neighbor_comms = 4692, elapsed = 0.923157
+pass 4, iter 3, q = 24.909064, iter_gain = 0.019349, pass_gain = 0.073718, #neighbor_comms = 4582, elapsed = 0.923157
+pass 4, iter 4, q = 24.926183, iter_gain = 0.017119, pass_gain = 0.090837, #neighbor_comms = 4598, elapsed = 0.916958
+pass 4, iter 5, q = 24.945031, iter_gain = 0.018848, pass_gain = 0.109685, #neighbor_comms = 4598, elapsed = 0.915051
+pass 4, iter 6, q = 24.961996, iter_gain = 0.016965, pass_gain = 0.126650, #neighbor_comms = 4579, elapsed = 0.925064
+pass 4, iter 7, q = 24.980844, iter_gain = 0.018848, pass_gain = 0.145498, #neighbor_comms = 4598, elapsed = 0.918150
+pass 4, iter 8, q = 24.997809, iter_gain = 0.016965, pass_gain = 0.162463, #neighbor_comms = 4579, elapsed = 0.926971
+pass 4, iter 9, q = 25.016657, iter_gain = 0.018848, pass_gain = 0.181311, #neighbor_comms = 4598, elapsed = 0.917912
+pass 4, graph compaction, elapsed = 0.774145
+pass 4, #v = 86627 -> 86494, #e = 5478 -> 3829, #iter = 10, q = 25.016657, pass_gain = 0.181311, elapsed = 10.132074
+Pass 5, pre-iter, elapsed = 0.013113
+pass 5, iter 0, q = 25.030148, iter_gain = 0.013491, pass_gain = 0.013491, #neighbor_comms = 3829, elapsed = 0.983953
+pass 5, iter 1, q = 25.041040, iter_gain = 0.010892, pass_gain = 0.024383, #neighbor_comms = 3681, elapsed = 0.930071
+pass 5, iter 2, q = 25.051529, iter_gain = 0.010489, pass_gain = 0.034871, #neighbor_comms = 3606, elapsed = 0.932932
+pass 5, iter 3, q = 25.061965, iter_gain = 0.010436, pass_gain = 0.045307, #neighbor_comms = 3601, elapsed = 0.932932
+pass 5, iter 4, q = 25.072401, iter_gain = 0.010436, pass_gain = 0.055743, #neighbor_comms = 3601, elapsed = 0.934124
+pass 5, iter 5, q = 25.082837, iter_gain = 0.010436, pass_gain = 0.066179, #neighbor_comms = 3601, elapsed = 0.932932
+pass 5, iter 6, q = 25.093273, iter_gain = 0.010436, pass_gain = 0.076615, #neighbor_comms = 3601, elapsed = 0.931978
+pass 5, iter 7, q = 25.103709, iter_gain = 0.010436, pass_gain = 0.087051, #neighbor_comms = 3601, elapsed = 0.924110
+pass 5, iter 8, q = 25.114145, iter_gain = 0.010436, pass_gain = 0.097487, #neighbor_comms = 3601, elapsed = 0.925064
+pass 5, iter 9, q = 25.124581, iter_gain = 0.010436, pass_gain = 0.107923, #neighbor_comms = 3601, elapsed = 0.929117
+pass 5, graph compaction, elapsed = 0.782013
+pass 5, #v = 86494 -> 86428, #e = 3829 -> 3421, #iter = 10, q = 25.124581, pass_gain = 0.107923, elapsed = 10.236025
+Pass 6, pre-iter, elapsed = 0.011921
+pass 6, iter 0, q = 25.135807, iter_gain = 0.011226, pass_gain = 0.011226, #neighbor_comms = 3421, elapsed = 1.037836
+pass 6, iter 1, q = 25.145546, iter_gain = 0.009739, pass_gain = 0.020965, #neighbor_comms = 3384, elapsed = 0.995874
+pass 6, iter 2, q = 25.154911, iter_gain = 0.009365, pass_gain = 0.030331, #neighbor_comms = 3343, elapsed = 0.989914
+pass 6, iter 3, q = 25.164234, iter_gain = 0.009323, pass_gain = 0.039654, #neighbor_comms = 3341, elapsed = 0.991106
+pass 6, iter 4, q = 25.173472, iter_gain = 0.009238, pass_gain = 0.048891, #neighbor_comms = 3340, elapsed = 0.980139
+pass 6, iter 5, q = 25.182699, iter_gain = 0.009227, pass_gain = 0.058118, #neighbor_comms = 3338, elapsed = 0.987053
+pass 6, iter 6, q = 25.191926, iter_gain = 0.009227, pass_gain = 0.067345, #neighbor_comms = 3338, elapsed = 0.991106
+pass 6, iter 7, q = 25.201153, iter_gain = 0.009227, pass_gain = 0.076572, #neighbor_comms = 3338, elapsed = 0.993013
+pass 6, iter 8, q = 25.210380, iter_gain = 0.009227, pass_gain = 0.085799, #neighbor_comms = 3338, elapsed = 0.984907
+pass 6, iter 9, q = 25.219607, iter_gain = 0.009227, pass_gain = 0.095026, #neighbor_comms = 3338, elapsed = 0.984907
+pass 6, graph compaction, elapsed = 0.814915
+pass 6, #v = 86428 -> 86370, #e = 3421 -> 3279, #iter = 10, q = 25.219607, pass_gain = 0.095026, elapsed = 10.849953
+Pass 7, pre-iter, elapsed = 0.012159
+pass 7, iter 0, q = 25.229462, iter_gain = 0.009855, pass_gain = 0.009855, #neighbor_comms = 3279, elapsed = 1.015902
+pass 7, iter 1, q = 25.238241, iter_gain = 0.008778, pass_gain = 0.018634, #neighbor_comms = 3242, elapsed = 0.959873
+pass 7, iter 2, q = 25.246867, iter_gain = 0.008627, pass_gain = 0.027261, #neighbor_comms = 3227, elapsed = 0.975847
+pass 7, iter 3, q = 25.255494, iter_gain = 0.008627, pass_gain = 0.035887, #neighbor_comms = 3227, elapsed = 0.967979
+pass 7, iter 4, q = 25.264121, iter_gain = 0.008627, pass_gain = 0.044514, #neighbor_comms = 3227, elapsed = 0.981092
+pass 7, iter 5, q = 25.272748, iter_gain = 0.008627, pass_gain = 0.053141, #neighbor_comms = 3227, elapsed = 0.971079
+pass 7, iter 6, q = 25.281375, iter_gain = 0.008627, pass_gain = 0.061768, #neighbor_comms = 3227, elapsed = 0.982046
+pass 7, iter 7, q = 25.290002, iter_gain = 0.008627, pass_gain = 0.070395, #neighbor_comms = 3227, elapsed = 0.964880
+pass 7, iter 8, q = 25.298629, iter_gain = 0.008627, pass_gain = 0.079022, #neighbor_comms = 3227, elapsed = 0.970840
+pass 7, iter 9, q = 25.307256, iter_gain = 0.008627, pass_gain = 0.087649, #neighbor_comms = 3227, elapsed = 0.973940
+pass 7, graph compaction, elapsed = 0.814199
+pass 7, #v = 86370 -> 86330, #e = 3279 -> 3182, #iter = 10, q = 25.307256, pass_gain = 0.087649, elapsed = 10.670185
+Pass 8, pre-iter, elapsed = 0.013113
+pass 8, iter 0, q = 25.316397, iter_gain = 0.009142, pass_gain = 0.009142, #neighbor_comms = 3182, elapsed = 1.039028
+pass 8, iter 1, q = 25.324675, iter_gain = 0.008277, pass_gain = 0.017419, #neighbor_comms = 3154, elapsed = 0.991106
+pass 8, iter 2, q = 25.332639, iter_gain = 0.007965, pass_gain = 0.025384, #neighbor_comms = 3125, elapsed = 0.992060
+pass 8, iter 3, q = 25.340583, iter_gain = 0.007943, pass_gain = 0.033327, #neighbor_comms = 3124, elapsed = 0.998974
+pass 8, iter 4, q = 25.348526, iter_gain = 0.007943, pass_gain = 0.041270, #neighbor_comms = 3124, elapsed = 0.994921
+pass 8, iter 5, q = 25.356469, iter_gain = 0.007943, pass_gain = 0.049213, #neighbor_comms = 3124, elapsed = 0.993967
+pass 8, iter 6, q = 25.364412, iter_gain = 0.007943, pass_gain = 0.057157, #neighbor_comms = 3124, elapsed = 0.988007
+pass 8, iter 7, q = 25.372356, iter_gain = 0.007943, pass_gain = 0.065100, #neighbor_comms = 3124, elapsed = 0.985146
+pass 8, iter 8, q = 25.380299, iter_gain = 0.007943, pass_gain = 0.073043, #neighbor_comms = 3124, elapsed = 0.993013
+pass 8, iter 9, q = 25.388242, iter_gain = 0.007943, pass_gain = 0.080986, #neighbor_comms = 3124, elapsed = 0.991106
+pass 8, graph compaction, elapsed = 0.813007
+pass 8, #v = 86330 -> 86287, #e = 3182 -> 3077, #iter = 10, q = 25.388242, pass_gain = 0.080986, elapsed = 10.876179
+Pass 9, pre-iter, elapsed = 0.013113
+pass 9, iter 0, q = 25.396611, iter_gain = 0.008369, pass_gain = 0.008369, #neighbor_comms = 3077, elapsed = 1.031876
+pass 9, iter 1, q = 25.404216, iter_gain = 0.007605, pass_gain = 0.015974, #neighbor_comms = 3049, elapsed = 0.984907
+pass 9, iter 2, q = 25.411518, iter_gain = 0.007302, pass_gain = 0.023276, #neighbor_comms = 3012, elapsed = 0.982046
+pass 9, iter 3, q = 25.418778, iter_gain = 0.007260, pass_gain = 0.030536, #neighbor_comms = 3010, elapsed = 0.984907
+pass 9, iter 4, q = 25.426038, iter_gain = 0.007260, pass_gain = 0.037796, #neighbor_comms = 3010, elapsed = 0.991821
+pass 9, iter 5, q = 25.433298, iter_gain = 0.007260, pass_gain = 0.045055, #neighbor_comms = 3010, elapsed = 0.985861
+pass 9, iter 6, q = 25.440557, iter_gain = 0.007260, pass_gain = 0.052315, #neighbor_comms = 3010, elapsed = 0.981092
+pass 9, iter 7, q = 25.447817, iter_gain = 0.007260, pass_gain = 0.059575, #neighbor_comms = 3010, elapsed = 0.980854
+pass 9, iter 8, q = 25.455077, iter_gain = 0.007260, pass_gain = 0.066835, #neighbor_comms = 3010, elapsed = 0.989914
+pass 9, iter 9, q = 25.462337, iter_gain = 0.007260, pass_gain = 0.074095, #neighbor_comms = 3010, elapsed = 0.987053
+pass 9, graph compaction, elapsed = 0.816107
+pass 9, #v = 86287 -> 86240, #e = 3077 -> 2963, #iter = 10, q = 25.462337, pass_gain = 0.074095, elapsed = 10.817051
+--------------------------
+Run 6 elapsed: 106.215000 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86240.000000, modularity = 0.710411
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.012875
+pass 0, iter 0, q = 25.660741, iter_gain = 0.198404, pass_gain = 0.198404, #neighbor_comms = 186878, elapsed = 1.294851
+pass 0, iter 1, q = 25.842751, iter_gain = 0.182010, pass_gain = 0.380415, #neighbor_comms = 144596, elapsed = 1.170874
+pass 0, iter 2, q = 25.983424, iter_gain = 0.140672, pass_gain = 0.521087, #neighbor_comms = 116525, elapsed = 1.122952
+pass 0, iter 3, q = 26.087436, iter_gain = 0.104012, pass_gain = 0.625099, #neighbor_comms = 103304, elapsed = 1.113176
+pass 0, iter 4, q = 26.171690, iter_gain = 0.084255, pass_gain = 0.709353, #neighbor_comms = 97224, elapsed = 1.102924
+pass 0, iter 5, q = 26.245565, iter_gain = 0.073875, pass_gain = 0.783228, #neighbor_comms = 93650, elapsed = 1.102924
+pass 0, iter 6, q = 26.313474, iter_gain = 0.067908, pass_gain = 0.851137, #neighbor_comms = 91509, elapsed = 1.094818
+pass 0, iter 7, q = 26.376482, iter_gain = 0.063009, pass_gain = 0.914145, #neighbor_comms = 89781, elapsed = 1.098871
+pass 0, iter 8, q = 26.436379, iter_gain = 0.059897, pass_gain = 0.974042, #neighbor_comms = 88564, elapsed = 1.101017
+pass 0, iter 9, q = 26.496138, iter_gain = 0.059759, pass_gain = 1.033801, #neighbor_comms = 87989, elapsed = 1.097918
+pass 0, graph compaction, elapsed = 0.960112
+pass 0, #v = 108299 -> 91017, #e = 186878 -> 46821, #iter = 10, q = 26.496138, pass_gain = 1.033801, elapsed = 12.357950
+Pass 1, pre-iter, elapsed = 0.011921
+pass 1, iter 0, q = 26.692954, iter_gain = 0.196816, pass_gain = 0.196816, #neighbor_comms = 46821, elapsed = 0.919104
+pass 1, iter 1, q = 26.814701, iter_gain = 0.121747, pass_gain = 0.318563, #neighbor_comms = 38796, elapsed = 0.836134
+pass 1, iter 2, q = 26.938918, iter_gain = 0.124217, pass_gain = 0.442779, #neighbor_comms = 36011, elapsed = 0.850916
+pass 1, iter 3, q = 27.047218, iter_gain = 0.108300, pass_gain = 0.551080, #neighbor_comms = 34491, elapsed = 0.817060
+pass 1, iter 4, q = 27.148118, iter_gain = 0.100900, pass_gain = 0.651979, #neighbor_comms = 33922, elapsed = 0.849962
+pass 1, iter 5, q = 27.240542, iter_gain = 0.092425, pass_gain = 0.744404, #neighbor_comms = 33284, elapsed = 0.816822
+pass 1, iter 6, q = 27.332982, iter_gain = 0.092440, pass_gain = 0.836844, #neighbor_comms = 33003, elapsed = 0.848055
+pass 1, iter 7, q = 27.423259, iter_gain = 0.090277, pass_gain = 0.927121, #neighbor_comms = 32657, elapsed = 0.819921
+pass 1, iter 8, q = 27.511919, iter_gain = 0.088659, pass_gain = 1.015781, #neighbor_comms = 32624, elapsed = 0.840902
+pass 1, iter 9, q = 27.601278, iter_gain = 0.089359, pass_gain = 1.105139, #neighbor_comms = 32401, elapsed = 0.814915
+pass 1, graph compaction, elapsed = 0.699997
+pass 1, #v = 91017 -> 87774, #e = 46821 -> 21489, #iter = 10, q = 27.601278, pass_gain = 1.105139, elapsed = 9.208918
+Pass 2, pre-iter, elapsed = 0.011921
+pass 2, iter 0, q = 27.699586, iter_gain = 0.098308, pass_gain = 0.098308, #neighbor_comms = 21489, elapsed = 0.965118
+pass 2, iter 1, q = 27.751133, iter_gain = 0.051547, pass_gain = 0.149855, #neighbor_comms = 17512, elapsed = 0.894070
+pass 2, iter 2, q = 27.806797, iter_gain = 0.055664, pass_gain = 0.205519, #neighbor_comms = 16152, elapsed = 0.886917
+pass 2, iter 3, q = 27.854597, iter_gain = 0.047800, pass_gain = 0.253320, #neighbor_comms = 15670, elapsed = 0.888109
+pass 2, iter 4, q = 27.903727, iter_gain = 0.049130, pass_gain = 0.302449, #neighbor_comms = 15638, elapsed = 0.884056
+pass 2, iter 5, q = 27.949993, iter_gain = 0.046265, pass_gain = 0.348715, #neighbor_comms = 15393, elapsed = 0.886917
+pass 2, iter 6, q = 27.997370, iter_gain = 0.047377, pass_gain = 0.396092, #neighbor_comms = 15528, elapsed = 0.883102
+pass 2, iter 7, q = 28.042920, iter_gain = 0.045550, pass_gain = 0.441642, #neighbor_comms = 15317, elapsed = 0.885963
+pass 2, iter 8, q = 28.089877, iter_gain = 0.046957, pass_gain = 0.488599, #neighbor_comms = 15492, elapsed = 0.882864
+pass 2, iter 9, q = 28.134867, iter_gain = 0.044990, pass_gain = 0.533590, #neighbor_comms = 15295, elapsed = 0.883818
+pass 2, graph compaction, elapsed = 0.741005
+pass 2, #v = 87774 -> 86887, #e = 21489 -> 10163, #iter = 10, q = 28.134867, pass_gain = 0.533590, elapsed = 9.784937
+Pass 3, pre-iter, elapsed = 0.011921
+pass 3, iter 0, q = 28.176569, iter_gain = 0.041702, pass_gain = 0.041702, #neighbor_comms = 10163, elapsed = 0.962973
+pass 3, iter 1, q = 28.200725, iter_gain = 0.024156, pass_gain = 0.065858, #neighbor_comms = 8311, elapsed = 0.900984
+pass 3, iter 2, q = 28.223292, iter_gain = 0.022566, pass_gain = 0.088425, #neighbor_comms = 7996, elapsed = 0.895977
+pass 3, iter 3, q = 28.243588, iter_gain = 0.020296, pass_gain = 0.108720, #neighbor_comms = 7679, elapsed = 0.890970
+pass 3, iter 4, q = 28.264013, iter_gain = 0.020425, pass_gain = 0.129145, #neighbor_comms = 7699, elapsed = 0.899076
+pass 3, iter 5, q = 28.283543, iter_gain = 0.019530, pass_gain = 0.148675, #neighbor_comms = 7567, elapsed = 0.897169
+pass 3, iter 6, q = 28.303900, iter_gain = 0.020358, pass_gain = 0.169033, #neighbor_comms = 7658, elapsed = 0.894070
+pass 3, iter 7, q = 28.323385, iter_gain = 0.019484, pass_gain = 0.188517, #neighbor_comms = 7571, elapsed = 0.896931
+pass 3, iter 8, q = 28.343754, iter_gain = 0.020369, pass_gain = 0.208886, #neighbor_comms = 7645, elapsed = 0.893831
+pass 3, iter 9, q = 28.363227, iter_gain = 0.019473, pass_gain = 0.228360, #neighbor_comms = 7570, elapsed = 0.896931
+pass 3, graph compaction, elapsed = 0.770092
+pass 3, #v = 86887 -> 86659, #e = 10163 -> 5557, #iter = 10, q = 28.363227, pass_gain = 0.228360, elapsed = 9.893894
+Pass 4, pre-iter, elapsed = 0.011921
+pass 4, iter 0, q = 28.383519, iter_gain = 0.020292, pass_gain = 0.020292, #neighbor_comms = 5557, elapsed = 0.984192
+pass 4, iter 1, q = 28.400258, iter_gain = 0.016739, pass_gain = 0.037031, #neighbor_comms = 4943, elapsed = 0.931025
+pass 4, iter 2, q = 28.414640, iter_gain = 0.014382, pass_gain = 0.051413, #neighbor_comms = 4937, elapsed = 0.931025
+pass 4, iter 3, q = 28.434989, iter_gain = 0.020350, pass_gain = 0.071762, #neighbor_comms = 4801, elapsed = 0.933886
+pass 4, iter 4, q = 28.454968, iter_gain = 0.019979, pass_gain = 0.091741, #neighbor_comms = 4807, elapsed = 0.933170
+pass 4, iter 5, q = 28.474687, iter_gain = 0.019718, pass_gain = 0.111459, #neighbor_comms = 4799, elapsed = 0.939131
+pass 4, iter 6, q = 28.494652, iter_gain = 0.019966, pass_gain = 0.131425, #neighbor_comms = 4804, elapsed = 0.935078
+pass 4, iter 7, q = 28.512761, iter_gain = 0.018108, pass_gain = 0.149534, #neighbor_comms = 4827, elapsed = 0.935078
+pass 4, iter 8, q = 28.532727, iter_gain = 0.019966, pass_gain = 0.169500, #neighbor_comms = 4804, elapsed = 0.933886
+pass 4, iter 9, q = 28.550835, iter_gain = 0.018108, pass_gain = 0.187608, #neighbor_comms = 4827, elapsed = 0.931025
+pass 4, graph compaction, elapsed = 0.781059
+pass 4, #v = 86659 -> 86537, #e = 5557 -> 4175, #iter = 10, q = 28.550835, pass_gain = 0.187608, elapsed = 10.263920
+Pass 5, pre-iter, elapsed = 0.012875
+pass 5, iter 0, q = 28.565690, iter_gain = 0.014854, pass_gain = 0.014854, #neighbor_comms = 4175, elapsed = 1.003027
+pass 5, iter 1, q = 28.577676, iter_gain = 0.011986, pass_gain = 0.026841, #neighbor_comms = 4057, elapsed = 0.941992
+pass 5, iter 2, q = 28.588955, iter_gain = 0.011279, pass_gain = 0.038120, #neighbor_comms = 3982, elapsed = 0.927925
+pass 5, iter 3, q = 28.600203, iter_gain = 0.011247, pass_gain = 0.049367, #neighbor_comms = 3979, elapsed = 0.930071
+pass 5, iter 4, q = 28.611450, iter_gain = 0.011247, pass_gain = 0.060615, #neighbor_comms = 3979, elapsed = 0.923872
+pass 5, iter 5, q = 28.622698, iter_gain = 0.011247, pass_gain = 0.071862, #neighbor_comms = 3979, elapsed = 0.928879
+pass 5, iter 6, q = 28.633945, iter_gain = 0.011247, pass_gain = 0.083110, #neighbor_comms = 3979, elapsed = 0.935078
+pass 5, iter 7, q = 28.645192, iter_gain = 0.011247, pass_gain = 0.094357, #neighbor_comms = 3979, elapsed = 0.935078
+pass 5, iter 8, q = 28.656440, iter_gain = 0.011247, pass_gain = 0.105605, #neighbor_comms = 3979, elapsed = 0.926971
+pass 5, iter 9, q = 28.667687, iter_gain = 0.011247, pass_gain = 0.116852, #neighbor_comms = 3979, elapsed = 0.936031
+pass 5, graph compaction, elapsed = 0.777960
+pass 5, #v = 86537 -> 86462, #e = 4175 -> 3829, #iter = 10, q = 28.667687, pass_gain = 0.116852, elapsed = 10.267019
+Pass 6, pre-iter, elapsed = 0.012159
+pass 6, iter 0, q = 28.679751, iter_gain = 0.012063, pass_gain = 0.012063, #neighbor_comms = 3829, elapsed = 0.998020
+pass 6, iter 1, q = 28.690933, iter_gain = 0.011182, pass_gain = 0.023246, #neighbor_comms = 3745, elapsed = 0.952005
+pass 6, iter 2, q = 28.700971, iter_gain = 0.010038, pass_gain = 0.033284, #neighbor_comms = 3761, elapsed = 0.946999
+pass 6, iter 3, q = 28.711536, iter_gain = 0.010565, pass_gain = 0.043849, #neighbor_comms = 3717, elapsed = 0.952959
+pass 6, iter 4, q = 28.721322, iter_gain = 0.009785, pass_gain = 0.053634, #neighbor_comms = 3755, elapsed = 0.945091
+pass 6, iter 5, q = 28.730981, iter_gain = 0.009659, pass_gain = 0.063294, #neighbor_comms = 3755, elapsed = 0.941038
+pass 6, iter 6, q = 28.740602, iter_gain = 0.009621, pass_gain = 0.072915, #neighbor_comms = 3751, elapsed = 0.954151
+pass 6, iter 7, q = 28.750224, iter_gain = 0.009621, pass_gain = 0.082536, #neighbor_comms = 3751, elapsed = 0.949860
+pass 6, iter 8, q = 28.759845, iter_gain = 0.009621, pass_gain = 0.092158, #neighbor_comms = 3751, elapsed = 0.954866
+pass 6, iter 9, q = 28.769467, iter_gain = 0.009621, pass_gain = 0.101779, #neighbor_comms = 3751, elapsed = 0.952005
+pass 6, graph compaction, elapsed = 0.776052
+pass 6, #v = 86462 -> 86406, #e = 3829 -> 3689, #iter = 10, q = 28.769467, pass_gain = 0.101779, elapsed = 10.416031
+Pass 7, pre-iter, elapsed = 0.011921
+pass 7, iter 0, q = 28.779869, iter_gain = 0.010402, pass_gain = 0.010402, #neighbor_comms = 3689, elapsed = 1.039982
+pass 7, iter 1, q = 28.788804, iter_gain = 0.008936, pass_gain = 0.019338, #neighbor_comms = 3623, elapsed = 0.998974
+pass 7, iter 2, q = 28.797396, iter_gain = 0.008592, pass_gain = 0.027929, #neighbor_comms = 3610, elapsed = 0.999928
+pass 7, iter 3, q = 28.805974, iter_gain = 0.008578, pass_gain = 0.036507, #neighbor_comms = 3589, elapsed = 0.988007
+pass 7, iter 4, q = 28.814552, iter_gain = 0.008578, pass_gain = 0.045085, #neighbor_comms = 3589, elapsed = 0.993013
+pass 7, iter 5, q = 28.823129, iter_gain = 0.008578, pass_gain = 0.053663, #neighbor_comms = 3589, elapsed = 0.993013
+pass 7, iter 6, q = 28.831707, iter_gain = 0.008578, pass_gain = 0.062240, #neighbor_comms = 3589, elapsed = 0.996113
+pass 7, iter 7, q = 28.840285, iter_gain = 0.008578, pass_gain = 0.070818, #neighbor_comms = 3589, elapsed = 0.998020
+pass 7, iter 8, q = 28.848862, iter_gain = 0.008578, pass_gain = 0.079396, #neighbor_comms = 3589, elapsed = 1.002073
+pass 7, iter 9, q = 28.857440, iter_gain = 0.008578, pass_gain = 0.087974, #neighbor_comms = 3589, elapsed = 0.986099
+pass 7, graph compaction, elapsed = 0.833035
+pass 7, #v = 86406 -> 86346, #e = 3689 -> 3508, #iter = 10, q = 28.857440, pass_gain = 0.087974, elapsed = 10.921001
+Pass 8, pre-iter, elapsed = 0.011921
+pass 8, iter 0, q = 28.866635, iter_gain = 0.009195, pass_gain = 0.009195, #neighbor_comms = 3508, elapsed = 1.034975
+pass 8, iter 1, q = 28.874808, iter_gain = 0.008173, pass_gain = 0.017367, #neighbor_comms = 3466, elapsed = 0.989914
+pass 8, iter 2, q = 28.882784, iter_gain = 0.007977, pass_gain = 0.025344, #neighbor_comms = 3434, elapsed = 0.985146
+pass 8, iter 3, q = 28.890740, iter_gain = 0.007955, pass_gain = 0.033299, #neighbor_comms = 3433, elapsed = 0.984192
+pass 8, iter 4, q = 28.898695, iter_gain = 0.007955, pass_gain = 0.041255, #neighbor_comms = 3433, elapsed = 0.978947
+pass 8, iter 5, q = 28.906650, iter_gain = 0.007955, pass_gain = 0.049210, #neighbor_comms = 3433, elapsed = 0.977039
+pass 8, iter 6, q = 28.914606, iter_gain = 0.007955, pass_gain = 0.057166, #neighbor_comms = 3433, elapsed = 0.983953
+pass 8, iter 7, q = 28.922561, iter_gain = 0.007955, pass_gain = 0.065121, #neighbor_comms = 3433, elapsed = 0.975132
+pass 8, iter 8, q = 28.930516, iter_gain = 0.007955, pass_gain = 0.073076, #neighbor_comms = 3433, elapsed = 0.983953
+pass 8, iter 9, q = 28.938472, iter_gain = 0.007955, pass_gain = 0.081032, #neighbor_comms = 3433, elapsed = 0.983953
+pass 8, graph compaction, elapsed = 0.823021
+pass 8, #v = 86346 -> 86299, #e = 3508 -> 3374, #iter = 10, q = 28.938472, pass_gain = 0.081032, elapsed = 10.799885
+Pass 9, pre-iter, elapsed = 0.012159
+pass 9, iter 0, q = 28.946850, iter_gain = 0.008378, pass_gain = 0.008378, #neighbor_comms = 3374, elapsed = 1.047850
+pass 9, iter 1, q = 28.954414, iter_gain = 0.007565, pass_gain = 0.015943, #neighbor_comms = 3341, elapsed = 1.004934
+pass 9, iter 2, q = 28.961885, iter_gain = 0.007471, pass_gain = 0.023413, #neighbor_comms = 3332, elapsed = 1.001120
+pass 9, iter 3, q = 28.969356, iter_gain = 0.007471, pass_gain = 0.030884, #neighbor_comms = 3332, elapsed = 1.002073
+pass 9, iter 4, q = 28.976826, iter_gain = 0.007471, pass_gain = 0.038354, #neighbor_comms = 3332, elapsed = 1.001120
+pass 9, iter 5, q = 28.984297, iter_gain = 0.007471, pass_gain = 0.045825, #neighbor_comms = 3332, elapsed = 1.004934
+pass 9, iter 6, q = 28.991767, iter_gain = 0.007471, pass_gain = 0.053295, #neighbor_comms = 3332, elapsed = 1.000881
+pass 9, iter 7, q = 28.999238, iter_gain = 0.007471, pass_gain = 0.060766, #neighbor_comms = 3332, elapsed = 0.999212
+pass 9, iter 8, q = 29.006708, iter_gain = 0.007471, pass_gain = 0.068236, #neighbor_comms = 3332, elapsed = 0.998974
+pass 9, iter 9, q = 29.014179, iter_gain = 0.007471, pass_gain = 0.075707, #neighbor_comms = 3332, elapsed = 0.996828
+pass 9, graph compaction, elapsed = 0.824928
+pass 9, #v = 86299 -> 86267, #e = 3374 -> 3298, #iter = 10, q = 29.014179, pass_gain = 0.075707, elapsed = 10.976076
+--------------------------
+Run 7 elapsed: 106.501818 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86267.000000, modularity = 0.711907
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.011921
+pass 0, iter 0, q = 29.212605, iter_gain = 0.198426, pass_gain = 0.198426, #neighbor_comms = 186878, elapsed = 1.290798
+pass 0, iter 1, q = 29.394807, iter_gain = 0.182203, pass_gain = 0.380629, #neighbor_comms = 144564, elapsed = 1.169920
+pass 0, iter 2, q = 29.535507, iter_gain = 0.140699, pass_gain = 0.521328, #neighbor_comms = 116461, elapsed = 1.119852
+pass 0, iter 3, q = 29.639312, iter_gain = 0.103805, pass_gain = 0.625133, #neighbor_comms = 103163, elapsed = 1.106977
+pass 0, iter 4, q = 29.723979, iter_gain = 0.084666, pass_gain = 0.709800, #neighbor_comms = 97067, elapsed = 1.111984
+pass 0, iter 5, q = 29.798610, iter_gain = 0.074632, pass_gain = 0.784431, #neighbor_comms = 93411, elapsed = 1.101017
+pass 0, iter 6, q = 29.867285, iter_gain = 0.068674, pass_gain = 0.853106, #neighbor_comms = 91293, elapsed = 1.099110
+pass 0, iter 7, q = 29.930914, iter_gain = 0.063629, pass_gain = 0.916735, #neighbor_comms = 89578, elapsed = 1.094103
+pass 0, iter 8, q = 29.990407, iter_gain = 0.059494, pass_gain = 0.976228, #neighbor_comms = 88316, elapsed = 1.097918
+pass 0, iter 9, q = 30.049699, iter_gain = 0.059292, pass_gain = 1.035521, #neighbor_comms = 87783, elapsed = 1.091003
+pass 0, graph compaction, elapsed = 0.961065
+pass 0, #v = 108299 -> 91002, #e = 186878 -> 46720, #iter = 10, q = 30.049699, pass_gain = 1.035521, elapsed = 12.341976
+Pass 1, pre-iter, elapsed = 0.012159
+pass 1, iter 0, q = 30.244798, iter_gain = 0.195098, pass_gain = 0.195098, #neighbor_comms = 46720, elapsed = 0.916004
+pass 1, iter 1, q = 30.366194, iter_gain = 0.121397, pass_gain = 0.316495, #neighbor_comms = 38677, elapsed = 0.844955
+pass 1, iter 2, q = 30.487123, iter_gain = 0.120929, pass_gain = 0.437424, #neighbor_comms = 35914, elapsed = 0.844002
+pass 1, iter 3, q = 30.593345, iter_gain = 0.106222, pass_gain = 0.543645, #neighbor_comms = 34352, elapsed = 0.828981
+pass 1, iter 4, q = 30.695936, iter_gain = 0.102591, pass_gain = 0.646236, #neighbor_comms = 33693, elapsed = 0.838041
+pass 1, iter 5, q = 30.788019, iter_gain = 0.092084, pass_gain = 0.738320, #neighbor_comms = 32971, elapsed = 0.819921
+pass 1, iter 6, q = 30.881604, iter_gain = 0.093584, pass_gain = 0.831904, #neighbor_comms = 32751, elapsed = 0.830889
+pass 1, iter 7, q = 30.969291, iter_gain = 0.087687, pass_gain = 0.919592, #neighbor_comms = 32306, elapsed = 0.821114
+pass 1, iter 8, q = 31.055088, iter_gain = 0.085797, pass_gain = 1.005389, #neighbor_comms = 32320, elapsed = 0.837088
+pass 1, iter 9, q = 31.139644, iter_gain = 0.084555, pass_gain = 1.089944, #neighbor_comms = 31990, elapsed = 0.825167
+pass 1, graph compaction, elapsed = 0.698090
+pass 1, #v = 91002 -> 87758, #e = 46720 -> 20967, #iter = 10, q = 31.139644, pass_gain = 1.089944, elapsed = 9.205103
+Pass 2, pre-iter, elapsed = 0.011921
+pass 2, iter 0, q = 31.236828, iter_gain = 0.097185, pass_gain = 0.097185, #neighbor_comms = 20967, elapsed = 0.904083
+pass 2, iter 1, q = 31.283967, iter_gain = 0.047139, pass_gain = 0.144324, #neighbor_comms = 16845, elapsed = 0.855923
+pass 2, iter 2, q = 31.329454, iter_gain = 0.045486, pass_gain = 0.189810, #neighbor_comms = 15907, elapsed = 0.864983
+pass 2, iter 3, q = 31.367077, iter_gain = 0.037623, pass_gain = 0.227433, #neighbor_comms = 15265, elapsed = 0.859976
+pass 2, iter 4, q = 31.402920, iter_gain = 0.035843, pass_gain = 0.263276, #neighbor_comms = 15207, elapsed = 0.865936
+pass 2, iter 5, q = 31.439538, iter_gain = 0.036618, pass_gain = 0.299894, #neighbor_comms = 15051, elapsed = 0.864029
+pass 2, iter 6, q = 31.473776, iter_gain = 0.034238, pass_gain = 0.334132, #neighbor_comms = 15094, elapsed = 0.866175
+pass 2, iter 7, q = 31.508652, iter_gain = 0.034876, pass_gain = 0.369008, #neighbor_comms = 15000, elapsed = 0.870943
+pass 2, iter 8, q = 31.542497, iter_gain = 0.033845, pass_gain = 0.402853, #neighbor_comms = 15052, elapsed = 0.864983
+pass 2, iter 9, q = 31.577230, iter_gain = 0.034733, pass_gain = 0.437587, #neighbor_comms = 15027, elapsed = 0.859022
+pass 2, graph compaction, elapsed = 0.723124
+pass 2, #v = 87758 -> 86881, #e = 20967 -> 10032, #iter = 10, q = 31.577230, pass_gain = 0.437587, elapsed = 9.491920
+Pass 3, pre-iter, elapsed = 0.010967
+pass 3, iter 0, q = 31.614649, iter_gain = 0.037418, pass_gain = 0.037418, #neighbor_comms = 10032, elapsed = 0.959158
+pass 3, iter 1, q = 31.643058, iter_gain = 0.028409, pass_gain = 0.065828, #neighbor_comms = 8282, elapsed = 0.915051
+pass 3, iter 2, q = 31.668833, iter_gain = 0.025775, pass_gain = 0.091603, #neighbor_comms = 7841, elapsed = 0.900030
+pass 3, iter 3, q = 31.694564, iter_gain = 0.025731, pass_gain = 0.117334, #neighbor_comms = 7685, elapsed = 0.906229
+pass 3, iter 4, q = 31.719944, iter_gain = 0.025380, pass_gain = 0.142714, #neighbor_comms = 7816, elapsed = 0.900030
+pass 3, iter 5, q = 31.745579, iter_gain = 0.025635, pass_gain = 0.168349, #neighbor_comms = 7667, elapsed = 0.907183
+pass 3, iter 6, q = 31.770337, iter_gain = 0.024759, pass_gain = 0.193107, #neighbor_comms = 7788, elapsed = 0.899076
+pass 3, iter 7, q = 31.796005, iter_gain = 0.025667, pass_gain = 0.218774, #neighbor_comms = 7639, elapsed = 0.906944
+pass 3, iter 8, q = 31.820831, iter_gain = 0.024827, pass_gain = 0.243601, #neighbor_comms = 7793, elapsed = 0.897884
+pass 3, iter 9, q = 31.846415, iter_gain = 0.025584, pass_gain = 0.269185, #neighbor_comms = 7635, elapsed = 0.908136
+pass 3, graph compaction, elapsed = 0.756979
+pass 3, #v = 86881 -> 86640, #e = 10032 -> 5741, #iter = 10, q = 31.846415, pass_gain = 0.269185, elapsed = 9.950876
+Pass 4, pre-iter, elapsed = 0.010967
+pass 4, iter 0, q = 31.869894, iter_gain = 0.023479, pass_gain = 0.023479, #neighbor_comms = 5741, elapsed = 0.996113
+pass 4, iter 1, q = 31.890446, iter_gain = 0.020551, pass_gain = 0.044031, #neighbor_comms = 4959, elapsed = 0.937939
+pass 4, iter 2, q = 31.909631, iter_gain = 0.019186, pass_gain = 0.063216, #neighbor_comms = 4920, elapsed = 0.938177
+pass 4, iter 3, q = 31.928351, iter_gain = 0.018720, pass_gain = 0.081936, #neighbor_comms = 4843, elapsed = 0.930071
+pass 4, iter 4, q = 31.947384, iter_gain = 0.019032, pass_gain = 0.100969, #neighbor_comms = 4877, elapsed = 0.935078
+pass 4, iter 5, q = 31.966083, iter_gain = 0.018699, pass_gain = 0.119668, #neighbor_comms = 4843, elapsed = 0.926971
+pass 4, iter 6, q = 31.985115, iter_gain = 0.019032, pass_gain = 0.138700, #neighbor_comms = 4877, elapsed = 0.934839
+pass 4, iter 7, q = 32.003814, iter_gain = 0.018699, pass_gain = 0.157399, #neighbor_comms = 4843, elapsed = 0.928879
+pass 4, iter 8, q = 32.022846, iter_gain = 0.019032, pass_gain = 0.176431, #neighbor_comms = 4877, elapsed = 0.931025
+pass 4, iter 9, q = 32.041545, iter_gain = 0.018699, pass_gain = 0.195130, #neighbor_comms = 4843, elapsed = 0.924110
+pass 4, graph compaction, elapsed = 0.776052
+pass 4, #v = 86640 -> 86522, #e = 5741 -> 4173, #iter = 10, q = 32.041545, pass_gain = 0.195130, elapsed = 10.256052
+Pass 5, pre-iter, elapsed = 0.012875
+pass 5, iter 0, q = 32.057993, iter_gain = 0.016448, pass_gain = 0.016448, #neighbor_comms = 4173, elapsed = 0.999928
+pass 5, iter 1, q = 32.070012, iter_gain = 0.012020, pass_gain = 0.028467, #neighbor_comms = 3996, elapsed = 0.936031
+pass 5, iter 2, q = 32.080897, iter_gain = 0.010884, pass_gain = 0.039352, #neighbor_comms = 3872, elapsed = 0.934839
+pass 5, iter 3, q = 32.091774, iter_gain = 0.010877, pass_gain = 0.050229, #neighbor_comms = 3870, elapsed = 0.929117
+pass 5, iter 4, q = 32.102651, iter_gain = 0.010877, pass_gain = 0.061106, #neighbor_comms = 3870, elapsed = 0.935078
+pass 5, iter 5, q = 32.113528, iter_gain = 0.010877, pass_gain = 0.071983, #neighbor_comms = 3870, elapsed = 0.938892
+pass 5, iter 6, q = 32.124405, iter_gain = 0.010877, pass_gain = 0.082860, #neighbor_comms = 3870, elapsed = 0.938177
+pass 5, iter 7, q = 32.135282, iter_gain = 0.010877, pass_gain = 0.093737, #neighbor_comms = 3870, elapsed = 0.932932
+pass 5, iter 8, q = 32.146160, iter_gain = 0.010877, pass_gain = 0.104614, #neighbor_comms = 3870, elapsed = 0.943899
+pass 5, iter 9, q = 32.157037, iter_gain = 0.010877, pass_gain = 0.115492, #neighbor_comms = 3870, elapsed = 0.934839
+pass 5, graph compaction, elapsed = 0.783205
+pass 5, #v = 86522 -> 86427, #e = 4173 -> 3637, #iter = 10, q = 32.157037, pass_gain = 0.115492, elapsed = 10.303020
+Pass 6, pre-iter, elapsed = 0.010967
+pass 6, iter 0, q = 32.168890, iter_gain = 0.011854, pass_gain = 0.011854, #neighbor_comms = 3637, elapsed = 1.069784
+pass 6, iter 1, q = 32.178823, iter_gain = 0.009933, pass_gain = 0.021786, #neighbor_comms = 3590, elapsed = 0.995874
+pass 6, iter 2, q = 32.188228, iter_gain = 0.009404, pass_gain = 0.031191, #neighbor_comms = 3551, elapsed = 1.008987
+pass 6, iter 3, q = 32.200878, iter_gain = 0.012650, pass_gain = 0.043841, #neighbor_comms = 3504, elapsed = 1.011133
+pass 6, iter 4, q = 32.212841, iter_gain = 0.011964, pass_gain = 0.055805, #neighbor_comms = 3501, elapsed = 0.999928
+pass 6, iter 5, q = 32.222344, iter_gain = 0.009502, pass_gain = 0.065307, #neighbor_comms = 3547, elapsed = 1.011848
+pass 6, iter 6, q = 32.235070, iter_gain = 0.012726, pass_gain = 0.078033, #neighbor_comms = 3500, elapsed = 1.008034
+pass 6, iter 7, q = 32.246871, iter_gain = 0.011801, pass_gain = 0.089835, #neighbor_comms = 3494, elapsed = 0.998020
+pass 6, iter 8, q = 32.256470, iter_gain = 0.009599, pass_gain = 0.099433, #neighbor_comms = 3543, elapsed = 1.016140
+pass 6, iter 9, q = 32.268750, iter_gain = 0.012280, pass_gain = 0.111714, #neighbor_comms = 3495, elapsed = 1.008987
+pass 6, graph compaction, elapsed = 0.840187
+pass 6, #v = 86427 -> 86363, #e = 3637 -> 3385, #iter = 10, q = 32.268750, pass_gain = 0.111714, elapsed = 11.063099
+Pass 7, pre-iter, elapsed = 0.010967
+pass 7, iter 0, q = 32.278815, iter_gain = 0.010065, pass_gain = 0.010065, #neighbor_comms = 3385, elapsed = 1.028061
+pass 7, iter 1, q = 32.287402, iter_gain = 0.008587, pass_gain = 0.018652, #neighbor_comms = 3310, elapsed = 0.987053
+pass 7, iter 2, q = 32.295794, iter_gain = 0.008392, pass_gain = 0.027043, #neighbor_comms = 3264, elapsed = 0.988007
+pass 7, iter 3, q = 32.304185, iter_gain = 0.008392, pass_gain = 0.035435, #neighbor_comms = 3264, elapsed = 0.979900
+pass 7, iter 4, q = 32.312577, iter_gain = 0.008392, pass_gain = 0.043826, #neighbor_comms = 3264, elapsed = 0.988007
+pass 7, iter 5, q = 32.320968, iter_gain = 0.008392, pass_gain = 0.052218, #neighbor_comms = 3264, elapsed = 0.984907
+pass 7, iter 6, q = 32.329360, iter_gain = 0.008392, pass_gain = 0.060610, #neighbor_comms = 3264, elapsed = 0.991106
+pass 7, iter 7, q = 32.337751, iter_gain = 0.008392, pass_gain = 0.069001, #neighbor_comms = 3264, elapsed = 0.988007
+pass 7, iter 8, q = 32.346143, iter_gain = 0.008392, pass_gain = 0.077393, #neighbor_comms = 3264, elapsed = 0.988960
+pass 7, iter 9, q = 32.354535, iter_gain = 0.008392, pass_gain = 0.085784, #neighbor_comms = 3264, elapsed = 0.983953
+pass 7, graph compaction, elapsed = 0.813961
+pass 7, #v = 86363 -> 86318, #e = 3385 -> 3157, #iter = 10, q = 32.354535, pass_gain = 0.085784, elapsed = 10.818958
+Pass 8, pre-iter, elapsed = 0.011921
+pass 8, iter 0, q = 32.363442, iter_gain = 0.008908, pass_gain = 0.008908, #neighbor_comms = 3157, elapsed = 1.012087
+pass 8, iter 1, q = 32.371379, iter_gain = 0.007937, pass_gain = 0.016845, #neighbor_comms = 3125, elapsed = 0.965118
+pass 8, iter 2, q = 32.379124, iter_gain = 0.007745, pass_gain = 0.024590, #neighbor_comms = 3101, elapsed = 0.961065
+pass 8, iter 3, q = 32.386870, iter_gain = 0.007746, pass_gain = 0.032335, #neighbor_comms = 3099, elapsed = 0.962973
+pass 8, iter 4, q = 32.394616, iter_gain = 0.007746, pass_gain = 0.040081, #neighbor_comms = 3099, elapsed = 0.962019
+pass 8, iter 5, q = 32.402361, iter_gain = 0.007746, pass_gain = 0.047827, #neighbor_comms = 3099, elapsed = 0.963926
+pass 8, iter 6, q = 32.410107, iter_gain = 0.007746, pass_gain = 0.055572, #neighbor_comms = 3099, elapsed = 0.970840
+pass 8, iter 7, q = 32.417853, iter_gain = 0.007746, pass_gain = 0.063318, #neighbor_comms = 3099, elapsed = 0.965834
+pass 8, iter 8, q = 32.425598, iter_gain = 0.007746, pass_gain = 0.071064, #neighbor_comms = 3099, elapsed = 0.969887
+pass 8, iter 9, q = 32.433344, iter_gain = 0.007746, pass_gain = 0.078809, #neighbor_comms = 3099, elapsed = 0.957012
+pass 8, graph compaction, elapsed = 0.808954
+pass 8, #v = 86318 -> 86277, #e = 3157 -> 3056, #iter = 10, q = 32.433344, pass_gain = 0.078809, elapsed = 10.594845
+Pass 9, pre-iter, elapsed = 0.012159
+pass 9, iter 0, q = 32.441470, iter_gain = 0.008126, pass_gain = 0.008126, #neighbor_comms = 3056, elapsed = 1.051903
+pass 9, iter 1, q = 32.448917, iter_gain = 0.007448, pass_gain = 0.015573, #neighbor_comms = 3029, elapsed = 0.987053
+pass 9, iter 2, q = 32.456214, iter_gain = 0.007296, pass_gain = 0.022870, #neighbor_comms = 3013, elapsed = 0.985861
+pass 9, iter 3, q = 32.463510, iter_gain = 0.007296, pass_gain = 0.030166, #neighbor_comms = 3013, elapsed = 0.990868
+pass 9, iter 4, q = 32.470806, iter_gain = 0.007296, pass_gain = 0.037462, #neighbor_comms = 3013, elapsed = 0.989199
+pass 9, iter 5, q = 32.478102, iter_gain = 0.007296, pass_gain = 0.044758, #neighbor_comms = 3013, elapsed = 0.987053
+pass 9, iter 6, q = 32.485399, iter_gain = 0.007296, pass_gain = 0.052055, #neighbor_comms = 3013, elapsed = 0.982046
+pass 9, iter 7, q = 32.492695, iter_gain = 0.007296, pass_gain = 0.059351, #neighbor_comms = 3013, elapsed = 0.987053
+pass 9, iter 8, q = 32.499991, iter_gain = 0.007296, pass_gain = 0.066647, #neighbor_comms = 3013, elapsed = 0.985146
+pass 9, iter 9, q = 32.507287, iter_gain = 0.007296, pass_gain = 0.073943, #neighbor_comms = 3013, elapsed = 0.982046
+pass 9, graph compaction, elapsed = 0.829935
+pass 9, #v = 86277 -> 86244, #e = 3056 -> 2980, #iter = 10, q = 32.507287, pass_gain = 0.073943, elapsed = 10.849953
+--------------------------
+Run 8 elapsed: 106.472969 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86244.000000, modularity = 0.713661
+Reference: #communities = 85783.000000, modularity = 0.731292
+__________________________
+Pass 0, pre-iter, elapsed = 0.013113
+pass 0, iter 0, q = 32.705820, iter_gain = 0.198533, pass_gain = 0.198533, #neighbor_comms = 186878, elapsed = 1.286983
+pass 0, iter 1, q = 32.888055, iter_gain = 0.182235, pass_gain = 0.380768, #neighbor_comms = 144637, elapsed = 1.158953
+pass 0, iter 2, q = 33.028986, iter_gain = 0.140930, pass_gain = 0.521698, #neighbor_comms = 116630, elapsed = 1.116037
+pass 0, iter 3, q = 33.133360, iter_gain = 0.104374, pass_gain = 0.626072, #neighbor_comms = 103319, elapsed = 1.107931
+pass 0, iter 4, q = 33.218114, iter_gain = 0.084755, pass_gain = 0.710827, #neighbor_comms = 97080, elapsed = 1.106977
+pass 0, iter 5, q = 33.292214, iter_gain = 0.074100, pass_gain = 0.784927, #neighbor_comms = 93488, elapsed = 1.102924
+pass 0, iter 6, q = 33.359676, iter_gain = 0.067462, pass_gain = 0.852389, #neighbor_comms = 91228, elapsed = 1.097918
+pass 0, iter 7, q = 33.423244, iter_gain = 0.063568, pass_gain = 0.915957, #neighbor_comms = 89580, elapsed = 1.091003
+pass 0, iter 8, q = 33.482805, iter_gain = 0.059561, pass_gain = 0.975518, #neighbor_comms = 88484, elapsed = 1.097918
+pass 0, iter 9, q = 33.542059, iter_gain = 0.059253, pass_gain = 1.034771, #neighbor_comms = 87818, elapsed = 1.096010
+pass 0, graph compaction, elapsed = 0.962973
+pass 0, #v = 108299 -> 91010, #e = 186878 -> 46725, #iter = 10, q = 33.542059, pass_gain = 1.034771, elapsed = 12.320042
+Pass 1, pre-iter, elapsed = 0.011921
+pass 1, iter 0, q = 33.738550, iter_gain = 0.196491, pass_gain = 0.196491, #neighbor_comms = 46725, elapsed = 0.914097
+pass 1, iter 1, q = 33.859895, iter_gain = 0.121345, pass_gain = 0.317836, #neighbor_comms = 38586, elapsed = 0.832081
+pass 1, iter 2, q = 33.982224, iter_gain = 0.122329, pass_gain = 0.440165, #neighbor_comms = 35863, elapsed = 0.842094
+pass 1, iter 3, q = 34.089915, iter_gain = 0.107692, pass_gain = 0.547856, #neighbor_comms = 34451, elapsed = 0.818014
+pass 1, iter 4, q = 34.195727, iter_gain = 0.105812, pass_gain = 0.653668, #neighbor_comms = 33986, elapsed = 0.840902
+pass 1, iter 5, q = 34.291389, iter_gain = 0.095661, pass_gain = 0.749330, #neighbor_comms = 33415, elapsed = 0.822067
+pass 1, iter 6, q = 34.383335, iter_gain = 0.091947, pass_gain = 0.841276, #neighbor_comms = 33097, elapsed = 0.842094
+pass 1, iter 7, q = 34.473082, iter_gain = 0.089746, pass_gain = 0.931023, #neighbor_comms = 32824, elapsed = 0.818014
+pass 1, iter 8, q = 34.559275, iter_gain = 0.086194, pass_gain = 1.017217, #neighbor_comms = 32691, elapsed = 0.832081
+pass 1, iter 9, q = 34.647524, iter_gain = 0.088249, pass_gain = 1.105465, #neighbor_comms = 32568, elapsed = 0.812054
+pass 1, graph compaction, elapsed = 0.694990
+pass 1, #v = 91010 -> 87778, #e = 46725 -> 21918, #iter = 10, q = 34.647524, pass_gain = 1.105465, elapsed = 9.161949
+Pass 2, pre-iter, elapsed = 0.011921
+pass 2, iter 0, q = 34.745732, iter_gain = 0.098208, pass_gain = 0.098208, #neighbor_comms = 21918, elapsed = 0.938892
+pass 2, iter 1, q = 34.800630, iter_gain = 0.054897, pass_gain = 0.153106, #neighbor_comms = 17609, elapsed = 0.874996
+pass 2, iter 2, q = 34.859599, iter_gain = 0.058969, pass_gain = 0.212074, #neighbor_comms = 16632, elapsed = 0.869989
+pass 2, iter 3, q = 34.920215, iter_gain = 0.060616, pass_gain = 0.272691, #neighbor_comms = 15998, elapsed = 0.865936
+pass 2, iter 4, q = 34.977445, iter_gain = 0.057231, pass_gain = 0.329921, #neighbor_comms = 15940, elapsed = 0.871181
+pass 2, iter 5, q = 35.035410, iter_gain = 0.057964, pass_gain = 0.387886, #neighbor_comms = 15752, elapsed = 0.869989
+pass 2, iter 6, q = 35.094178, iter_gain = 0.058768, pass_gain = 0.446653, #neighbor_comms = 15674, elapsed = 0.869036
+pass 2, iter 7, q = 35.154260, iter_gain = 0.060083, pass_gain = 0.506736, #neighbor_comms = 15652, elapsed = 0.863791
+pass 2, iter 8, q = 35.213543, iter_gain = 0.059283, pass_gain = 0.566019, #neighbor_comms = 15632, elapsed = 0.867844
+pass 2, iter 9, q = 35.273489, iter_gain = 0.059946, pass_gain = 0.625965, #neighbor_comms = 15614, elapsed = 0.867128
+pass 2, graph compaction, elapsed = 0.735998
+pass 2, #v = 87778 -> 86889, #e = 21918 -> 10111, #iter = 10, q = 35.273489, pass_gain = 0.625965, elapsed = 9.594917
+Pass 3, pre-iter, elapsed = 0.012159
+pass 3, iter 0, q = 35.319522, iter_gain = 0.046033, pass_gain = 0.046033, #neighbor_comms = 10111, elapsed = 0.925064
+pass 3, iter 1, q = 35.342987, iter_gain = 0.023465, pass_gain = 0.069498, #neighbor_comms = 8225, elapsed = 0.884056
+pass 3, iter 2, q = 35.365944, iter_gain = 0.022957, pass_gain = 0.092455, #neighbor_comms = 7823, elapsed = 0.883102
+pass 3, iter 3, q = 35.386797, iter_gain = 0.020853, pass_gain = 0.113308, #neighbor_comms = 7661, elapsed = 0.890970
+pass 3, iter 4, q = 35.408072, iter_gain = 0.021275, pass_gain = 0.134583, #neighbor_comms = 7666, elapsed = 0.887871
+pass 3, iter 5, q = 35.428344, iter_gain = 0.020272, pass_gain = 0.154855, #neighbor_comms = 7593, elapsed = 0.880957
+pass 3, iter 6, q = 35.449384, iter_gain = 0.021040, pass_gain = 0.175895, #neighbor_comms = 7708, elapsed = 0.886917
+pass 3, iter 7, q = 35.469595, iter_gain = 0.020211, pass_gain = 0.196106, #neighbor_comms = 7600, elapsed = 0.878811
+pass 3, iter 8, q = 35.490635, iter_gain = 0.021040, pass_gain = 0.217146, #neighbor_comms = 7708, elapsed = 0.882864
+pass 3, iter 9, q = 35.510846, iter_gain = 0.020211, pass_gain = 0.237357, #neighbor_comms = 7600, elapsed = 0.874996
+pass 3, graph compaction, elapsed = 0.757933
+pass 3, #v = 86889 -> 86651, #e = 10111 -> 5672, #iter = 10, q = 35.510846, pass_gain = 0.237357, elapsed = 9.726048
+Pass 4, pre-iter, elapsed = 0.011921
+pass 4, iter 0, q = 35.532169, iter_gain = 0.021323, pass_gain = 0.021323, #neighbor_comms = 5672, elapsed = 0.991106
+pass 4, iter 1, q = 35.552039, iter_gain = 0.019870, pass_gain = 0.041192, #neighbor_comms = 5006, elapsed = 0.930071
+pass 4, iter 2, q = 35.571062, iter_gain = 0.019023, pass_gain = 0.060216, #neighbor_comms = 4977, elapsed = 0.930071
+pass 4, iter 3, q = 35.591959, iter_gain = 0.020897, pass_gain = 0.081112, #neighbor_comms = 4843, elapsed = 0.935078
+pass 4, iter 4, q = 35.611212, iter_gain = 0.019253, pass_gain = 0.100366, #neighbor_comms = 4921, elapsed = 0.937939
+pass 4, iter 5, q = 35.631549, iter_gain = 0.020337, pass_gain = 0.120702, #neighbor_comms = 4846, elapsed = 0.936985
+pass 4, iter 6, q = 35.650635, iter_gain = 0.019087, pass_gain = 0.139789, #neighbor_comms = 4891, elapsed = 0.939131
+pass 4, iter 7, q = 35.670951, iter_gain = 0.020315, pass_gain = 0.160104, #neighbor_comms = 4844, elapsed = 0.930071
+pass 4, iter 8, q = 35.690037, iter_gain = 0.019087, pass_gain = 0.179191, #neighbor_comms = 4891, elapsed = 0.934124
+pass 4, iter 9, q = 35.710353, iter_gain = 0.020315, pass_gain = 0.199506, #neighbor_comms = 4844, elapsed = 0.936031
+pass 4, graph compaction, elapsed = 0.777006
+pass 4, #v = 86651 -> 86518, #e = 5672 -> 4217, #iter = 10, q = 35.710353, pass_gain = 0.199506, elapsed = 10.271788
+Pass 5, pre-iter, elapsed = 0.011921
+pass 5, iter 0, q = 35.727446, iter_gain = 0.017093, pass_gain = 0.017093, #neighbor_comms = 4217, elapsed = 0.988007
+pass 5, iter 1, q = 35.745285, iter_gain = 0.017839, pass_gain = 0.034932, #neighbor_comms = 3908, elapsed = 0.935078
+pass 5, iter 2, q = 35.758435, iter_gain = 0.013151, pass_gain = 0.048083, #neighbor_comms = 3879, elapsed = 0.929832
+pass 5, iter 3, q = 35.772550, iter_gain = 0.014115, pass_gain = 0.062198, #neighbor_comms = 3863, elapsed = 0.927925
+pass 5, iter 4, q = 35.786206, iter_gain = 0.013656, pass_gain = 0.075853, #neighbor_comms = 3895, elapsed = 0.925064
+pass 5, iter 5, q = 35.799969, iter_gain = 0.013764, pass_gain = 0.089617, #neighbor_comms = 3861, elapsed = 0.929117
+pass 5, iter 6, q = 35.813602, iter_gain = 0.013633, pass_gain = 0.103250, #neighbor_comms = 3861, elapsed = 0.928879
+pass 5, iter 7, q = 35.827366, iter_gain = 0.013764, pass_gain = 0.117013, #neighbor_comms = 3861, elapsed = 0.926018
+pass 5, iter 8, q = 35.840999, iter_gain = 0.013633, pass_gain = 0.130646, #neighbor_comms = 3861, elapsed = 0.926971
+pass 5, iter 9, q = 35.854763, iter_gain = 0.013764, pass_gain = 0.144410, #neighbor_comms = 3861, elapsed = 0.927925
+pass 5, graph compaction, elapsed = 0.775814
+pass 5, #v = 86518 -> 86454, #e = 4217 -> 3569, #iter = 10, q = 35.854763, pass_gain = 0.144410, elapsed = 10.221958
+Pass 6, pre-iter, elapsed = 0.011921
+pass 6, iter 0, q = 35.867954, iter_gain = 0.013191, pass_gain = 0.013191, #neighbor_comms = 3569, elapsed = 1.039982
+pass 6, iter 1, q = 35.878452, iter_gain = 0.010499, pass_gain = 0.023690, #neighbor_comms = 3490, elapsed = 0.973940
+pass 6, iter 2, q = 35.888484, iter_gain = 0.010031, pass_gain = 0.033721, #neighbor_comms = 3411, elapsed = 0.993967
+pass 6, iter 3, q = 35.898515, iter_gain = 0.010031, pass_gain = 0.043753, #neighbor_comms = 3411, elapsed = 0.993013
+pass 6, iter 4, q = 35.908546, iter_gain = 0.010031, pass_gain = 0.053784, #neighbor_comms = 3411, elapsed = 0.991106
+pass 6, iter 5, q = 35.918578, iter_gain = 0.010031, pass_gain = 0.063815, #neighbor_comms = 3411, elapsed = 0.998020
+pass 6, iter 6, q = 35.928609, iter_gain = 0.010031, pass_gain = 0.073847, #neighbor_comms = 3411, elapsed = 0.991106
+pass 6, iter 7, q = 35.938640, iter_gain = 0.010031, pass_gain = 0.083878, #neighbor_comms = 3411, elapsed = 0.989914
+pass 6, iter 8, q = 35.948672, iter_gain = 0.010031, pass_gain = 0.093909, #neighbor_comms = 3411, elapsed = 0.994921
+pass 6, iter 9, q = 35.958703, iter_gain = 0.010031, pass_gain = 0.103941, #neighbor_comms = 3411, elapsed = 0.997782
+pass 6, graph compaction, elapsed = 0.815868
+pass 6, #v = 86454 -> 86395, #e = 3569 -> 3285, #iter = 10, q = 35.958703, pass_gain = 0.103941, elapsed = 10.872126
+Pass 7, pre-iter, elapsed = 0.011921
+pass 7, iter 0, q = 35.969373, iter_gain = 0.010670, pass_gain = 0.010670, #neighbor_comms = 3285, elapsed = 1.058817
+pass 7, iter 1, q = 35.978848, iter_gain = 0.009475, pass_gain = 0.020145, #neighbor_comms = 3248, elapsed = 1.021862
+pass 7, iter 2, q = 35.988086, iter_gain = 0.009238, pass_gain = 0.029383, #neighbor_comms = 3237, elapsed = 1.023054
+pass 7, iter 3, q = 35.997139, iter_gain = 0.009053, pass_gain = 0.038436, #neighbor_comms = 3232, elapsed = 1.013041
+pass 7, iter 4, q = 36.006130, iter_gain = 0.008991, pass_gain = 0.047427, #neighbor_comms = 3231, elapsed = 1.022100
+pass 7, iter 5, q = 36.015089, iter_gain = 0.008959, pass_gain = 0.056385, #neighbor_comms = 3229, elapsed = 1.023054
+pass 7, iter 6, q = 36.024047, iter_gain = 0.008959, pass_gain = 0.065344, #neighbor_comms = 3229, elapsed = 1.024008
+pass 7, iter 7, q = 36.033006, iter_gain = 0.008959, pass_gain = 0.074302, #neighbor_comms = 3229, elapsed = 1.024961
+pass 7, iter 8, q = 36.041964, iter_gain = 0.008959, pass_gain = 0.083261, #neighbor_comms = 3229, elapsed = 1.028061
+pass 7, iter 9, q = 36.050923, iter_gain = 0.008959, pass_gain = 0.092220, #neighbor_comms = 3229, elapsed = 1.022100
+pass 7, graph compaction, elapsed = 0.837088
+pass 7, #v = 86395 -> 86351, #e = 3285 -> 3181, #iter = 10, q = 36.050923, pass_gain = 0.092220, elapsed = 11.192083
+Pass 8, pre-iter, elapsed = 0.010967
+pass 8, iter 0, q = 36.060448, iter_gain = 0.009525, pass_gain = 0.009525, #neighbor_comms = 3181, elapsed = 1.028061
+pass 8, iter 1, q = 36.069055, iter_gain = 0.008607, pass_gain = 0.018133, #neighbor_comms = 3147, elapsed = 0.967979
+pass 8, iter 2, q = 36.077591, iter_gain = 0.008536, pass_gain = 0.026668, #neighbor_comms = 3136, elapsed = 0.972033
+pass 8, iter 3, q = 36.086106, iter_gain = 0.008515, pass_gain = 0.035183, #neighbor_comms = 3135, elapsed = 0.964880
+pass 8, iter 4, q = 36.094621, iter_gain = 0.008515, pass_gain = 0.043698, #neighbor_comms = 3135, elapsed = 0.974178
+pass 8, iter 5, q = 36.103136, iter_gain = 0.008515, pass_gain = 0.052213, #neighbor_comms = 3135, elapsed = 0.969172
+pass 8, iter 6, q = 36.111651, iter_gain = 0.008515, pass_gain = 0.060728, #neighbor_comms = 3135, elapsed = 0.971079
+pass 8, iter 7, q = 36.120166, iter_gain = 0.008515, pass_gain = 0.069243, #neighbor_comms = 3135, elapsed = 0.969887
+pass 8, iter 8, q = 36.128681, iter_gain = 0.008515, pass_gain = 0.077758, #neighbor_comms = 3135, elapsed = 0.967026
+pass 8, iter 9, q = 36.137196, iter_gain = 0.008515, pass_gain = 0.086273, #neighbor_comms = 3135, elapsed = 0.965118
+pass 8, graph compaction, elapsed = 0.818968
+pass 8, #v = 86351 -> 86319, #e = 3181 -> 3097, #iter = 10, q = 36.137196, pass_gain = 0.086273, elapsed = 10.668039
+Pass 9, pre-iter, elapsed = 0.012159
+pass 9, iter 0, q = 36.146113, iter_gain = 0.008917, pass_gain = 0.008917, #neighbor_comms = 3097, elapsed = 1.046896
+pass 9, iter 1, q = 36.154278, iter_gain = 0.008164, pass_gain = 0.017082, #neighbor_comms = 3070, elapsed = 1.008987
+pass 9, iter 2, q = 36.162279, iter_gain = 0.008001, pass_gain = 0.025083, #neighbor_comms = 3055, elapsed = 1.006126
+pass 9, iter 3, q = 36.170281, iter_gain = 0.008001, pass_gain = 0.033085, #neighbor_comms = 3055, elapsed = 1.014948
+pass 9, iter 4, q = 36.178282, iter_gain = 0.008001, pass_gain = 0.041086, #neighbor_comms = 3055, elapsed = 1.011848
+pass 9, iter 5, q = 36.186284, iter_gain = 0.008001, pass_gain = 0.049088, #neighbor_comms = 3055, elapsed = 1.016140
+pass 9, iter 6, q = 36.194285, iter_gain = 0.008001, pass_gain = 0.057089, #neighbor_comms = 3055, elapsed = 1.005173
+pass 9, iter 7, q = 36.202286, iter_gain = 0.008001, pass_gain = 0.065090, #neighbor_comms = 3055, elapsed = 1.008034
+pass 9, iter 8, q = 36.210288, iter_gain = 0.008001, pass_gain = 0.073092, #neighbor_comms = 3055, elapsed = 1.014948
+pass 9, iter 9, q = 36.218289, iter_gain = 0.008001, pass_gain = 0.081093, #neighbor_comms = 3055, elapsed = 1.008987
+pass 9, graph compaction, elapsed = 0.826120
+pass 9, #v = 86319 -> 86286, #e = 3097 -> 3021, #iter = 10, q = 36.218289, pass_gain = 0.081093, elapsed = 11.063099
+--------------------------
+Run 9 elapsed: 106.712103 ms, #passes = 10
+Community Validity: PASS
+Computed: #communities = 86286.000000, modularity = 0.711971
+Reference: #communities = 85783.000000, modularity = 0.731292
+[Louvain] finished.
+ avg. elapsed: 108.008575 ms
+ iterations: 10
+ min. elapsed: 106.215000 ms
+ max. elapsed: 118.952990 ms
+ load time: 97.4641 ms
+ preprocess time: 955.420000 ms
+ postprocess time: 0.992060 ms
+ total time: 2078.540087 ms
