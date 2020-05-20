@@ -72,7 +72,7 @@ struct main_struct {
     VertexT *ref_walks = NULL;
 
     ValueT *node_values = NULL;
-    if (walk_mode != 0) {
+    if (walk_mode != 0 and walk_mode != 3) {
       std::string node_value_path =
           parameters.Get<std::string>("node-value-path");
       if (node_value_path.compare("") == 0) {
@@ -137,8 +137,8 @@ int main(int argc, char **argv) {
   }
   GUARD_CU(parameters.Check_Required());
 
-  return app::Switch_Types<app::VERTEXT_U32B | app::VERTEXT_U64B |
-                           app::SIZET_U32B | app::SIZET_U64B |
+  return app::Switch_Types<app::VERTEXT_U32B |
+                           app::SIZET_U64B |
                            app::VALUET_F32B | app::DIRECTED | app::UNDIRECTED>(
       parameters, main_struct());
 }

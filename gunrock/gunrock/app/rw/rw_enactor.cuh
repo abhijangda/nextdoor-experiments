@@ -23,6 +23,7 @@
 #include <math.h>
 #include <curand.h>
 #include <curand_kernel.h>
+#include <cstdlib>
 
 namespace gunrock {
 namespace app {
@@ -237,6 +238,117 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
       GUARD_CU(frontier.V_Q()->ForAll(stochastic_greedy_rw_op,
                                       frontier.queue_length, util::DEVICE,
                                       oprtr_parameters.stream));
+
+    } else if (walk_mode == 3) {  // Node2Vec using rejection sampling
+
+      #define p 1.2f
+      #define q 0.8f
+      //int num_threads = frontier.queue_length*10;
+      int grid_size = frontier.queue_length/256 + 1;
+      printf ("node2vec\n");
+      std::cout << "grid_size " << grid_size << " size " <<  frontier.V_Q()->GetSize() << " " << frontier.queue_length << " sizeof(SizeT) " << sizeof(SizeT) << " sizeof(VertexT) " << sizeof(VertexT) << std::endl;
+      const size_t size_rand = graph.nodes * 20UL * walks_per_node;
+      auto node2vec_rw_op =
+          [graph, walks, rand, iteration, walk_length, store_walks,
+           neighbors_seen, steps_taken, size_rand] __host__
+          __device__(VertexT * v, const SizeT &i) {
+            
+            SizeT write_idx =
+                (i * walk_length) + iteration;  // Write location in RW array
+            if (store_walks) {
+              walks[write_idx] = v[i];  // record current position in walk
+            }
+
+            if (!util::isValid(v[i])) {
+              return;
+            }
+
+            if (iteration >= walk_length - 1)
+              return;
+            SizeT num_neighbors = graph.GetNeighborListLength(v[i]);
+            if (iteration >= 1) {
+              VertexT last_stop = walks[write_idx-1];
+              if (num_neighbors == 0) {
+                v[i] = util::PreDefinedValues<VertexT>::InvalidValue;
+                return;
+              }
+              SizeT neighbor_list_offset = graph.GetNeighborListOffset(v[i]);
+              // if (num_neighbors <= 1) {
+              //   v[i] = graph.GetEdgeDest(neighbor_list_offset+num_neighbors-1);
+              //   steps_taken[i]++;
+              //   neighbors_seen[i] += (uint64_t)num_neighbors;
+              //   return;
+              // }
+              const float height = max(1.0/p, max(1.0f, 1.0f/q));
+              int ii = 0;              
+              while (true) {
+                // Rejection sampling
+                const float rand_x = rand[(ii++ +i*20)%size_rand];
+                const SizeT x = (SizeT)(round(0.5 + num_neighbors * rand_x) - 1);
+                const float rand_y = rand[(ii++ + i*20)%size_rand];
+                const float y = rand_y*height;
+                VertexT neighbor =
+                    graph.GetEdgeDest(neighbor_list_offset + x);
+                float neighbrH = 0.0f;
+                if (last_stop == neighbor)
+                  neighbrH = 1.0f/p;
+                else {
+                  bool has_edge = graph.GetSrcDestEdge(last_stop, neighbor);
+                  if (has_edge) {
+                    neighbrH = 1.0f;
+                  } else {
+                    neighbrH = 1.0f/q;
+                  }
+                }
+
+                if (round(y) <= round(neighbrH)) {
+                  //Found neighbor
+                  v[i] = neighbor;  // Replace vertex w/ neighbor in queue
+                  steps_taken[i]++;
+                  neighbors_seen[i] += (uint64_t)
+                      num_neighbors;  // Record number of neighbors we've seen
+                  return;
+                }
+
+                if (ii > 10) {
+                  printf ("iteration %ld v[i] %d num_neighbors %ld last_stop %ld root %ld y %f x %ld neighbrH %f neighbor %ld height %f\n", (long)iteration, (long)v[i], (long)num_neighbors, (long)last_stop, (long)walks[write_idx - iteration], y, x, neighbrH, 
+                  (long)neighbor, height);
+                  assert (false);
+                }
+              }
+            } else {
+              SizeT neighbor_list_offset = graph.GetNeighborListOffset(v[i]);
+              if (num_neighbors > 0) {
+                VertexT neighbor =
+                      graph.GetEdgeDest(neighbor_list_offset+num_neighbors-1);
+                v[i] = neighbor;  // Replace vertex w/ neighbor in queue
+                steps_taken[i]++;
+                neighbors_seen[i] += (uint64_t)num_neighbors;
+              } else {
+                v[i] = util::PreDefinedValues<VertexT>::InvalidValue;
+              }
+            }
+          };
+
+      //curandSetStream(gen, oprtr_parameters.stream);
+      float* h_rand = new float[size_rand];
+      for (size_t i = 0; i < size_rand; i++) {
+        float r = static_cast <float> (::rand()) / static_cast <float> (RAND_MAX);
+        if (r == 1.0f) {
+          r = 0.99f;
+        }
+
+        h_rand[i] = r;
+        assert (r >= 0 && r < 1);
+      }
+      GUARD_CU(cudaMemcpy(rand.GetPointer(util::DEVICE), h_rand, size_rand*sizeof(float), cudaMemcpyHostToDevice));
+      delete h_rand;
+      // curandGenerateUniform(gen, rand.GetPointer(util::DEVICE),
+      //                       size_rand);
+      
+      GUARD_CU(frontier.V_Q()->ForAll(node2vec_rw_op, frontier.queue_length,
+                                      util::DEVICE, oprtr_parameters.stream,
+                                      grid_size, 256));
 
     } else {
       printf("ERROR: unknown walk_mode=%d\n", walk_mode);

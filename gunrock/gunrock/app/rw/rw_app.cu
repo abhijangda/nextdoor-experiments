@@ -108,7 +108,22 @@ cudaError_t RunTests(util::Parameters &parameters, GraphT &graph,
   EnactorT enactor;
   GUARD_CU(problem.Init(graph, target));
   GUARD_CU(enactor.Init(problem, target));
-
+  GUARD_CU(graph.Sort());
+  // {
+  //   SizeT e = graph.GetSrcDestEdge(24320, 99999);
+  //   std::cout << "edge between 1 and 100? "<< e << std::endl;
+  //   VertexT src, dest;
+  //   graph.GetEdgeSrcDest(e, src, dest);
+  //   std::cout << "edge " << e << " is " << src << "->" << dest << std::endl;
+  //   std::cout << "src offset " << graph.GetNeighborListOffset(24320) << std::endl;
+  // }
+  // {
+  //   SizeT e = graph.GetSrcDestEdge(24320, 100);
+  //   std::cout << "edge between 1 and 100? "<< e << std::endl;
+  //   VertexT src, dest;
+  //   graph.GetEdgeSrcDest(e, src, dest);
+  //   std::cout << "edge " << e << " is " << src << "->" << dest << std::endl;
+  // }
   cpu_timer.Stop();
   parameters.Set("preprocess-time", cpu_timer.ElapsedMillis());
 

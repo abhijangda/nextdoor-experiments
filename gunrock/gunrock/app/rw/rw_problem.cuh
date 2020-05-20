@@ -124,7 +124,7 @@ struct Problem : ProblemBase<_GraphT, _FLAG> {
       store_walks = store_walks_;
 
       curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEFAULT);
-      curandSetPseudoRandomGeneratorSeed(gen, seed);
+      curandSetPseudoRandomGeneratorSeed(gen, 1234);
 
       if (store_walks_) {
         GUARD_CU(walks.Allocate(sub_graph.nodes * walk_length * walks_per_node,
@@ -132,7 +132,7 @@ struct Problem : ProblemBase<_GraphT, _FLAG> {
       } else {
         GUARD_CU(walks.Allocate(1, target));  // Dummy allocation
       }
-      GUARD_CU(rand.Allocate(sub_graph.nodes * walks_per_node, target));
+      GUARD_CU(rand.Allocate(sub_graph.nodes * 20UL*walks_per_node, target));
       GUARD_CU(
           neighbors_seen.Allocate(sub_graph.nodes * walks_per_node, target));
       GUARD_CU(steps_taken.Allocate(sub_graph.nodes * walks_per_node, target));

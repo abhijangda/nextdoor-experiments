@@ -558,9 +558,14 @@ struct Csr :
     }
 
     __device__ __host__ __forceinline__ 
-    SizeT GetSrcDestEdge(const VertexT &src, const VertexT &dest)
+    bool GetSrcDestEdge(const VertexT &src, const VertexT &dest) const
     {
-        return util::BinarySearch(dest, column_indices + 0, row_offsets[src], row_offsets[src + 1] - 1);
+        if (row_offsets[src] == row_offsets[src + 1]) {
+            return column_indices[row_offsets[src]] == dest;
+        } else {
+            assert (row_offsets[src + 1] != 0);
+            return util::BinarySearch2(dest, column_indices + 0, row_offsets[src], row_offsets[src + 1] - 1);
+        }
     }  
 
     /*template <typename Tuple>

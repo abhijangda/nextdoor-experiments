@@ -50,6 +50,41 @@ __host__ __device__ SizeT BinarySearch(const T1 &element_to_find,
 }
 
 template <typename T1, typename ArrayT, typename SizeT>
+__host__ __device__ bool BinarySearch2(const T1 &element_to_find,
+                                        const ArrayT &elements, SizeT left_index,
+                                        SizeT right_index)  // strictly less
+{
+  SizeT l = left_index;
+  SizeT r = right_index;
+  if (l == r) {
+    if (elements[l] == element_to_find)
+      return true;
+    else 
+      return false;
+  }
+  while (l <= r) { 
+    SizeT m = l + (r - l) / 2; 
+
+    // Check if x is present at mid 
+    if (elements[m] == element_to_find) 
+        return true;
+
+    // If x greater, ignore left half 
+    if (elements[m] < element_to_find) 
+        l = m + 1; 
+
+    // If x is smaller, ignore right half 
+    else
+        r = m - 1; 
+  } 
+
+  // if we reach here, then element was 
+  // not present 
+  return false; 
+}
+
+
+template <typename T1, typename ArrayT, typename SizeT>
 __host__ __device__ __forceinline__ SizeT
 BinarySearch(const T1 &element_to_find, const ArrayT &elements,
              SizeT left_index, SizeT right_index) {
