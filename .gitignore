@@ -2,3 +2,5 @@ datasets/*
 *.o
 a.out
 sparse
+build/
+ext/

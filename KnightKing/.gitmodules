@@ -1,0 +1,9 @@
+[submodule "ext/args"]
+	path = ext/args
+	url = https://github.com/Taywee/args.git
+[submodule "ext/gemini"]
+	path = ext/gemini
+	url = https://github.com/thu-pacman/GeminiGraph.git
+[submodule "ext/gtest"]
+	path = ext/gtest
+	url = https://github.com/google/googletest.git
