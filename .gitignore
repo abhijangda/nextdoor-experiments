@@ -1,3 +1,4 @@
+datasets/*
 *.o
 a.out
 sparse
