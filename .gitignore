@@ -4,3 +4,4 @@ a.out
 sparse
 build/
 ext/
+*.txt
