@@ -2,11 +2,11 @@
 
 import subprocess
 import re
-# file = (filelocation, noVertex, noWalkers) 
-files = [("../datasets/weighted-cit-Patents.data",3774768,1),
-         ("../datasets/soc-LiveJournal1.data",4847571,1),
-         ("../datasets/com-orkut.data",3072441,1),
-         ("../datasets/com-friendster.data",65608366,1)]
+# file = (filelocation, noVertex, noWalkers)
+files = [("../datasets/weighted-cit-Patents.data", 6009556,1),
+         ("../datasets/soc-LiveJournal1.data", 4847593,1),
+         ("../datasets/com-orkut.data", 3072640 ,1),
+         ("../datasets/com-friendster.data",124836199 ,1)]
 
 files_d = [("./build/karate.data",100,1), 
          ("./build/karate.data",100,1)]
