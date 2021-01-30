@@ -5,3 +5,7 @@ sparse
 build/
 ext/
 *.txt
+*.pyc
+*.out
+GraphSAGE/
+*.pt

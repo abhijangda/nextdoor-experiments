@@ -7,7 +7,7 @@ from tqdm import tqdm
 import argparse
 import scipy
 import multiprocessing as mp
-
+import time
 import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -46,6 +46,7 @@ parser.add_argument('--cuda', type=int, default=0,
 
 
 args = parser.parse_args()
+
 
 
 class GraphConvolution(nn.Module):
@@ -91,12 +92,18 @@ class SuGCN(nn.Module):
         return x
 
 
+sampling_time = 0
+crit_sampling_time = 0
+training_time = 0
 
 def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
     '''
         FastGCN_Sampler: Sample a fixed number of nodes per layer. The sampling probability (importance)
                          is pre-computed based on the global degree (lap_matrix)
     '''
+    global sampling_time
+    global crit_sampling_time
+    t1 = time.time()
     np.random.seed(seed)
     previous_nodes = batch_nodes
     adjs  = []
@@ -108,20 +115,31 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
     '''
     for d in range(depth):
         #     row-select the lap_matrix (U) by previously sampled nodes
+        t2 = time.time()
         U = lap_matrix[previous_nodes , :]
+        #t3 = time.time()
         #     sample the next layer's nodes based on the pre-computed probability (p).
         s_num = np.min([np.sum(p > 0), samp_num_list[d]])
+        t3 = time.time()
         after_nodes = np.random.choice(num_nodes, s_num, p = p, replace = False)
+        #t3 = time.time()
         #     col-select the lap_matrix (U), and then devided by the sampled probability for 
         #     unbiased-sampling. Finally, conduct row-normalization to avoid value explosion.         
-        adj = row_norm(U[: , after_nodes].multiply(1/p[after_nodes]))
+        adj = (U[: , after_nodes].multiply(1/p[after_nodes]))
+        #t3 = time.time()
         #     Turn the sampled adjacency matrix into a sparse matrix. If implemented by PyG
         #     This sparse matrix can also provide index and value.
         adjs += [sparse_mx_to_torch_sparse_tensor(row_normalize(adj))]
         #     Turn the sampled nodes as previous_nodes, recursively conduct sampling.
+        #t3 = time.time()
         previous_nodes = after_nodes
+        crit_sampling_time += t3-t2
     #     Reverse the sampled probability from bottom to top. Only require input how the lastly sampled nodes.
+    t4 = time.time()
     adjs.reverse()
+    #t4 = time.time()
+    #print(t4-t1,t3-t2)
+    sampling_time += t4-t1
     return adjs, previous_nodes, batch_nodes
 
 def ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
@@ -135,6 +153,8 @@ def ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dept
     '''
         Sample nodes from top to bottom, based on the probability computed adaptively (layer-dependent).
     '''
+    global sampling_time
+    t1 = time.time()
     for d in range(depth):
         #     row-select the lap_matrix (U) by previously sampled nodes
         U = lap_matrix[previous_nodes , :]
@@ -154,6 +174,8 @@ def ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dept
         previous_nodes = after_nodes
     #     Reverse the sampled probability from bottom to top. Only require input how the lastly sampled nodes.
     adjs.reverse()
+    t2 = time.time()
+    sampling_time += t2-t1
     return adjs, previous_nodes, batch_nodes
 def default_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
     mx = sparse_mx_to_torch_sparse_tensor(lap_matrix)
@@ -205,12 +227,12 @@ elif args.sample_method == 'full':
 
 # In[ ]:
 
-
+training_time = 0
 process_ids = np.arange(args.batch_num)
 samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
-pool = mp.Pool(args.pool_num)
-jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+#pool = mp.Pool(args.pool_num)
+#jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
 
 all_res = []
 for oiter in range(5):
@@ -225,18 +247,32 @@ for oiter in range(5):
     times = []
     res   = []
     print('-' * 10)
+    print(len(feat_data))
     for epoch in np.arange(args.epoch_num):
         susage.train()
         train_losses = []
+        ######################### Synchronous Version ########################
+        idx = torch.randperm(len(train_nodes))[:args.batch_size]
+        batch_nodes = train_nodes[idx]
+        train_data = [sampler(np.random.randint(2**32 - 1), batch_nodes, \
+                samp_num_list * 20, len(feat_data), lap_matrix, args.n_layers)]
+        idx = torch.randperm(len(valid_nodes))[:args.batch_size]
+        batch_nodes = valid_nodes[idx]
+        valid_data = sampler(np.random.randint(2**32 - 1), batch_nodes, \
+                samp_num_list * 20, len(feat_data), lap_matrix, args.n_layers)
+        
+        ''' ########### Asynchronous version ###############
         train_data = [job.get() for job in jobs[:-1]]
         valid_data = jobs[-1].get()
         pool.close()
         pool.join()
         pool = mp.Pool(args.pool_num)
         '''
-            Use CPU-GPU cooperation to reduce the overhead for sampling. (conduct sampling while training)
+            #Use CPU-GPU cooperation to reduce the overhead for sampling. (conduct sampling while training)
         '''
         jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+        '''
+        t0 = time.time()
         for _iter in range(args.n_iters):
             for adjs, input_nodes, output_nodes in train_data:    
                 adjs = package_mxl(adjs, device)
@@ -270,6 +306,8 @@ for oiter in range(5):
             cnt += 1
         if cnt == args.n_stops // args.batch_num:
             break
+        t2 = time.time()
+        training_time += t2-t1
     best_model = torch.load('./save/best_model.pt')
     best_model.eval()
     test_f1s = []
@@ -297,7 +335,9 @@ for oiter in range(5):
     test_f1s = [f1_score(output.argmax(dim=1).cpu(), labels[output_nodes].cpu(), average='micro')]
     
     print('Iteration: %d, Test F1: %.3f' % (oiter, np.average(test_f1s)))
-
+    print("training_time",training_time)
+    print("sampling_time",sampling_time)
+    print("crit_time",crit_sampling_time)
 '''
     Visualize the train-test curve
 '''
