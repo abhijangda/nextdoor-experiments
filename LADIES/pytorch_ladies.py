@@ -148,11 +148,13 @@ fastgcn_p = None
 fastgcn_p_set = False
 
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
+    enable_nextdoor = True
     global nd, sampling_time, fastgcn_p, fastgcn_p_set
     previous_nodes = batch_nodes
     adjs = []
     # p computation can be pushed outside if performance is bad
-    
+    if (enable_nextdoor):
+        sampled_nodes = nd.sample(0)[0][0]
     samples = []
     t1 = time.time()
     if (fastgcn_p_set == False):
@@ -163,7 +165,7 @@ def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_ma
 
     for d in range(depth):
         #s_num = np.min([np.sum(p > 0), samp_num_list[d]])
-        after_nodes = np.random.choice(num_nodes, samp_num_list[d], replace = False)
+        after_nodes = sampled_nodes if(enable_nextdoor) else np.random.choice(num_nodes, samp_num_list[d], replace = False)
         adj = lap_matrix[previous_nodes, : ][:, after_nodes].multiply(1/fastgcn_p[after_nodes])
         # print(adj.shape, type(adj), fastgcn_p[after_nodes].shape, type(fastgcn_p[after_nodes]))
         samples += [(after_nodes, adj)]
@@ -273,7 +275,7 @@ process_ids = np.arange(args.batch_num)
 samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
 from nextdoor_patch import *
-nd = NextDoorSamplerFastGCN(args.dataset, edges, train_nodes, samp_num_list)
+nd = NextDoorSamplerFastGCN(args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
 
 
 #pool = mp.Pool(args.pool_num)
