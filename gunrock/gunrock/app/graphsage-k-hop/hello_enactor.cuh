@@ -101,38 +101,12 @@ struct NeighborsIterationLoop
     auto &positions = data_slice.positions[hop];
     auto &lengths = data_slice.lengths[hop];
     // </TODO>
-    std::cout << "Running for 121221212121211 hop " << hop << std::endl;
-  #define S1 25
-  #define S2 10
-  
+    std::cout << "Running for 121221212121211 hop " << hop << std::endl;  
+    // if (hop == 1) {
+    //   exit(EXIT_SUCCESS);
+    // }
     if (hop == 0) {
       auto &neighbors = data_slice.neighbors[hop];
-      {
-        auto &total_lengths = data_slice.total_lengths[hop];
-        util::Array1D<SizeT, VertexT> *null_frontier = NULL;        
-        auto advance_op = [
-                            neighbors, positions, lengths
-        ] __host__ __device__(const VertexT &src, VertexT &dest,
-                              const SizeT &edge_id, const VertexT &input_item,
-                              const SizeT &input_pos, SizeT &output_pos) -> bool {
-          atomicAdd (&lengths[src], 1);
-          return false;
-        };
-
-        
-        GUARD_CU(oprtr::Advance<oprtr::OprtrType_V2V>(
-            graph.csr(), null_frontier, null_frontier, oprtr_parameters,
-            advance_op));
-
-        cudaDeviceSynchronize ();
-
-        positions.ForAll (
-          [total_lengths, lengths] __device__ __host__ (SizeT* positions, VertexT i) {
-            positions[i] = atomicAdd (&total_lengths[0], lengths[i]);
-          }, data_slice.sub_graph[0].nodes, util::DEVICE, data_slice.stream);
-
-        cudaDeviceSynchronize ();
-      }
 
       {
         util::Array1D<SizeT, VertexT> *null_frontier = NULL;
@@ -140,7 +114,7 @@ struct NeighborsIterationLoop
         GUARD_CU (lengths.ForEach (
           [] __device__ __host__ (SizeT &x) {x = 0;}, graph.nodes, util::DEVICE, data_slice.stream));
 
-        cudaDeviceSynchronize ();
+          GUARD_CU(cudaDeviceSynchronize ());
 
         // advance operation
         auto advance_op = [
@@ -148,9 +122,10 @@ struct NeighborsIterationLoop
         ] __host__ __device__(const VertexT &src, VertexT &dest,
                               const SizeT &edge_id, const VertexT &input_item,
                               const SizeT &input_pos, SizeT &output_pos) -> bool {
-          if (edge_id < S1) {
+          if (lengths[src] < S1) {
             auto l = atomicAdd (&lengths[src], 1);
-            neighbors[src*S1 + edge_id] = dest;
+            if (l < S1)
+              neighbors[src*S1 + l] = dest;
           }
           return false;
         };
@@ -159,7 +134,7 @@ struct NeighborsIterationLoop
             graph.csr(), null_frontier, null_frontier, oprtr_parameters,
             advance_op));
 
-        cudaDeviceSynchronize ();
+            GUARD_CU(cudaDeviceSynchronize ());
       }
     } else {
       auto &prev_neighbors = data_slice.neighbors[hop-1];
@@ -168,24 +143,6 @@ struct NeighborsIterationLoop
 
       auto &total_lengths = data_slice.total_lengths[hop];
 
-      {        
-        util::Array1D<SizeT, VertexT> *null_frontier = NULL;        
-        auto advance_op = [
-                            prev_lengths, lengths
-        ] __host__ __device__(const VertexT &src, VertexT &dest,
-                              const SizeT &edge_id, const VertexT &input_item,
-                              const SizeT &input_pos, SizeT &output_pos) -> bool {
-          lengths[src] = S2;
-          return false;
-        };
-
-        GUARD_CU(oprtr::Advance<oprtr::OprtrType_V2V>(
-            graph.csr(), null_frontier, null_frontier, oprtr_parameters,
-            advance_op));
-
-        cudaDeviceSynchronize ();
-      }
-
       util::CpuTimer cpu_timer;
       cpu_timer.Start();
       std::vector<VertexT> h_prev_neighbors = std::vector<VertexT>(graph.nodes*S1);
@@ -193,21 +150,30 @@ struct NeighborsIterationLoop
       GUARD_CU(prev_neighbors.Move(util::DEVICE, util::HOST));
       std::vector<std::vector<VertexT>> src_to_roots = std::vector<std::vector<VertexT>>(graph.nodes);
       for (VertexT v = 0; v < graph.nodes; v++) {
-        src_to_roots[h_prev_neighbors[v]].push_back(v);
+        for (int i = 0; i < S1; i++) {
+          src_to_roots[h_prev_neighbors[v*S1 + i]].push_back(v);
+        }
       }
 
       std::vector<VertexT> h_csr_transpose_roots = std::vector<VertexT>(graph.nodes*S1);
       std::vector<VertexT> h_csr_src_pos = std::vector<VertexT>(2*graph.nodes);
       SizeT iter = 0;
+      size_t total_roots = 0;
+      size_t max_roots = 0.0;
       for (VertexT s = 0; s < graph.nodes; s++) {
         h_csr_src_pos[2*s] = iter;
         for (auto r : src_to_roots[s]) {
           h_csr_transpose_roots[iter] = r;
           iter++;
         }
-        h_csr_src_pos[2*s+1] = iter;
+        h_csr_src_pos[2*s+1] = src_to_roots[s].size();
+        total_roots += src_to_roots[s].size();
+        //std::cout << "src: " << s << " num_roots " <<  src_to_roots[s].size() << std::endl;
+        max_roots = max(max_roots, src_to_roots[s].size());
       }
 
+      std::cout << "total_roots " << total_roots << std::endl;
+      std::cout << "max_roots " << max_roots << std::endl;
       data_slice.InitNeighborsForHop (graph.nodes*S1*S2, hop, util::DEVICE);
       VertexT* d_csr_src_pos;
       VertexT* d_csr_transpose_roots;
@@ -240,10 +206,11 @@ struct NeighborsIterationLoop
                               const SizeT &input_pos, SizeT &output_pos) -> bool {
           for (SizeT q = d_csr_src_pos[2*src]; q < d_csr_src_pos[2*src] + d_csr_src_pos[2*src+1]; q++) {
             VertexT root = d_csr_transpose_roots[q];
-
-            if (edge_id < S2) {
+            if (lengths[root] <= S1*S2) {
               auto l = atomicAdd (&lengths[root], 1);
-              neighbors[root*S2*S1+l] = dest;
+              if (l <= S2*S1) {
+                neighbors[root*S2*S1+l] = dest;
+              }
             }
           }
           return false;

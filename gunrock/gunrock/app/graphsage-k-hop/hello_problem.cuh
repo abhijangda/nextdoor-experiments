@@ -342,10 +342,10 @@ struct Problem : ProblemBase<_GraphT, _FLAG> {
   }
 
 
-  cudaError_t Extract_total_lengths(
+  cudaError_t Extract_lengths(
     // <TODO> problem specific data to extract
     int hop,
-    SizeT *h_total_lengths,
+    SizeT *h_lengths,
     // </TODO>
     util::Location target = util::DEVICE) {
   cudaError_t retval = cudaSuccess;
@@ -360,13 +360,13 @@ struct Problem : ProblemBase<_GraphT, _FLAG> {
       GUARD_CU(util::SetDevice(this->gpu_idx[0]));
 
       // <TODO> extract the results from single GPU, e.g.:
-      GUARD_CU(data_slice.total_lengths[hop].SetPointer(h_total_lengths, 1*sizeof (SizeT), util::HOST));
-      GUARD_CU(data_slice.total_lengths[hop].Move(util::DEVICE, util::HOST));
+      GUARD_CU(data_slice.lengths[hop].SetPointer(h_lengths, graph.nodes*sizeof (SizeT), util::HOST));
+      GUARD_CU(data_slice.lengths[hop].Move(util::DEVICE, util::HOST));
       // </TODO>
     } else if (target == util::HOST) {
       // <TODO> extract the results from single CPU, e.g.:
-        GUARD_CU(data_slice.total_lengths[hop].ForEach(
-                h_total_lengths,
+        GUARD_CU(data_slice.lengths[hop].ForEach(
+                h_lengths,
                 [] __host__ __device__(const SizeT &device_val, SizeT &host_val) {
                   host_val = device_val;
                 },

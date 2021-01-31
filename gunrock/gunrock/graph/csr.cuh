@@ -78,7 +78,7 @@ struct Csr :
         cudaHostRegisterFlag> Array_NValueT;
 
     // List of values attached to edges in the graph
-    typename util::If<(FLAG & HAS_EDGE_VALUES) != 0,
+    typename util::If<(1) != 0,
         Array_ValueT,  Array_NValueT>::Type edge_values;
 
     // List of values attached to nodes in the graph
@@ -190,54 +190,118 @@ struct Csr :
     }
 
     cudaError_t LoadFromFile(std::string graph_file, util::Location target = GRAPH_DEFAULT_TARGET,
-                             cudaStream_t stream = 0,
-                            bool quiet = false) 
+                                    cudaStream_t stream = 0,
+                                    bool quiet = false) 
     {
         cudaError_t retval = cudaSuccess;
-        FILE* fp = fopen (graph_file.c_str(), "r+");
-        if (fp == nullptr) {
+        size_t n_edges = 0;
+        std::vector <size_t> vertex_ids;
+        std::vector<std::vector<std::pair<size_t, float> > > vertex_edges;
+        if (graph_file.find(".data") != graph_file.npos) {
+            FILE* fp = fopen (graph_file.c_str(), "rb");
+            std::cout << "Loading binary from " << graph_file << std::endl;
+            if (fp == nullptr) {
             std::cout << "File '" << graph_file << "' not found" << std::endl;
-        }
-
-        assert (fp != nullptr);
-        int n_edges = 0;
-        std::vector <int> vertex_ids;
-        std::vector<std::vector <int>> vertex_edges;
-        
-        const int LINE_SIZE = 1024*1024;
-
-        while (true) {
-            char line[LINE_SIZE];
-            char num_str[LINE_SIZE];
-            size_t line_size;
-
-            if (fgets (line, LINE_SIZE, fp) == nullptr) {
-                break;
+            return cudaSuccess;
             }
 
-            int id, label;
-            int bytes_read;
+            fseek(fp, 0, SEEK_END);
+            long fsize = ftell(fp);
+            fseek(fp, 0, SEEK_SET);
+            size_t max_vertex = 0;
+            char *string = new char[fsize + 1];
+            fread(string, 1, fsize, fp);
+            std::cout << "graph string loaded " << std::endl;
 
-            bytes_read = sscanf (line, "%d %d", &id, &label);
-            vertex_ids.push_back(id);
-            vertex_edges.push_back (std::vector <int> ());
-            char* _line = line + chars_in_int (id) + chars_in_int (label);
-            do {
-                int num;
+            n_edges = 0;
 
-                bytes_read = sscanf (_line, "%d", &num);
-                if (bytes_read > 0) {
-                    vertex_edges[vertex_edges.size () - 1].push_back (num);
-                    _line += chars_in_int (num);
-                    n_edges++;
+            // std::unordered_set<int> vertices_with_degree;
+            
+            for (size_t s = 0; s < fsize; s += 12) {
+            int src = *(int*)(string+s);
+            int dst = *(int*)(string+s+4);
+            float weight = *(float*)(string+s+8);
+
+            if (src > vertex_ids.size()) {
+                size_t p = vertex_ids.size();
+                vertex_ids.resize(src+1);
+                vertex_edges.resize(src+1);
+                // for (size_t i = sz; i <= src; i++) {
+                //   vertices.push_back(Vertex(i, i));
+                // }
+                for (size_t i = p; i < vertex_ids.size(); i++) {
+                    vertex_ids[i] = i;
+                }
+            }
+
+            if (dst > vertex_ids.size()) {
+                size_t p = vertex_ids.size();
+                vertex_ids.resize(dst+1);
+                vertex_edges.resize(dst+1);
+                for (size_t i = p; i < vertex_ids.size(); i++) {
+                    vertex_ids[i] = i;
+                }
+                // for (size_t i = sz; i <= src; i++) {
+                //   vertices.push_back(Vertex(i, i));
+                // }
+            }
+
+            vertex_edges[src].push_back(std::make_pair(dst, 0.0f));
+
+            n_edges++;
+            }
+
+            delete string;
+            fclose(fp);
+        } else {
+            FILE* fp = fopen (graph_file.c_str(), "r+");
+            if (fp == nullptr) {
+                std::cout << "File '" << graph_file << "' not found" << std::endl;
+            }
+
+            assert (fp != nullptr);
+            
+            const int LINE_SIZE = 1024*1024;
+
+            while (true) {
+                char line[LINE_SIZE];
+                char num_str[LINE_SIZE];
+                size_t line_size;
+
+                if (fgets (line, LINE_SIZE, fp) == nullptr) {
+                    break;
                 }
 
-            } while (bytes_read > 0);
-            std::sort (vertex_edges[vertex_edges.size () - 1].begin (), vertex_edges[vertex_edges.size () - 1].end ());
+                int id;
+                int vars_filled;
+          
+                vars_filled = sscanf(line, "%d", &id);
+                char* _line = line + chars_in_int(id);
+                vertex_ids.push_back(id);
+                vertex_edges.push_back (std::vector <std::pair<size_t, float>> ());
+
+                do {
+                  int num;
+                  float weight;
+                  int chars_read = 0;
+          
+                  vars_filled = sscanf(_line, "%d %f%n", &num, &weight, &chars_read);
+                  //printf("_line '%s' vars_filled %d chars_read %d\n", _line, vars_filled, chars_read);
+                  if (vars_filled == 2) {
+                    vertex_edges[vertex_edges.size () - 1].push_back (std::make_pair(num, weight));
+                    _line += chars_read;//chars_in_int(num);
+                    n_edges++;
+                  }
+          
+                } while (vars_filled == 2);
+
+                std::sort (vertex_edges[vertex_edges.size () - 1].begin (), vertex_edges[vertex_edges.size () - 1].end ());
+            }
+
+            fclose (fp);
+            std::cout << " vertex_ids.size () " << vertex_ids.size () << " n_edges " << n_edges << std::endl;
         }
 
-        fclose (fp);
-        std::cout << " vertex_ids.size () " << vertex_ids.size () << " n_edges " << n_edges << std::endl;
         this->nodes = vertex_ids.size ();
         this->edges = n_edges;
         this->directed = false;
@@ -249,7 +313,9 @@ struct Csr :
             vertex_offsets.push_back (curr_offset);
             row_offsets[v] = curr_offset;
             for (int ii = 0; ii < vertex_edges[v].size (); ii++) {
-                column_indices[curr_offset++] = vertex_edges[v][ii];
+                column_indices[curr_offset] = vertex_edges[v][ii].first;
+                edge_values[curr_offset] = vertex_edges[v][ii].second;
+                curr_offset++;
             }
 
             //std::cout << "row_offsets[" << v << "] = " << row_offsets[v] << std::endl;

@@ -17,6 +17,9 @@
 #include <gunrock/app/app_base.cuh>
 #include <gunrock/app/test_base.cuh>
 
+#define S1 (10)
+#define S2 (5)
+
 // <TODO> change includes
 #include <gunrock/app/graphsage-k-hop/hello_enactor.cuh>
 #include <gunrock/app/graphsage-k-hop/hello_test.cuh>
@@ -100,7 +103,7 @@ cudaError_t RunTests(util::Parameters &parameters, GraphT &graph,
   ProblemT problem(parameters);
   EnactorT enactor;
   GUARD_CU(problem.Init(graph, target));
-  GUARD_CU(problem.InitNeighborsForHop (graph.nodes*25, 0, target));
+  GUARD_CU(problem.InitNeighborsForHop (graph.nodes*S1, 0, target));
   GUARD_CU(enactor.Init(problem, target));
 
   cpu_timer.Stop();
@@ -155,28 +158,30 @@ cudaError_t RunTests(util::Parameters &parameters, GraphT &graph,
 
   cpu_timer.Start();
 
-  for (int hop = 0; hop < N_HOPS; hop++) {
+  //for (int hop = 0; hop < N_HOPS; hop++) 
+  int hop = 1;
+  {
     printf ("for hop %d\n", hop);
-    SizeT h_total_lengths;
+    SizeT* h_lengths = new SizeT[graph.nodes];
 
     GUARD_CU(problem.Extract_total_lengths(
       // <TODO> problem specific data
       hop,
-      &h_total_lengths
+      h_total_lengths
       // </TODO>
       ));
-    h_neighbors = new VertexT[h_total_lengths];
+    //h_neighbors = new VertexT[h_total_lengths];
 
-    GUARD_CU(problem.Extract(
-        // <TODO> problem specific data
-        hop,
-        h_neighbors,
-        h_total_lengths,
-        h_positions,
-        h_lengths,
-        &h_total_lengths
-        // </TODO>
-        ));
+    // GUARD_CU(problem.Extract(
+    //     // <TODO> problem specific data
+    //     hop,
+    //     h_neighbors,
+    //     h_total_lengths,
+    //     h_positions,
+    //     h_lengths,
+    //     &h_total_lengths
+    //     // </TODO>
+    //     ));
     
     int sum_e = 0;
     for (SizeT v = 0; v < graph.nodes; v++) {
@@ -185,15 +190,15 @@ cudaError_t RunTests(util::Parameters &parameters, GraphT &graph,
     }
 
     std::cout << "Sum of lengths " << sum_e << std::endl;
-    for (SizeT v = 0; v < graph.nodes - 1; v++) {
-      //printf ("v %d l1 %d pos %d\n", v, h_lengths[v], h_positions[v]); //graph.CsrT::GetNeighborListOffset (v+1)-graph.CsrT::GetNeighborListOffset (v),);
-      //assert (h_lengths[v] == graph.CsrT::GetNeighborListOffset (v+1)-graph.CsrT::GetNeighborListOffset (v));
-      for (int e = 0; e < h_lengths[v]; e++) {
-        int d_pos = h_positions[v] + e;
-        int cpu_pos = graph.CsrT::GetNeighborListOffset (v) + e;
-       // printf ("   %d %d\n", h_neighbors[d_pos], graph.CsrT::GetEdgeDest (cpu_pos));
-      }
-    }
+    // for (SizeT v = 0; v < graph.nodes - 1; v++) {
+    //   //printf ("v %d l1 %d pos %d\n", v, h_lengths[v], h_positions[v]); //graph.CsrT::GetNeighborListOffset (v+1)-graph.CsrT::GetNeighborListOffset (v),);
+    //   //assert (h_lengths[v] == graph.CsrT::GetNeighborListOffset (v+1)-graph.CsrT::GetNeighborListOffset (v));
+    //   for (int e = 0; e < h_lengths[v]; e++) {
+    //     int d_pos = h_positions[v] + e;
+    //     int cpu_pos = graph.CsrT::GetNeighborListOffset (v) + e;
+    //    // printf ("   %d %d\n", h_neighbors[d_pos], graph.CsrT::GetEdgeDest (cpu_pos));
+    //   }
+    // }
   }
 
   std::cout << "Time to exclude " << enactor.exclude_time << std::endl;

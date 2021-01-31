@@ -22,7 +22,7 @@ parser.add_argument('--dataset', type=str, default='reddit',
                     help='Dataset name: Cora/CiteSeer/PubMed/Reddit/orkut/patents/livejournal')
 parser.add_argument('--nhid', type=int, default=256,
                     help='Hidden state dimension')
-parser.add_argument('--epoch_num', type=int, default= 100,
+parser.add_argument('--epoch_num', type=int, default= 10,
                     help='Number of Epoch')
 parser.add_argument('--pool_num', type=int, default= 10,
                     help='Number of Pool')
@@ -120,16 +120,17 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
         #t3 = time.time()
         #     sample the next layer's nodes based on the pre-computed probability (p).
         s_num = np.min([np.sum(p > 0), samp_num_list[d]])
-        t3 = time.time()
+        
         after_nodes = np.random.choice(num_nodes, s_num, p = p, replace = False)
         #t3 = time.time()
         #     col-select the lap_matrix (U), and then devided by the sampled probability for 
         #     unbiased-sampling. Finally, conduct row-normalization to avoid value explosion.         
         adj = (U[: , after_nodes].multiply(1/p[after_nodes]))
+        t3 = time.time()
         #t3 = time.time()
         #     Turn the sampled adjacency matrix into a sparse matrix. If implemented by PyG
         #     This sparse matrix can also provide index and value.
-        print(adj.shape)
+        
         adjs += [sparse_mx_to_torch_sparse_tensor(row_normalize(adj))]
         #     Turn the sampled nodes as previous_nodes, recursively conduct sampling.
         #t3 = time.time()
@@ -144,6 +145,7 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
     return adjs, previous_nodes, batch_nodes
 
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
+    return fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth)
     global nd
     previous_nodes = batch_nodes
     adjs = []
@@ -333,14 +335,19 @@ for oiter in range(5):
             cnt = 0
         else:
             cnt += 1
-        if cnt == args.n_stops // args.batch_num:
-            break
+        # if cnt == args.n_stops // args.batch_num:
+        #     break
         t2 = time.time()
         training_time += t2-t1
+    
+    
+    print("training_time",training_time)
+    print("sampling_time",sampling_time)
+    print("crit_time",crit_sampling_time)
+    break
     best_model = torch.load('./save/best_model.pt')
     best_model.eval()
     test_f1s = []
-    
     '''
     If using batch sampling for inference:
     '''

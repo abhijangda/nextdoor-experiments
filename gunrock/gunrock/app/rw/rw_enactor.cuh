@@ -77,6 +77,8 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
     auto &oprtr_parameters = enactor_slice.oprtr_parameters;
     auto &retval = enactor_stats.retval;
     auto &iteration = enactor_stats.iteration;
+    auto &device_curand_states = data_slice.device_curand_states;
+    auto &edge_values = data_slice.edge_values;
 
     // problem specific data alias:
     auto &walks = data_slice.walks;
@@ -93,7 +95,7 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
 
       auto uniform_rw_op =
           [graph, walks, rand, iteration, walk_length, store_walks,
-           neighbors_seen, steps_taken] __host__
+           neighbors_seen, steps_taken, device_curand_states] __host__
           __device__(VertexT * v, const SizeT &i) {
             SizeT write_idx =
                 (i * walk_length) + iteration;  // Write location in RW array
@@ -114,24 +116,28 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
 
               // Randomly sample neighbor
               SizeT neighbor_list_offset = graph.GetNeighborListOffset(v[i]);
-              SizeT rand_offset = (SizeT)round(0.5 + num_neighbors * rand[i]) - 1;
-              VertexT neighbor =
-                  graph.GetEdgeDest(neighbor_list_offset + rand_offset);
-              v[i] = neighbor;  // Replace vertex w/ neighbor in queue
-              steps_taken[i]++;
-              neighbors_seen[i] += (uint64_t)
-                  num_neighbors;  // Record number of neighbors we've seen
+              if (iteration == 0) {
+                VertexT neighbor =
+                    graph.GetEdgeDest(neighbor_list_offset);
+                v[i] = neighbor;  // Replace vertex w/ neighbor in queue
+                steps_taken[i]++;
+                neighbors_seen[i] += (uint64_t)
+                    num_neighbors;  // Record number of neighbors we've seen
+              } else {
+                const float rand_x = curand_uniform(&device_curand_states[i]);
+                const SizeT rand_offset = min((SizeT)(rand_x*num_neighbors), num_neighbors-1);;
+                VertexT neighbor =
+                    graph.GetEdgeDest(neighbor_list_offset + rand_offset);
+                v[i] = neighbor;  // Replace vertex w/ neighbor in queue
+                steps_taken[i]++;
+                neighbors_seen[i] += (uint64_t)
+                    num_neighbors;  // Record number of neighbors we've seen
+              }
             }
           };
 
-      curandSetStream(gen, oprtr_parameters.stream);
-      curandGenerateUniform(gen, rand.GetPointer(util::DEVICE),
-                            graph.nodes * walks_per_node);
-      int grid_size = frontier.queue_length/256 + 1;
-      std::cout << "grid_size " << grid_size << " size " <<  frontier.V_Q()->GetSize() << " " << frontier.queue_length << std::endl;
       GUARD_CU(frontier.V_Q()->ForAll(uniform_rw_op, frontier.queue_length,
-                                      util::DEVICE, oprtr_parameters.stream,
-                                      grid_size, 256));
+                                      util::DEVICE, oprtr_parameters.stream));
 
     } else if (walk_mode ==
                1) {  // greedy: walk to neighbor w/ maximum node value
@@ -239,10 +245,61 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
                                       frontier.queue_length, util::DEVICE,
                                       oprtr_parameters.stream));
 
-    } else if (walk_mode == 3) {  // Node2Vec using rejection sampling
+    } else if (walk_mode == 3) {  // DeepWalk using rejection sampling
 
-      #define p 1.2f
-      #define q 0.8f
+      auto deepwalk_rw_op =
+          [graph, walks, rand, iteration, walk_length, store_walks,
+           neighbors_seen, steps_taken, device_curand_states, edge_values] __host__
+          __device__(VertexT * v, const SizeT &i) {
+            SizeT write_idx =
+                (i * walk_length) + iteration;  // Write location in RW array
+            if (store_walks) {
+              walks[write_idx] = v[i];  // record current position in walk
+            }
+
+            if (!util::isValid(v[i])) {
+              return;
+            }
+
+            if (iteration < walk_length - 1) {
+              SizeT num_neighbors = graph.GetNeighborListLength(v[i]);
+              if (num_neighbors == 0) {
+                v[i] = util::PreDefinedValues<VertexT>::InvalidValue;
+                return;
+              }
+
+              // Randomly sample neighbor
+              SizeT neighbor_list_offset = graph.GetNeighborListOffset(v[i]);
+              if (iteration == 0) {
+                VertexT neighbor =
+                    graph.GetEdgeDest(neighbor_list_offset);
+                v[i] = neighbor;  // Replace vertex w/ neighbor in queue
+                steps_taken[i]++;
+                neighbors_seen[i] += (uint64_t)
+                    num_neighbors;  // Record number of neighbors we've seen
+              } else {
+                const float rand_x = curand_uniform(&device_curand_states[i]);
+                const SizeT rand_offset = min((SizeT)(rand_x*num_neighbors), num_neighbors-1);;
+                const SizeT edge = neighbor_list_offset + rand_offset;
+                VertexT neighbor = graph.GetEdgeDest(edge);
+                if (threadIdx.x == 0) {
+                  printf("graph.edge_ %p %f neighbor %d edge %d\n", edge_values, edge_values[edge], neighbor, (int)edge);
+                }
+                v[i] = neighbor;  // Replace vertex w/ neighbor in queue
+                steps_taken[i]++;
+                neighbors_seen[i] += (uint64_t)
+                    num_neighbors;  // Record number of neighbors we've seen
+              }
+            }
+          };
+
+      GUARD_CU(frontier.V_Q()->ForAll(deepwalk_rw_op, frontier.queue_length,
+                                      util::DEVICE, oprtr_parameters.stream));
+
+    } else if (walk_mode == 4) {  // Node2Vec using rejection sampling
+
+      #define p 2.0f
+      #define q 0.5f
       //int num_threads = frontier.queue_length*10;
       int grid_size = frontier.queue_length/256 + 1;
       printf ("node2vec\n");
@@ -250,7 +307,7 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
       const size_t size_rand = graph.nodes * 20UL * walks_per_node;
       auto node2vec_rw_op =
           [graph, walks, rand, iteration, walk_length, store_walks,
-           neighbors_seen, steps_taken, size_rand] __host__
+           neighbors_seen, steps_taken, size_rand, device_curand_states] __host__
           __device__(VertexT * v, const SizeT &i) {
             
             SizeT write_idx =
@@ -280,12 +337,11 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
               //   return;
               // }
               const float height = max(1.0/p, max(1.0f, 1.0f/q));
-              int ii = 0;              
               while (true) {
                 // Rejection sampling
-                const float rand_x = rand[(ii++ +i*20)%size_rand];
-                const SizeT x = (SizeT)(round(0.5 + num_neighbors * rand_x) - 1);
-                const float rand_y = rand[(ii++ + i*20)%size_rand];
+                const float rand_x = curand_uniform(&device_curand_states[i]);
+                const SizeT x = min((SizeT)rand_x*num_neighbors, num_neighbors-1);
+                const float rand_y = curand_uniform(&device_curand_states[i]);
                 const float y = rand_y*height;
                 VertexT neighbor =
                     graph.GetEdgeDest(neighbor_list_offset + x);
@@ -301,7 +357,7 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
                   }
                 }
 
-                if (round(y) <= round(neighbrH)) {
+                if ((y) <= (neighbrH)) {
                   //Found neighbor
                   v[i] = neighbor;  // Replace vertex w/ neighbor in queue
                   steps_taken[i]++;
@@ -309,18 +365,12 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
                       num_neighbors;  // Record number of neighbors we've seen
                   return;
                 }
-
-                if (ii > 10) {
-                  printf ("iteration %ld v[i] %d num_neighbors %ld last_stop %ld root %ld y %f x %ld neighbrH %f neighbor %ld height %f\n", (long)iteration, (long)v[i], (long)num_neighbors, (long)last_stop, (long)walks[write_idx - iteration], y, x, neighbrH, 
-                  (long)neighbor, height);
-                  assert (false);
-                }
               }
             } else {
               SizeT neighbor_list_offset = graph.GetNeighborListOffset(v[i]);
               if (num_neighbors > 0) {
                 VertexT neighbor =
-                      graph.GetEdgeDest(neighbor_list_offset+num_neighbors-1);
+                      graph.GetEdgeDest(neighbor_list_offset);
                 v[i] = neighbor;  // Replace vertex w/ neighbor in queue
                 steps_taken[i]++;
                 neighbors_seen[i] += (uint64_t)num_neighbors;
@@ -331,24 +381,23 @@ struct RWIterationLoop : public IterationLoopBase<EnactorT, Use_FullQ | Push> {
           };
 
       //curandSetStream(gen, oprtr_parameters.stream);
-      float* h_rand = new float[size_rand];
-      for (size_t i = 0; i < size_rand; i++) {
-        float r = static_cast <float> (::rand()) / static_cast <float> (RAND_MAX);
-        if (r == 1.0f) {
-          r = 0.99f;
-        }
+      // float* h_rand = new float[size_rand];
+      // for (size_t i = 0; i < size_rand; i++) {
+      //   float r = static_cast <float> (::rand()) / static_cast <float> (RAND_MAX);
+      //   if (r == 1.0f) {
+      //     r = 0.99f;
+      //   }
 
-        h_rand[i] = r;
-        assert (r >= 0 && r < 1);
-      }
-      GUARD_CU(cudaMemcpy(rand.GetPointer(util::DEVICE), h_rand, size_rand*sizeof(float), cudaMemcpyHostToDevice));
-      delete h_rand;
+      //   h_rand[i] = r;
+      //   assert (r >= 0 && r < 1);
+      // }
+      // GUARD_CU(cudaMemcpy(rand.GetPointer(util::DEVICE), h_rand, size_rand*sizeof(float), cudaMemcpyHostToDevice));
+      // delete h_rand;
       // curandGenerateUniform(gen, rand.GetPointer(util::DEVICE),
       //                       size_rand);
       
       GUARD_CU(frontier.V_Q()->ForAll(node2vec_rw_op, frontier.queue_length,
-                                      util::DEVICE, oprtr_parameters.stream,
-                                      grid_size, 256));
+                                      util::DEVICE, oprtr_parameters.stream));
 
     } else {
       printf("ERROR: unknown walk_mode=%d\n", walk_mode);

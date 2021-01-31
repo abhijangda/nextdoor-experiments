@@ -15,6 +15,8 @@
 #pragma once
 
 #include <gunrock/app/problem_base.cuh>
+#include <curand.h>
+#include <curand_kernel.h>
 
 namespace gunrock {
 namespace app {
@@ -31,6 +33,13 @@ cudaError_t UseParameters_problem(util::Parameters &parameters) {
   GUARD_CU(gunrock::app::UseParameters_problem(parameters));
 
   return retval;
+}
+
+__global__ void init_curand_states(curandState* states, size_t num_states)
+{
+  int thread_id = blockIdx.x*blockDim.x + threadIdx.x;
+  if (thread_id < num_states)
+    curand_init(1234, 0, 0, &states[thread_id]);
 }
 
 /**
@@ -68,6 +77,8 @@ struct Problem : ProblemBase<_GraphT, _FLAG> {
     int walk_mode;
     bool store_walks;
     curandGenerator_t gen;
+    curandState* device_curand_states;
+    float* edge_values;
 
     /*
      * @brief Default constructor
@@ -125,6 +136,12 @@ struct Problem : ProblemBase<_GraphT, _FLAG> {
 
       curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEFAULT);
       curandSetPseudoRandomGeneratorSeed(gen, 1234);
+      GUARD_CU(cudaMalloc(&edge_values, sub_graph.edges*sizeof(float)));
+      GUARD_CU(cudaMemcpy(edge_values, &sub_graph.edge_values[0], sub_graph.edges*sizeof(float), cudaMemcpyHostToDevice));
+      GUARD_CU(cudaMalloc(&device_curand_states, sub_graph.nodes*sizeof(curandState)));
+      size_t num_blocks = sub_graph.nodes/256 + 1;
+      init_curand_states<<<num_blocks, 256>>> (device_curand_states, sub_graph.nodes);
+      GUARD_CU(cudaDeviceSynchronize());
 
       if (store_walks_) {
         GUARD_CU(walks.Allocate(sub_graph.nodes * walk_length * walks_per_node,

@@ -108,7 +108,7 @@ cudaError_t RunTests(util::Parameters &parameters, GraphT &graph,
   EnactorT enactor;
   GUARD_CU(problem.Init(graph, target));
   GUARD_CU(enactor.Init(problem, target));
-  GUARD_CU(graph.Sort());
+  // GUARD_CU(graph.Sort());
   // {
   //   SizeT e = graph.GetSrcDestEdge(24320, 99999);
   //   std::cout << "edge between 1 and 100? "<< e << std::endl;
@@ -254,7 +254,7 @@ double gunrock_rw(gunrock::util::Parameters &parameters, GraphT &graph,
 template <typename VertexT = int, typename SizeT = int,
           typename GValueT = unsigned int, typename TValueT = GValueT>
 float rw(const SizeT num_nodes, const SizeT num_edges, const SizeT *row_offsets,
-         const VertexT *col_indices, const int num_runs, VertexT *h_walks,
+         const VertexT *col_indices, const float* edge_values, const int num_runs, VertexT *h_walks,
          const int walks_per_node) {
   // TODO: change to other graph representation, if not using CSR
   typedef typename gunrock::app::TestGraph<VertexT, SizeT, GValueT,
@@ -279,6 +279,8 @@ float rw(const SizeT num_nodes, const SizeT num_edges, const SizeT *row_offsets,
                                      gunrock::util::HOST);
   graph.CsrT::column_indices.SetPointer(col_indices, num_edges,
                                         gunrock::util::HOST);
+  graph.CsrT::edge_values.SetPointer(edge_values, num_edges,
+                                        gunrock::util::HOST);
   graph.FromCsr(graph.csr(), true, quiet);
   gunrock::graphio::LoadGraph(parameters, graph);
 
@@ -290,9 +292,9 @@ float rw(const SizeT num_nodes, const SizeT num_edges, const SizeT *row_offsets,
 }
 
 float rw(const int num_nodes, const int num_edges, const int *row_offsets,
-         const int *col_indices, const int num_runs, int *h_walks,
+         const int *col_indices, const float* edge_values, const int num_runs, int *h_walks,
          const int walks_per_node) {
-  return rw(num_nodes, num_edges, row_offsets, col_indices, num_runs, h_walks,
+  return rw(num_nodes, num_edges, row_offsets, col_indices, edge_values, num_runs, h_walks,
             walks_per_node);
 }
 // Leave this at the end of the file
