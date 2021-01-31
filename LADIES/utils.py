@@ -26,7 +26,7 @@ import time
 import sys
 import os
 import random
-
+import pickle
 
 def parse_index_file(filename):
     """Parse index file."""
@@ -40,34 +40,56 @@ def custom_dataset(dataset_str):
     MAX_FEATURE_SIZE = 256 
     if dataset_str == 'patents':
         filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
+        picklefilename = "./cit-Patents.pickle"
     elif dataset_str == 'orkut':
         filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/com-orkut.ungraph.txt'
+        picklefilename = "./com-orkut.pickle"
     elif dataset_str == 'livejournal':    
         filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/soc-LiveJournal1.txt'
+        picklefilename = "./soc-LiveJournal1.pickle"
+    elif dataset_str == "reddit":
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/reddit_edgelist'
+        picklefilename = "./reddit_edgelist.pickle"
+    elif dataset_str == "ppi":
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/ppi_edgelist'
+        picklefilename = "./ppi_edgelist.pickle"
     else:
         assert(False)
-    edges = []
-    G = nx.Graph()
-    for line in open(filename):
-        if line.startswith('#'):
-            continue
-        a,b = line.split()
-        a,b = int(a),int(b)
-        edges += [[a,b]]
-    G.add_edges_from(edges)
-    ################## reorder
-    remap = {}
-    count = 0
-    for i in G.nodes:
-        remap[i] = count
-        count = count + 1
-    G = nx.Graph()
-    new_edges = []
-    for a,b in edges:
-        new_edges += [[remap[a],remap[b]]]
-    edges = new_edges
-    G.add_edges_from(edges)
-    ################## end reorder
+
+    if (os.path.exists(picklefilename)):
+        f = open(picklefilename, 'rb')
+        G = pickle.load(f)
+        f.close()
+        edges = G.edges
+    else:
+        edges = []
+        G = nx.Graph()
+        for line in open(filename):
+            if line.startswith('#'):
+                continue
+            a,b = line.split()
+            a,b = int(a),int(b)
+            edges += [[a,b]]
+        G.add_edges_from(edges)
+        print ("Edges Added")
+        ################## reorder
+        remap = {}
+        count = 0
+        for i in G.nodes:
+            remap[i] = count
+            count = count + 1
+        G = nx.Graph()
+        new_edges = []
+        for a,b in edges:
+            new_edges += [[remap[a],remap[b]]]
+        edges = new_edges
+        G.add_edges_from(edges)
+        print ("Reorder Done")
+        ################## end reorder
+        f = open(picklefilename, 'wb')
+        pickle.dump(G, f)
+        f.close()
+
     max_nodes = max(G.nodes) + 1
     degrees = np.zeros(max_nodes, dtype=np.int64)
     labels = np.zeros(max_nodes, dtype = np.int64)
@@ -85,12 +107,13 @@ def custom_dataset(dataset_str):
         degrees[s] = len(G[s])
         labels[s] = random.randint(0, MAX_LABELS)
     features = np.random.rand(max_nodes,MAX_FEATURE_SIZE)
+    print ("features created")
     return np.array(edges), labels, features, np.max(labels)+1,  np.array(idx_train),np.array(idx_val) , np.array(idx_test)
     
 
     
 def load_data(dataset_str):
-    if dataset_str == 'orkut' or dataset_str == 'livejournal' or dataset_str == 'patents':
+    if dataset_str == "ppi" or dataset_str == "reddit" or dataset_str == 'orkut' or dataset_str == 'livejournal' or dataset_str == 'patents':
         return custom_dataset(dataset_str)
     
     if dataset_str == 'ppi':

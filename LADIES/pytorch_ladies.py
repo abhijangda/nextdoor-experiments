@@ -120,7 +120,7 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
         #t3 = time.time()
         #     sample the next layer's nodes based on the pre-computed probability (p).
         s_num = np.min([np.sum(p > 0), samp_num_list[d]])
-        
+        #print(num_nodes)
         after_nodes = np.random.choice(num_nodes, s_num, p = p, replace = False)
         #t3 = time.time()
         #     col-select the lap_matrix (U), and then devided by the sampled probability for 
@@ -145,19 +145,26 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
     return adjs, previous_nodes, batch_nodes
 
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
-    return fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth)
-    global nd
+    global nd, sampling_time
     previous_nodes = batch_nodes
     adjs = []
-    samples = nd.sample(batch_nodes)
-    previous_nodes = batch_nodes
     # p computation can be pushed outside if performance is bad
-    pi = np.array(np.sum(lap_matrix.multiply(lap_matrix), axis=0))[0]
-    p = pi / np.sum(pi)
-
+    
+    samples = []
+    t1 = time.time()
+    # pi = np.array(np.sum(lap_matrix.multiply(lap_matrix), axis=0))[0]
+    # p = pi / np.sum(pi)
     for d in range(depth):
-        after_nodes = samples[d]
-        adj = lap_matrix[previous_nodes, : ][:, after_nodes].multiply(1/p[after_nodes]) 
+        #s_num = np.min([np.sum(p > 0), samp_num_list[d]])
+        after_nodes = np.random.choice(num_nodes, samp_num_list[d], replace = False)
+        adj = lap_matrix[previous_nodes, : ][:, after_nodes] #.multiply(1/p[after_nodes])
+        samples += [(after_nodes, adj)]
+        previous_nodes = after_nodes
+    previous_nodes = batch_nodes
+    t2 = time.time()
+    sampling_time += t2-t1
+    for d in range(depth):
+        after_nodes, adj = samples[d]
         adjs += [sparse_mx_to_torch_sparse_tensor(row_normalize(adj))]
         previous_nodes = after_nodes
     adjs.reverse()
@@ -258,7 +265,7 @@ process_ids = np.arange(args.batch_num)
 samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
 from nextdoor_patch import *
-nd = NextDoorSamplerFastGCN(edges, train_nodes, samp_num_list)
+nd = NextDoorSamplerFastGCN(args.dataset, edges, train_nodes, samp_num_list)
 
 
 #pool = mp.Pool(args.pool_num)
@@ -279,6 +286,7 @@ for oiter in range(5):
     res   = []
     print('-' * 10)
     print(len(feat_data))
+    end_to_end_t1 = time.time()
     for epoch in np.arange(args.epoch_num):
         susage.train()
         train_losses = []
@@ -303,6 +311,7 @@ for oiter in range(5):
         '''
         jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
         '''
+        print("len(train_data)", len(train_data))
         t0 = time.time()
         for _iter in range(args.n_iters):
             for adjs, input_nodes, output_nodes in train_data:    
@@ -340,7 +349,8 @@ for oiter in range(5):
         t2 = time.time()
         training_time += t2-t1
     
-    
+    end_to_end_t2 = time.time()
+    print("end_to_end_time", end_to_end_t2 - end_to_end_t1)
     print("training_time",training_time)
     print("sampling_time",sampling_time)
     print("crit_time",crit_sampling_time)
