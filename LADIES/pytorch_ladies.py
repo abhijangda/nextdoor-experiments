@@ -144,20 +144,28 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
     sampling_time += t4-t1
     return adjs, previous_nodes, batch_nodes
 
+fastgcn_p = None
+fastgcn_p_set = False
+
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
-    global nd, sampling_time
+    global nd, sampling_time, fastgcn_p, fastgcn_p_set
     previous_nodes = batch_nodes
     adjs = []
     # p computation can be pushed outside if performance is bad
     
     samples = []
     t1 = time.time()
-    # pi = np.array(np.sum(lap_matrix.multiply(lap_matrix), axis=0))[0]
-    # p = pi / np.sum(pi)
+    if (fastgcn_p_set == False):
+        pi = np.array(np.sum(lap_matrix.multiply(lap_matrix), axis=0))[0]
+        p = pi / np.sum(pi)
+        fastgcn_p = p
+        fastgcn_p_set = True
+
     for d in range(depth):
         #s_num = np.min([np.sum(p > 0), samp_num_list[d]])
         after_nodes = np.random.choice(num_nodes, samp_num_list[d], replace = False)
-        adj = lap_matrix[previous_nodes, : ][:, after_nodes] #.multiply(1/p[after_nodes])
+        adj = lap_matrix[previous_nodes, : ][:, after_nodes].multiply(1/fastgcn_p[after_nodes])
+        # print(adj.shape, type(adj), fastgcn_p[after_nodes].shape, type(fastgcn_p[after_nodes]))
         samples += [(after_nodes, adj)]
         previous_nodes = after_nodes
     previous_nodes = batch_nodes
