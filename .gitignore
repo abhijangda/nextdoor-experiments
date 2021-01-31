@@ -1,3 +1,11 @@
+datasets/*
 *.o
 a.out
 sparse
+build/
+ext/
+*.txt
+*.pyc
+*.out
+GraphSAGE/
+*.pt
