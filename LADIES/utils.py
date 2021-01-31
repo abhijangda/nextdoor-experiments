@@ -39,11 +39,11 @@ def custom_dataset(dataset_str):
     MAX_LABELS = 10
     MAX_FEATURE_SIZE = 256 
     if dataset_str == 'patents':
-        filename = '../datasets/cit-Patents.txt'
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
     elif dataset_str == 'orkut':
-        filename = '../datasets/com-orkut.ungraph.txt'
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/com-orkut.ungraph.txt'
     elif dataset_str == 'livejournal':    
-        filename = '../datasets/soc-LiveJournal1.txt'
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/soc-LiveJournal1.txt'
     else:
         assert(False)
     edges = []
