@@ -25,7 +25,7 @@ import networkx as nx
 import time
 import sys
 import os
-
+import random
 
 
 def parse_index_file(filename):
@@ -35,8 +35,63 @@ def parse_index_file(filename):
         index.append(int(line.strip()))
     return index
 
-def load_data(dataset_str):
+def custom_dataset(dataset_str):
+    MAX_LABELS = 10
+    MAX_FEATURE_SIZE = 256 
+    if dataset_str == 'patents':
+        filename = '../datasets/cit-Patents.txt'
+    elif dataset_str == 'orkut':
+        filename = '../datasets/com-orkut.ungraph.txt'
+    elif dataset_str == 'livejournal':    
+        filename = '../datasets/soc-LiveJournal1.txt'
+    else:
+        assert(False)
+    edges = []
+    G = nx.Graph()
+    for line in open(filename):
+        if line.startswith('#'):
+            continue
+        a,b = line.split()
+        a,b = int(a),int(b)
+        edges += [[a,b]]
+    G.add_edges_from(edges)
+    ################## reorder
+    remap = {}
+    count = 0
+    for i in G.nodes:
+        remap[i] = count
+        count = count + 1
+    G = nx.Graph()
+    new_edges = []
+    for a,b in edges:
+        new_edges += [[remap[a],remap[b]]]
+    edges = new_edges
+    G.add_edges_from(edges)
+    ################## end reorder
+    max_nodes = max(G.nodes) + 1
+    degrees = np.zeros(max_nodes, dtype=np.int64)
+    labels = np.zeros(max_nodes, dtype = np.int64)
+    idx_train = []
+    idx_test = []
+    idx_val = []
+    for s in G:
+        r = random.random()
+        if r >= .9:
+            idx_test += [int(s)]
+        elif r >= .8:
+            idx_val += [s]
+        else:
+            idx_train += [s]
+        degrees[s] = len(G[s])
+        labels[s] = random.randint(0, MAX_LABELS)
+    features = np.random.rand(max_nodes,MAX_FEATURE_SIZE)
+    return np.array(edges), labels, features, np.max(labels)+1,  np.array(idx_train),np.array(idx_val) , np.array(idx_test)
+    
 
+    
+def load_data(dataset_str):
+    if dataset_str == 'orkut' or dataset_str == 'livejournal' or dataset_str == 'patents':
+        return custom_dataset(dataset_str)
     
     if dataset_str == 'ppi':
         prefix = './ppi/ppi'

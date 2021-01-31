@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser(description='Training GCN on Cora/CiteSeer/PubM
     Dataset arguments
 '''
 parser.add_argument('--dataset', type=str, default='reddit',
-                    help='Dataset name: Cora/CiteSeer/PubMed/Reddit')
+                    help='Dataset name: Cora/CiteSeer/PubMed/Reddit/orkut/patents/livejournal')
 parser.add_argument('--nhid', type=int, default=256,
                     help='Hidden state dimension')
 parser.add_argument('--epoch_num', type=int, default= 100,
@@ -129,6 +129,7 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
         #t3 = time.time()
         #     Turn the sampled adjacency matrix into a sparse matrix. If implemented by PyG
         #     This sparse matrix can also provide index and value.
+        print(adj.shape)
         adjs += [sparse_mx_to_torch_sparse_tensor(row_normalize(adj))]
         #     Turn the sampled nodes as previous_nodes, recursively conduct sampling.
         #t3 = time.time()
@@ -140,6 +141,24 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
     #t4 = time.time()
     #print(t4-t1,t3-t2)
     sampling_time += t4-t1
+    return adjs, previous_nodes, batch_nodes
+
+def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
+    global nd
+    previous_nodes = batch_nodes
+    adjs = []
+    samples = nd.sample(batch_nodes)
+    previous_nodes = batch_nodes
+    # p computation can be pushed outside if performance is bad
+    pi = np.array(np.sum(lap_matrix.multiply(lap_matrix), axis=0))[0]
+    p = pi / np.sum(pi)
+
+    for d in range(depth):
+        after_nodes = samples[d]
+        adj = lap_matrix[previous_nodes, : ][:, after_nodes].multiply(1/p[after_nodes]) 
+        adjs += [sparse_mx_to_torch_sparse_tensor(row_normalize(adj))]
+        previous_nodes = after_nodes
+    adjs.reverse()
     return adjs, previous_nodes, batch_nodes
 
 def ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
@@ -177,6 +196,7 @@ def ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dept
     t2 = time.time()
     sampling_time += t2-t1
     return adjs, previous_nodes, batch_nodes
+
 def default_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
     mx = sparse_mx_to_torch_sparse_tensor(lap_matrix)
     return [mx for i in range(depth)], np.arange(num_nodes), batch_nodes
@@ -223,7 +243,11 @@ elif args.sample_method == 'fastgcn':
     sampler = fastgcn_sampler
 elif args.sample_method == 'full':
     sampler = default_sampler
-
+elif args.sample_method == 'nextdoor_fastgcn':
+    sampler = nextdoor_fastgcn_sampler
+elif args.sample_method == 'nextdoor_ladies':
+    pass
+    #sampler = nextdoor_ladies_sampler
 
 # In[ ]:
 
@@ -231,11 +255,16 @@ training_time = 0
 process_ids = np.arange(args.batch_num)
 samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
+from nextdoor_patch import *
+nd = NextDoorSamplerFastGCN(edges, train_nodes, samp_num_list)
+
+
 #pool = mp.Pool(args.pool_num)
 #jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
 
 all_res = []
 for oiter in range(5):
+    print(feat_data.shape)
     encoder = GCN(nfeat = feat_data.shape[1], nhid=args.nhid, layers=args.n_layers, dropout = 0.2).to(device)
     susage  = SuGCN(encoder = encoder, num_classes=num_classes, dropout=0.5, inp = feat_data.shape[1])
     susage.to(device)
