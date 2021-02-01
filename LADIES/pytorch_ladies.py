@@ -306,14 +306,26 @@ for oiter in range(5):
         train_losses = []
         if (not asynchronous):
             ######################### Synchronous Version ########################
-            idx = torch.randperm(len(train_nodes))[:args.batch_size]
-            batch_nodes = train_nodes[idx]
-            train_data = [sampler(np.random.randint(2**32 - 1), batch_nodes, \
-                    samp_num_list, len(feat_data), lap_matrix, args.n_layers) for b in range(args.batch_num)]
-            idx = torch.randperm(len(valid_nodes))[:args.batch_size]
-            batch_nodes = valid_nodes[idx]
-            valid_data = sampler(np.random.randint(2**32 - 1), batch_nodes, \
-                    samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+            useMP = False
+            if bbbb:
+                with mp.Pool(processes=args.pool_num) as pool:
+                    idx = torch.randperm(len(train_nodes))[:args.batch_size]
+                    batch_nodes = train_nodes[idx]
+                    sampleArgs = (np.random.randint(2**32 - 1), batch_nodes, \
+                        samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+                    jobs = [pool.apply_async(sampler, sampleArgs) for b in range(args.batch_num)]
+                    train_data = [job.get() for job in jobs[:-1]]
+                    valid_data = jobs[-1].get()
+
+            else:
+                idx = torch.randperm(len(train_nodes))[:args.batch_size]
+                batch_nodes = train_nodes[idx]
+                train_data = [sampler(np.random.randint(2**32 - 1), batch_nodes, \
+                        samp_num_list, len(feat_data), lap_matrix, args.n_layers) for b in range(args.batch_num)]
+                idx = torch.randperm(len(valid_nodes))[:args.batch_size]
+                batch_nodes = valid_nodes[idx]
+                valid_data = sampler(np.random.randint(2**32 - 1), batch_nodes, \
+                        samp_num_list, len(feat_data), lap_matrix, args.n_layers)
         else:
             ########### Asynchronous version ###############
             train_data = [job.get() for job in jobs[:-1]]
