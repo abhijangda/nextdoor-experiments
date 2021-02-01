@@ -28,7 +28,7 @@ parser.add_argument('--pool_num', type=int, default= 10,
                     help='Number of Pool')
 parser.add_argument('--batch_num', type=int, default= 10,
                     help='Maximum Batch Number')
-parser.add_argument('--batch_size', type=int, default=512,
+parser.add_argument('--batch_size', type=int, default=64,
                     help='size of output node in a batch')
 parser.add_argument('--n_layers', type=int, default=5,
                     help='Number of GCN layers')
@@ -149,7 +149,7 @@ fastgcn_p_set = False
 sample_number = 0
 
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
-    enable_nextdoor = True
+    enable_nextdoor = False
     global nd, sampling_time, fastgcn_p, fastgcn_p_set, sample_number
     previous_nodes = batch_nodes
     adjs = []
@@ -162,7 +162,7 @@ def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_ma
         fastgcn_p = p
         fastgcn_p_set = True
     sample_number += 1
-    print(len(previous_nodes), samp_num_list[0])
+    print("Sampling", len(previous_nodes), samp_num_list[0])
     for d in range(depth):
         #s_num = np.min([np.sum(p > 0), samp_num_list[d]])
         after_nodes = nd.sample(0)[sample_number][d] if(enable_nextdoor) else np.random.choice(num_nodes, samp_num_list[d], replace = False)
@@ -224,11 +224,12 @@ def prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_
     for _ in process_ids:
         idx = torch.randperm(len(train_nodes))[:args.batch_size]
         batch_nodes = train_nodes[idx]
-        p = pool.apply_async(sampler, args=(np.random.randint(2**32 - 1), batch_nodes,                                                    samp_num_list, num_nodes, lap_matrix, depth))
+        p = pool.apply_async(sampler, args=(0, #np.random.randint(2**32 - 1)
+        batch_nodes,                                                    samp_num_list, num_nodes, lap_matrix, depth))
         jobs.append(p)
     idx = torch.randperm(len(valid_nodes))[:args.batch_size]
     batch_nodes = valid_nodes[idx]
-    p = pool.apply_async(sampler, args=(np.random.randint(2**32 - 1), batch_nodes,                                                samp_num_list * 20, num_nodes, lap_matrix, depth))
+    p = pool.apply_async(sampler, args=(np.random.randint(2**32 - 1), batch_nodes,                                                samp_num_list, num_nodes, lap_matrix, depth))
     jobs.append(p)
     return jobs
 def package_mxl(mxl, device):
@@ -278,8 +279,7 @@ from nextdoor_patch import *
 nd = NextDoorSamplerFastGCN(args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
 
 
-#pool = mp.Pool(args.pool_num)
-#jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+asynchronous = False
 
 all_res = []
 for oiter in range(5):
@@ -297,30 +297,34 @@ for oiter in range(5):
     print('-' * 10)
     print(len(feat_data))
     end_to_end_t1 = time.time()
+    if (asynchronous):
+        pool = mp.Pool(args.pool_num)
+        jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+
     for epoch in np.arange(args.epoch_num):
         susage.train()
         train_losses = []
-        ######################### Synchronous Version ########################
-        idx = torch.randperm(len(train_nodes))[:args.batch_size]
-        batch_nodes = train_nodes[idx]
-        train_data = [sampler(np.random.randint(2**32 - 1), batch_nodes, \
-                samp_num_list, len(feat_data), lap_matrix, args.n_layers)]
-        idx = torch.randperm(len(valid_nodes))[:args.batch_size]
-        batch_nodes = valid_nodes[idx]
-        valid_data = sampler(np.random.randint(2**32 - 1), batch_nodes, \
-                samp_num_list, len(feat_data), lap_matrix, args.n_layers)
-        
-        ''' ########### Asynchronous version ###############
-        train_data = [job.get() for job in jobs[:-1]]
-        valid_data = jobs[-1].get()
-        pool.close()
-        pool.join()
-        pool = mp.Pool(args.pool_num)
-        '''
-            #Use CPU-GPU cooperation to reduce the overhead for sampling. (conduct sampling while training)
-        '''
-        jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
-        '''
+        if (not asynchronous):
+            ######################### Synchronous Version ########################
+            idx = torch.randperm(len(train_nodes))[:args.batch_size]
+            batch_nodes = train_nodes[idx]
+            train_data = [sampler(np.random.randint(2**32 - 1), batch_nodes, \
+                    samp_num_list, len(feat_data), lap_matrix, args.n_layers) for b in range(args.batch_num)]
+            idx = torch.randperm(len(valid_nodes))[:args.batch_size]
+            batch_nodes = valid_nodes[idx]
+            valid_data = sampler(np.random.randint(2**32 - 1), batch_nodes, \
+                    samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+        else:
+            ########### Asynchronous version ###############
+            train_data = [job.get() for job in jobs[:-1]]
+            valid_data = jobs[-1].get()
+            pool.close()
+            pool.join()
+            pool = mp.Pool(args.pool_num)
+            '''
+                #Use CPU-GPU cooperation to reduce the overhead for sampling. (conduct sampling while training)
+            '''
+            jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
         print("len(train_data)", len(train_data))
         t0 = time.time()
         for _iter in range(args.n_iters):
