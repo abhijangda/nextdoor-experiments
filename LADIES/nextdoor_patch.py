@@ -20,11 +20,13 @@ class NextDoorSamplerFastGCN:
         #print("nodes", len(self.nodes))
         if (self.samples == []):
             NextDoor.sample()
-            lib.finalSamplesArray.restype = np.ctypeslib.ndpointer(dtype=ctypes.c_int, shape=(NextDoor.finalSampleLength()))
+            length = NextDoor.finalSampleLength()
+            print("length ", length)
+            lib.finalSamplesArray.restype = np.ctypeslib.ndpointer(dtype=ctypes.c_int, shape=(length))
             finalSamples = lib.finalSamplesArray()
-            num_layers = 1 #len(self.layer_dims)
-            newshape = (len(finalSamples)//(self.batch_size*num_layers), num_layers,self.batch_size)
-            print((num_layers, self.batch_size), newshape)
+            num_layers = len(self.layer_dims)
+            newshape = (len(finalSamples)//(self.layer_dims[0]*num_layers), num_layers,self.layer_dims[0])
+            print((num_layers, self.layer_dims[0]), newshape)
             self.samples = np.reshape(finalSamples, newshape)
             print(self.samples.shape)
             return self.samples

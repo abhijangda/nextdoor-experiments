@@ -146,15 +146,14 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
 
 fastgcn_p = None
 fastgcn_p_set = False
+sample_number = 0
 
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
     enable_nextdoor = True
-    global nd, sampling_time, fastgcn_p, fastgcn_p_set
+    global nd, sampling_time, fastgcn_p, fastgcn_p_set, sample_number
     previous_nodes = batch_nodes
     adjs = []
     # p computation can be pushed outside if performance is bad
-    if (enable_nextdoor):
-        sampled_nodes = nd.sample(0)[0][0]
     samples = []
     t1 = time.time()
     if (fastgcn_p_set == False):
@@ -162,10 +161,11 @@ def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_ma
         p = pi / np.sum(pi)
         fastgcn_p = p
         fastgcn_p_set = True
-
+    sample_number += 1
+    print(len(previous_nodes), samp_num_list[0])
     for d in range(depth):
         #s_num = np.min([np.sum(p > 0), samp_num_list[d]])
-        after_nodes = sampled_nodes if(enable_nextdoor) else np.random.choice(num_nodes, samp_num_list[d], replace = False)
+        after_nodes = nd.sample(0)[sample_number][d] if(enable_nextdoor) else np.random.choice(num_nodes, samp_num_list[d], replace = False)
         adj = lap_matrix[previous_nodes, : ][:, after_nodes].multiply(1/fastgcn_p[after_nodes])
         # print(adj.shape, type(adj), fastgcn_p[after_nodes].shape, type(fastgcn_p[after_nodes]))
         samples += [(after_nodes, adj)]
@@ -304,11 +304,11 @@ for oiter in range(5):
         idx = torch.randperm(len(train_nodes))[:args.batch_size]
         batch_nodes = train_nodes[idx]
         train_data = [sampler(np.random.randint(2**32 - 1), batch_nodes, \
-                samp_num_list * 20, len(feat_data), lap_matrix, args.n_layers)]
+                samp_num_list, len(feat_data), lap_matrix, args.n_layers)]
         idx = torch.randperm(len(valid_nodes))[:args.batch_size]
         batch_nodes = valid_nodes[idx]
         valid_data = sampler(np.random.randint(2**32 - 1), batch_nodes, \
-                samp_num_list * 20, len(feat_data), lap_matrix, args.n_layers)
+                samp_num_list, len(feat_data), lap_matrix, args.n_layers)
         
         ''' ########### Asynchronous version ###############
         train_data = [job.get() for job in jobs[:-1]]
