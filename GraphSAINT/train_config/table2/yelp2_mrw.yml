@@ -1,0 +1,18 @@
+network:
+  - dim: 512
+    aggr: 'concat'
+    loss: 'sigmoid'
+    arch: '1-1-0'
+    act: 'relu'
+    bias: 'norm'
+params:
+  - lr: 0.01
+    dropout: 0.1
+    weight_decay: 0.0
+    sample_coverage: 50
+phase:
+  - end: 100
+    sampler: 'mrw'
+    size_subgraph: 2500
+    size_frontier: 1000
+    deg_clip: 100       # this clipping only limits the sampling probability of extremely high degree nodes. it does not change the graph topology

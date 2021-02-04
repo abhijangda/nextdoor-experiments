@@ -1,0 +1,17 @@
+network:
+  - dim: 128
+    aggr: 'concat'
+    loss: 'softmax'
+    arch: '1-0-1-0'     # '1-0-1-0' is the arch used by S-GCN. Changing to '1-1-0' still leads to significantly higher acc than other baselines. 
+    act: 'relu'
+    bias: 'norm'
+params:
+  - lr: 0.01
+    dropout: 0.1
+    weight_decay: 0.0   
+    sample_coverage: 50
+phase:
+  - end: 30
+    sampler: 'mrw'
+    size_subgraph: 8000
+    size_frontier: 1000
