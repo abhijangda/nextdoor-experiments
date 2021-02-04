@@ -180,6 +180,46 @@ def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_ma
     adjs.reverse()
     return adjs, previous_nodes, batch_nodes
 
+
+def nextdoor_ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
+    '''
+        LADIES_Sampler: Sample a fixed number of nodes per layer. The sampling probability (importance)
+                         is computed adaptively according to the nodes sampled in the upper layer.
+    '''
+    enable_nextdoor = True
+    np.random.seed(seed)
+    previous_nodes = batch_nodes
+    adjs  = []
+    '''
+        Sample nodes from top to bottom, based on the probability computed adaptively (layer-dependent).
+    '''
+    global sampling_time, nd, sample_number
+
+    sample_number += 1
+    t1 = time.time()
+    for d in range(depth):
+        #     row-select the lap_matrix (U) by previously sampled nodes
+        U = lap_matrix[previous_nodes , :]
+        #     Only use the upper layer's neighborhood to calculate the probability.
+        pi = np.array(np.sum(U.multiply(U), axis=0))[0]
+        p = pi / np.sum(pi)
+        s_num = np.min([np.sum(p > 0), samp_num_list[d]])
+        #     sample the next layer's nodes based on the adaptively probability (p).
+        after_nodes = nd.sample(0)[sample_number][d] if(enable_nextdoor) else np.random.choice(num_nodes, s_num, p = p, replace = False)
+        #     Add output nodes for self-loop
+        after_nodes = np.unique(np.concatenate((after_nodes, batch_nodes)))
+        #     col-select the lap_matrix (U), and then devided by the sampled probability for 
+        #     unbiased-sampling. Finally, conduct row-normalization to avoid value explosion.      
+        adj = U[: , after_nodes].multiply(1/p[after_nodes])
+        adjs += [sparse_mx_to_torch_sparse_tensor(row_normalize(adj))]
+        #     Turn the sampled nodes as previous_nodes, recursively conduct sampling.
+        previous_nodes = after_nodes
+    #     Reverse the sampled probability from bottom to top. Only require input how the lastly sampled nodes.
+    adjs.reverse()
+    t2 = time.time()
+    sampling_time += t2-t1
+    return adjs, previous_nodes, batch_nodes
+
 def ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
     '''
         LADIES_Sampler: Sample a fixed number of nodes per layer. The sampling probability (importance)
@@ -266,8 +306,7 @@ elif args.sample_method == 'full':
 elif args.sample_method == 'nextdoor_fastgcn':
     sampler = nextdoor_fastgcn_sampler
 elif args.sample_method == 'nextdoor_ladies':
-    pass
-    #sampler = nextdoor_ladies_sampler
+    sampler = nextdoor_ladies_sampler
 
 # In[ ]:
 
@@ -307,7 +346,7 @@ for oiter in range(5):
         if (not asynchronous):
             ######################### Synchronous Version ########################
             useMP = False
-            if bbbb:
+            if False:
                 with mp.Pool(processes=args.pool_num) as pool:
                     idx = torch.randperm(len(train_nodes))[:args.batch_size]
                     batch_nodes = train_nodes[idx]
