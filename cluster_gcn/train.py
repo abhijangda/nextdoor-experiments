@@ -23,6 +23,7 @@ import tensorflow.compat.v1 as tf
 import utils
 
 tf.logging.set_verbosity(tf.logging.INFO)
+tf.disable_eager_execution()
 # Set random seed
 seed = 1
 np.random.seed(seed)
@@ -196,15 +197,20 @@ def main(unused_argv):
   saver = tf.train.Saver()
   cost_val = []
   total_training_time = 0.0
+  sampling_time = 0
+  training_time = 0
   # Train model
   for epoch in range(FLAGS.epochs):
     t = time.time()
     np.random.shuffle(idx_parts)
     if FLAGS.bsize > 1:
+      t0 = time.time()  
       (features_batches, support_batches, y_train_batches,
        train_mask_batches) = utils.preprocess_multicluster(
            train_adj, parts, train_feats, y_train, train_mask,
            FLAGS.num_clusters, FLAGS.bsize, FLAGS.diag_lambda)
+      t1 = time.time()
+      sampling_time += t1-t0
       for pid in range(len(features_batches)):
         # Use preprocessed batch data
         features_b = features_batches[pid]
@@ -215,9 +221,12 @@ def main(unused_argv):
         feed_dict = utils.construct_feed_dict(features_b, support_b, y_train_b,
                                               train_mask_b, placeholders)
         feed_dict.update({placeholders['dropout']: FLAGS.dropout})
+        t0 = time.time()
         # Training step
         outs = sess.run([model.opt_op, model.loss, model.accuracy],
                         feed_dict=feed_dict)
+        t1 = time.time()
+        training_time += t1-t0
     else:
       np.random.shuffle(idx_parts)
       for pid in idx_parts:
@@ -233,7 +242,9 @@ def main(unused_argv):
         # Training step
         outs = sess.run([model.opt_op, model.loss, model.accuracy],
                         feed_dict=feed_dict)
-
+    
+    print(sampling_time,"sampling_time")
+    print(training_time,"training_time")
     total_training_time += time.time() - t
     print_str = 'Epoch: %04d ' % (epoch + 1) + 'training time: {:.5f} '.format(
         total_training_time) + 'train_acc= {:.5f} '.format(outs[2])
@@ -256,7 +267,8 @@ def main(unused_argv):
       break
 
   tf.logging.info('Optimization Finished!')
-
+  print(sampling_time,"Total sampling time")
+  print(training_time,"Total training time")
   # Save model
   saver.save(sess, FLAGS.save_name)
 
