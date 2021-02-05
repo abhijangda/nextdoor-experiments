@@ -4,7 +4,7 @@ from graphsaint.tensorflow_version.inits import *
 from graphsaint.utils import *
 from graphsaint.graph_samplers import *
 from graphsaint.norm_aggr import *
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import scipy.sparse as sp
 import scipy
 
@@ -78,7 +78,7 @@ class Minibatch:
         self.sample_coverage = train_params['sample_coverage']
         self.dropout = train_params['dropout']
         self.deg_train = np.array(self.adj_train.sum(1)).flatten()
-
+        self.sampling_time = 0
 
     def set_sampler(self,train_phases):
         self.subgraphs_remaining_indptr = list()
@@ -119,6 +119,7 @@ class Minibatch:
         # 1. sample enough number of subgraphs
         # 2. estimate norm factor alpha and lambda
         tot_sampled_nodes = 0
+        t0 = time.time()
         while True:
             self.par_graph_sample('train')
             tot_sampled_nodes = sum([len(n) for n in self.subgraphs_remaining_nodes])
@@ -140,6 +141,8 @@ class Minibatch:
         self.norm_loss_train[self.node_val] = 0
         self.norm_loss_train[self.node_test] = 0
         self.norm_loss_train[self.node_train] = num_subg/self.norm_loss_train[self.node_train]/self.node_train.size
+        t1 = time.time()
+        self.sampling_time += t1-t0
 
     def par_graph_sample(self,phase):
         t0 = time.time()
@@ -197,7 +200,7 @@ class Minibatch:
             adj_7 = sp.csr_matrix(([],[],np.zeros(2)),shape=(1,self.node_subgraph.shape[0]))
 
             _dropout = self.dropout
-
+            self.sampling_time += time.time() - tt0
             self.batch_num += 1
         feed_dict = dict()
         feed_dict.update({self.placeholders['node_subgraph']: self.node_subgraph})

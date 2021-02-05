@@ -7,11 +7,14 @@ from graphsaint.metric import *
 from tensorflow.python.client import timeline
 
 import sys, os, random
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import numpy as np
 import time
 import pdb
 import json
+
+
+tf.disable_eager_execution()
 
 class TimeLiner:
     _timeline_dict = None
@@ -226,6 +229,8 @@ def train(train_phases,model,minibatch,\
     #        'loss_test_opt':loss_test,'f1mic_test_opt':f1mic_test,'f1mac_test_opt':f1mac_test,\
     #        'epoch_best':e_best,
     #        'time_train': time_train}
+    print("sampling time",minibatch.sampling_time)
+    print("training_time",time_train)
     return      # everything is logged by TF. no need to return anything
 
 

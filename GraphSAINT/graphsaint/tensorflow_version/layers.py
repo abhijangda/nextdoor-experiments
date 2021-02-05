@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from graphsaint.tensorflow_version.inits import glorot,zeros,trained,ones,xavier,uniform
 from graphsaint.globals import *
 
