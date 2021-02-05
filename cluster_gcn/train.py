@@ -199,6 +199,7 @@ def main(unused_argv):
   total_training_time = 0.0
   sampling_time = 0
   training_time = 0
+  extraction_time = 0
   # Train model
   for epoch in range(FLAGS.epochs):
     t = time.time()
@@ -206,10 +207,11 @@ def main(unused_argv):
     if FLAGS.bsize > 1:
       t0 = time.time()  
       (features_batches, support_batches, y_train_batches,
-       train_mask_batches) = utils.preprocess_multicluster(
+       train_mask_batches,t) = utils.preprocess_multicluster(
            train_adj, parts, train_feats, y_train, train_mask,
            FLAGS.num_clusters, FLAGS.bsize, FLAGS.diag_lambda)
       t1 = time.time()
+      extraction_time += t
       sampling_time += t1-t0
       for pid in range(len(features_batches)):
         # Use preprocessed batch data
@@ -269,6 +271,7 @@ def main(unused_argv):
   tf.logging.info('Optimization Finished!')
   print(sampling_time,"Total sampling time")
   print(training_time,"Total training time")
+  print(extraction_time,"Total extraction time")
   # Save model
   saver.save(sess, FLAGS.save_name)
 
