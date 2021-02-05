@@ -149,7 +149,7 @@ fastgcn_p_set = False
 sample_number = 0
 
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
-    enable_nextdoor = False
+    enable_nextdoor = True
     global nd, sampling_time, fastgcn_p, fastgcn_p_set, sample_number
     previous_nodes = batch_nodes
     adjs = []
@@ -162,7 +162,7 @@ def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_ma
         fastgcn_p = p
         fastgcn_p_set = True
     sample_number += 1
-    print("Sampling", len(previous_nodes), samp_num_list[0])
+    # print("Sampling", len(previous_nodes), samp_num_list[0])
     for d in range(depth):
         #s_num = np.min([np.sum(p > 0), samp_num_list[d]])
         after_nodes = nd.sample(0)[sample_number][d] if(enable_nextdoor) else np.random.choice(num_nodes, samp_num_list[d], replace = False)
@@ -412,7 +412,7 @@ for oiter in range(5):
         # if cnt == args.n_stops // args.batch_num:
         #     break
         t2 = time.time()
-        training_time += t2-t1
+        training_time += t2-t0
     
     end_to_end_t2 = time.time()
     print("end_to_end_time", end_to_end_t2 - end_to_end_t1)

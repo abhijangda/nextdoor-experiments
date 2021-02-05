@@ -133,13 +133,17 @@ def preprocess_multicluster(adj,
   total_nnz = 0
   extraction_time = 0
   np.random.shuffle(parts)
+  print(num_clusters, block_size)
   for _, st in enumerate(range(0, num_clusters, block_size)):
     pt = parts[st]
     for pt_idx in range(st + 1, min(st + block_size, num_clusters)):
       pt = np.concatenate((pt, parts[pt_idx]), axis=0)
-    features_batches.append(features[pt, :])
-    y_train_batches.append(y_train[pt, :])
+    
     t0 = time.time()
+    ff = features[pt, :]
+    features_batches.append(ff)
+    y_train_batches.append(y_train[pt, :])
+   
     support_now = adj[pt, :][:, pt]
     if diag_lambda == -1:
       support_batches.append(sparse_to_tuple(normalize_adj(support_now)))
@@ -155,6 +159,7 @@ def preprocess_multicluster(adj,
       if train_mask[idx]:
         train_pt.append(newidx)
     train_mask_batches.append(sample_mask(train_pt, len(pt)))
+
   return (features_batches, support_batches, y_train_batches,
           train_mask_batches,extraction_time)
 
