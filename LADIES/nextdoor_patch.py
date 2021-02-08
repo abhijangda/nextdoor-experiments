@@ -7,11 +7,19 @@ lib = ctypes.CDLL("./NextDoor.so")
 
 class NextDoorSamplerFastGCN:
 
-    def __init__(self, batch_size, graph, edges , nodes,layer_dims):
+    def __init__(self, dataset, batch_size, graph, edges , nodes,layer_dims):
         self.edges = edges
         self.layer_dims = layer_dims
         self.nodes = nodes
-        NextDoor.initSampling("/mnt/homes/abhinav/GPUesque-for-eval/input/reddit_sampled_matrix")
+        if (dataset == "reddit"):
+            NextDoor.initSampling("/mnt/homes/abhinav/GPUesque-for-eval/input/reddit_sampled_matrix")
+        elif (dataset == "ppi"):
+            NextDoor.initSampling("/mnt/homes/abhinav/GPUesque-for-eval/input/ppi_sampled_matrix")
+        elif (dataset == "orkut"):
+            NextDoor.initSampling("/mnt/homes/abhinav/GPUesque-for-eval/input/com-orkut-weighted.graph")
+        elif (dataset == "livejournal"):
+            NextDoor.initSampling("/mnt/homes/abhinav/GPUesque-for-eval/input/soc-LiveJournal1-weighted.graph")
+
         self.samples = []
         self.batch_size = batch_size
 

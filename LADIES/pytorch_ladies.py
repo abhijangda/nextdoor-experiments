@@ -8,7 +8,7 @@ import argparse
 import scipy
 import multiprocessing as mp
 import time
-import warnings
+import warnings, pickle
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -115,18 +115,19 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
     '''
     for d in range(depth):
         #     row-select the lap_matrix (U) by previously sampled nodes
-        t2 = time.time()
         U = lap_matrix[previous_nodes , :]
         #t3 = time.time()
         #     sample the next layer's nodes based on the pre-computed probability (p).
         s_num = np.min([np.sum(p > 0), samp_num_list[d]])
         #print(num_nodes)
+        t2 = time.time()
         after_nodes = np.random.choice(num_nodes, s_num, p = p, replace = False)
         #t3 = time.time()
         #     col-select the lap_matrix (U), and then devided by the sampled probability for 
         #     unbiased-sampling. Finally, conduct row-normalization to avoid value explosion.         
         adj = (U[: , after_nodes].multiply(1/p[after_nodes]))
         t3 = time.time()
+
         #t3 = time.time()
         #     Turn the sampled adjacency matrix into a sparse matrix. If implemented by PyG
         #     This sparse matrix can also provide index and value.
@@ -150,12 +151,12 @@ sample_number = 0
 
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
     enable_nextdoor = True
-    global nd, sampling_time, fastgcn_p, fastgcn_p_set, sample_number
+    global nd, sampling_time, fastgcn_p, fastgcn_p_set, sample_number,crit_sampling_time
     previous_nodes = batch_nodes
     adjs = []
     # p computation can be pushed outside if performance is bad
     samples = []
-    t1 = time.time()
+    
     if (fastgcn_p_set == False):
         pi = np.array(np.sum(lap_matrix.multiply(lap_matrix), axis=0))[0]
         p = pi / np.sum(pi)
@@ -163,11 +164,16 @@ def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_ma
         fastgcn_p_set = True
     sample_number += 1
     # print("Sampling", len(previous_nodes), samp_num_list[0])
+    t1 = time.time()
     for d in range(depth):
         #s_num = np.min([np.sum(p > 0), samp_num_list[d]])
+        t3 = time.time()
         after_nodes = nd.sample(0)[sample_number][d] if(enable_nextdoor) else np.random.choice(num_nodes, samp_num_list[d], replace = False)
-        adj = lap_matrix[previous_nodes, : ][:, after_nodes].multiply(1/fastgcn_p[after_nodes])
+        t4 = time.time()
+        crit_sampling_time += t4-t3
         # print(adj.shape, type(adj), fastgcn_p[after_nodes].shape, type(fastgcn_p[after_nodes]))
+        adj = lap_matrix[previous_nodes, : ][:, after_nodes].multiply(1/fastgcn_p[after_nodes])
+        
         samples += [(after_nodes, adj)]
         previous_nodes = after_nodes
     previous_nodes = batch_nodes
@@ -231,7 +237,7 @@ def ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dept
     '''
         Sample nodes from top to bottom, based on the probability computed adaptively (layer-dependent).
     '''
-    global sampling_time
+    global sampling_time,crit_sampling_time
     t1 = time.time()
     for d in range(depth):
         #     row-select the lap_matrix (U) by previously sampled nodes
@@ -241,9 +247,12 @@ def ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dept
         p = pi / np.sum(pi)
         s_num = np.min([np.sum(p > 0), samp_num_list[d]])
         #     sample the next layer's nodes based on the adaptively probability (p).
+        _t1 = time.time() #TODO: Right now we consider time spent in only following lines for comparison of application time
         after_nodes = np.random.choice(num_nodes, s_num, p = p, replace = False)
         #     Add output nodes for self-loop
         after_nodes = np.unique(np.concatenate((after_nodes, batch_nodes)))
+        _t2 = time.time()
+        crit_sampling_time += _t2-_t1
         #     col-select the lap_matrix (U), and then devided by the sampled probability for 
         #     unbiased-sampling. Finally, conduct row-normalization to avoid value explosion.      
         adj = U[: , after_nodes].multiply(1/p[after_nodes])
@@ -286,9 +295,19 @@ else:
 print(args.dataset, args.sample_method)
 edges, labels, feat_data, num_classes, train_nodes, valid_nodes, test_nodes = load_data(args.dataset)
 
-adj_matrix = get_adj(edges, feat_data.shape[0])
+lap_matrix_file = args.dataset + "-lap-matrix.pkl"
+if os.path.exists(lap_matrix_file):
+    f = open(lap_matrix_file, 'rb')
+    lap_matrix = pickle.load(f)
+    f.close()
+else:
+    adj_matrix = get_adj(edges, feat_data.shape[0])
+    lap_matrix = row_normalize(adj_matrix + sp.eye(adj_matrix.shape[0]))
+    f = open(lap_matrix_file, 'wb')
+    pickle.dump(lap_matrix, f)
+    f.close()
+print("lap matrix loaded")
 
-lap_matrix = row_normalize(adj_matrix + sp.eye(adj_matrix.shape[0]))
 if type(feat_data) == scipy.sparse.lil.lil_matrix:
     feat_data = torch.FloatTensor(feat_data.todense()).to(device) 
 else:
@@ -315,7 +334,7 @@ process_ids = np.arange(args.batch_num)
 samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
 from nextdoor_patch import *
-nd = NextDoorSamplerFastGCN(args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
+nd = NextDoorSamplerFastGCN(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
 
 
 asynchronous = False
@@ -343,6 +362,8 @@ for oiter in range(5):
     for epoch in np.arange(args.epoch_num):
         susage.train()
         train_losses = []
+        batches = len(train_nodes)//args.batch_size
+        print("num batches", batches)
         if (not asynchronous):
             ######################### Synchronous Version ########################
             useMP = False
@@ -418,7 +439,8 @@ for oiter in range(5):
     print("end_to_end_time", end_to_end_t2 - end_to_end_t1)
     print("training_time",training_time)
     print("sampling_time",sampling_time)
-    print("crit_time",crit_sampling_time)
+    print("crit_sampling_time", crit_sampling_time)
+    print("Per Iteration Application Sampling time for %d nodes:"%(len(train_nodes)) ,crit_sampling_time/args.batch_num * batches / (100 if (len(train_nodes) > 1000000) else 1)/args.epoch_num)
     break
     best_model = torch.load('./save/best_model.pt')
     best_model.eval()
