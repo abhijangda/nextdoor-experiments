@@ -351,7 +351,7 @@ class subgraph_sampler(base_sampler):
         #global tt
         
         
-        t0 = time.time()
+        #t0 = time.time()
         adj = self.lap_matrix[batch_nodes, :][:, batch_nodes]
         U = self.lap_matrix[batch_nodes, :]
         is_neighbor = np.array(np.sum(U, axis=0))[0]>0
@@ -373,7 +373,7 @@ class subgraph_sampler(base_sampler):
         adjs_exact.reverse()
         sampled_nodes.reverse()
         input_nodes_exact.reverse()
-        t1 = time.time()
+        #t1 = time.time()
         #tt += t1-t0
         
         
