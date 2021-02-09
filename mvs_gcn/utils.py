@@ -205,7 +205,7 @@ def load_data_gcn(dataset_str):
 def preprocess_data(dataset):
     if dataset in ['ppi', 'ppi-large', 'reddit', 'flickr', 'yelp']:
         prefix = './data/{}/{}'.format(dataset, dataset)
-        G, feats, id_map, walks, class_map = load_data_graphsage(prefix)
+        G, feats, id_map, walks, class_map = load_data_graphsage(prefix, False)
 
         degrees = np.zeros(len(G), dtype=np.int64)
         edges = []

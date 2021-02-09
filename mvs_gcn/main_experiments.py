@@ -19,7 +19,7 @@ parser.add_argument('--dataset', type=str, default='reddit',
                     help='Dataset name: cora/citeseer/pubmed/flickr/reddit/ppi/ppi-large')
 parser.add_argument('--nhid', type=int, default=256,
                     help='Hidden state dimension')
-parser.add_argument('--epoch_num', type=int, default=400,
+parser.add_argument('--epoch_num', type=int, default=10,
                     help='Number of Epoch')
 parser.add_argument('--pool_num', type=int, default=10,
                     help='Number of Pool')
@@ -92,7 +92,7 @@ print('mvs_gcn_plus')
 susage, loss_train, loss_test, loss_train_all, f1_score_test, grad_variance_all  = mvs_gcn_plus(
     feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_nodes,  args, device, concat=use_concat, fq=args.batch_num)
 results['mvs_gcn_plus'] = [loss_train, loss_test, loss_train_all, f1_score_test, grad_variance_all]
-
+sys.exit(0)
 # print('mvs_gcn_plus_otf')
 # susage, loss_train, loss_test, loss_train_all, f1_score_test, grad_variance_all  = mvs_gcn_plus_otf(
 #     feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_nodes,  args, device, concat=use_concat)
