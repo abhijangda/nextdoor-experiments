@@ -1,0 +1,7 @@
+Run `run_ppi.sh` for experiments on PPI dataset.
+
+The same for other datasets.
+
+Create a folder "./data" by `mkdir data` then download data into this folder.
+
+Datasets can be download from https://drive.google.com/drive/folders/1qrFuQOxrbaDziJFeEkpAiXmL_C8dlk3K?usp=sharing

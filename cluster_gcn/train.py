@@ -21,6 +21,7 @@ import numpy as np
 import partition_utils
 import tensorflow.compat.v1 as tf
 import utils
+import json, os
 
 tf.logging.set_verbosity(tf.logging.INFO)
 tf.disable_eager_execution()
@@ -138,7 +139,20 @@ def main(unused_argv):
   if FLAGS.bsize > 1:
     _, parts = partition_utils.partition_graph(train_adj, visible_data,
                                                FLAGS.num_clusters)
+    parts_file = FLAGS.dataset + "-parts-txt"
+    if not os.path.exists(parts_file):
+      with open(parts_file, 'w') as f:
+        s = "{"
+        part_i = 0
+        for part in parts:
+          s += '"%d"'%part_i + ':' + str(part) + "\n"
+          if part_i != len(parts) - 1:
+            s += ','
+          part_i += 1
+        f.write(s + "}")
+
     parts = [np.array(pt) for pt in parts]
+      
   else:
     (parts, features_batches, support_batches, y_train_batches,
      train_mask_batches) = utils.preprocess(train_adj, train_feats, y_train,

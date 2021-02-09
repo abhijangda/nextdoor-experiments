@@ -133,7 +133,7 @@ def preprocess_multicluster(adj,
   total_nnz = 0
   extraction_time = 0
   np.random.shuffle(parts)
-  print(num_clusters, block_size)
+  print("Num Clusters", num_clusters, "Block Size", block_size)
   for _, st in enumerate(range(0, num_clusters, block_size)):
     pt = parts[st]
     for pt_idx in range(st + 1, min(st + block_size, num_clusters)):
