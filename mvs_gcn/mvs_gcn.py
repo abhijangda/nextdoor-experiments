@@ -338,7 +338,7 @@ def mvs_gcn_plus(feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_n
         data_prepare_times += [tp1-tp0]
         
         inner_loop_num = args.batch_num
-
+        training_t1 = time.time()
         t2 = time.time()
         cur_train_loss, cur_train_loss_all, grad_variance = variance_reduced_boost_step(susage, optimizer, feat_data, labels,
                                           train_nodes, valid_nodes,
@@ -359,7 +359,7 @@ def mvs_gcn_plus(feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_n
         cur_test_loss = susage.calculate_loss_grad(
             feat_data, adjs_full, labels, valid_nodes)
         val_f1 = susage.calculate_f1(feat_data, adjs_full, labels, valid_nodes)
-
+        training_t2 = time.time()
         if val_f1 > best_val:
             best_model = copy.deepcopy(susage)
         if val_f1 > best_val + 1e-2:
@@ -377,8 +377,10 @@ def mvs_gcn_plus(feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_n
         print('Epoch: ', epoch,
               '| train loss: %.8f' % cur_train_loss,
               '| val loss: %.8f' % cur_test_loss,
-              '| val f1: %.8f' % val_f1)
-    if bool(args.show_grad_norm):
+              '| val f1: %.8f' % val_f1,
+              '| sampling time: %.8f' % (tp1-tp0),
+              '| training time: %.8f' % (training_t2 - training_t1))
+    if False and bool(args.show_grad_norm):
         times, full_batch_times, data_prepare_times = \
             times[int(200/args.batch_num):], full_batch_times[int(200/args.batch_num):], data_prepare_times[int(200/args.batch_num):]
     print('Average training time is %0.3f'%np.mean(times))

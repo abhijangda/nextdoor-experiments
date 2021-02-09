@@ -21,7 +21,7 @@ parser.add_argument('--nhid', type=int, default=256,
                     help='Hidden state dimension')
 parser.add_argument('--epoch_num', type=int, default=10,
                     help='Number of Epoch')
-parser.add_argument('--pool_num', type=int, default=10,
+parser.add_argument('--pool_num', type=int, default=1,
                     help='Number of Pool')
 parser.add_argument('--batch_num', type=int, default=10,
                     help='Maximum Batch Number')

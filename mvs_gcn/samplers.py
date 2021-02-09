@@ -322,6 +322,7 @@ class graphsaint_sampler(base_sampler):
 
         return adjs, batch_nodes, batch_nodes, probs_nodes*len(self.train_nodes), sampled_nodes
 
+tt = 0
 class subgraph_sampler(base_sampler):
     def __init__(self, adj_matrix, train_nodes):
         assert(adj_matrix.diagonal().sum() == 0)  # make sure diagnal is zero
@@ -330,7 +331,7 @@ class subgraph_sampler(base_sampler):
         self.adj_matrix = adj_matrix.tocoo()
         self.lap_matrix = normalize(adj_matrix + sp.eye(adj_matrix.shape[0]))
         self.train_nodes = train_nodes
-
+        
     def dropedge(self, percent=0.8):
         nnz = self.adj_matrix.nnz
         perm = np.random.permutation(nnz)
@@ -343,27 +344,22 @@ class subgraph_sampler(base_sampler):
         lap_matrix = normalize(adj_matrix + sp.eye(adj_matrix.shape[0]))
         return lap_matrix
 
+
     def mini_batch(self, seed, batch_nodes, probs_nodes, samp_num_list, num_nodes, adj_matrix, depth):
         # lap_matrix = self.dropedge(percent=0.8)
         # adj = lap_matrix[batch_nodes, :][:, batch_nodes]
         # U = lap_matrix[batch_nodes, :]
+        global tt
+        
+        
+        t0 = time.time()
         adj = self.lap_matrix[batch_nodes, :][:, batch_nodes]
         U = self.lap_matrix[batch_nodes, :]
-        
         is_neighbor = np.array(np.sum(U, axis=0))[0]>0
         neighbors = np.arange(len(is_neighbor))[is_neighbor]
         neighbors = np.setdiff1d(neighbors, batch_nodes)
         after_nodes_exact = np.concatenate([batch_nodes, neighbors])
         adj_exact = U[:, after_nodes_exact]
-        
-#         for U_row in U:
-#             indices = U_row.indices
-#             after_nodes.append(indices)
-#         after_nodes = np.unique(np.concatenate(after_nodes))
-#         after_nodes = np.setdiff1d(after_nodes, batch_nodes)
-#         after_nodes_exact = np.concatenate([batch_nodes, after_nodes])
-#         adj_exact = U[:, after_nodes_exact]
-
         adjs = []
         adjs_exact = []
         sampled_nodes = []
@@ -373,10 +369,26 @@ class subgraph_sampler(base_sampler):
             adjs_exact += [sparse_mx_to_torch_sparse_tensor(adj_exact)]
             sampled_nodes.append(batch_nodes)
             input_nodes_exact.append(neighbors)
+        
         adjs.reverse()
         adjs_exact.reverse()
         sampled_nodes.reverse()
         input_nodes_exact.reverse()
+        t1 = time.time()
+        tt += t1-t0
+        print("359:", tt)
+        
+        
+#         for U_row in U:
+#             indices = U_row.indices
+#             after_nodes.append(indices)
+#         after_nodes = np.unique(np.concatenate(after_nodes))
+#         after_nodes = np.setdiff1d(after_nodes, batch_nodes)
+#         after_nodes_exact = np.concatenate([batch_nodes, after_nodes])
+#         adj_exact = U[:, after_nodes_exact]
+
+        
+
 
         return adjs, adjs_exact, batch_nodes, batch_nodes, probs_nodes, sampled_nodes, input_nodes_exact
 

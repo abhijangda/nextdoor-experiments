@@ -61,10 +61,14 @@ def load_data_graphsage(prefix, normalize=True, load_walks=False):
     # Remove all nodes that do not have val/test annotations
     # (necessary because of networkx weirdness with the Reddit data)
     broken_count = 0
+    nodes_to_remove = []
     for node in G.nodes():
         if not 'val' in G.node[node] or not 'test' in G.node[node]:
-            G.remove_node(node)
+            nodes_to_remove += [node]
             broken_count += 1
+    
+    for node in nodes_to_remove:
+        G.remove_node(node)
     print("Removed {:d} nodes that lacked proper annotations due to networkx versioning issues".format(
         broken_count))
 
