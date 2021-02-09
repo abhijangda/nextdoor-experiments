@@ -322,12 +322,11 @@ class graphsaint_sampler(base_sampler):
 
         return adjs, batch_nodes, batch_nodes, probs_nodes*len(self.train_nodes), sampled_nodes
 
-tt = 0
 class subgraph_sampler(base_sampler):
     def __init__(self, adj_matrix, train_nodes):
-        assert(adj_matrix.diagonal().sum() == 0)  # make sure diagnal is zero
+        #assert(adj_matrix.diagonal().sum() == 0)  # make sure diagnal is zero
         # make sure is symmetric
-        assert((adj_matrix != adj_matrix.T).nnz == 0)
+        #assert((adj_matrix != adj_matrix.T).nnz == 0)
         self.adj_matrix = adj_matrix.tocoo()
         self.lap_matrix = normalize(adj_matrix + sp.eye(adj_matrix.shape[0]))
         self.train_nodes = train_nodes
@@ -349,7 +348,7 @@ class subgraph_sampler(base_sampler):
         # lap_matrix = self.dropedge(percent=0.8)
         # adj = lap_matrix[batch_nodes, :][:, batch_nodes]
         # U = lap_matrix[batch_nodes, :]
-        global tt
+        #global tt
         
         
         t0 = time.time()
@@ -375,8 +374,7 @@ class subgraph_sampler(base_sampler):
         sampled_nodes.reverse()
         input_nodes_exact.reverse()
         t1 = time.time()
-        tt += t1-t0
-        print("359:", tt)
+        #tt += t1-t0
         
         
 #         for U_row in U:

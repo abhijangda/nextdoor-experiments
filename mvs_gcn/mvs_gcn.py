@@ -327,13 +327,29 @@ def mvs_gcn_plus(feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_n
             
         # prepare train data
         tp0 = time.time()
-        pool = mp.Pool(args.pool_num)
-        jobs = prepare_data(pool, subgraph_sampler_.mini_batch, process_ids, train_nodes, train_nodes_p, samp_num_list, len(feat_data),
+        asyncSampling = False
+        if asyncSampling:
+            pool = mp.Pool(args.pool_num)
+            jobs = prepare_data(pool, subgraph_sampler_.mini_batch, process_ids, train_nodes, train_nodes_p, samp_num_list, len(feat_data),
                             adj_matrix, args.n_layers, args.is_ratio)
         # fetch train data
-        train_data = [job.get() for job in jobs]
-        pool.close()
-        pool.join()
+            train_data = [job.get() for job in jobs]
+            pool.close()
+            pool.join()
+        else:
+            num_train_nodes = len(train_nodes)
+            num_nodes = len(feat_data)
+            is_ratio = args.is_ratio
+            sample_mask = np.random.uniform(0, 1, num_train_nodes) <= train_nodes_p
+            probs_nodes = train_nodes_p[sample_mask] * len(train_nodes) * is_ratio
+            batch_nodes = train_nodes[sample_mask]
+            train_data = []
+
+            for p in process_ids:
+                train_data += [subgraph_sampler_.mini_batch(np.random.randint(2**32 - 1), batch_nodes, probs_nodes,
+                            samp_num_list, num_nodes, adj_matrix, args.n_layers)]
+            
+
         tp1 = time.time()
         data_prepare_times += [tp1-tp0]
         
