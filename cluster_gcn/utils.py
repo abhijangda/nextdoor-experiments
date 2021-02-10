@@ -17,7 +17,7 @@
 
 import json
 import time
-
+import pickle
 from networkx.readwrite import json_graph
 import numpy as np
 import partition_utils
@@ -26,7 +26,9 @@ import sklearn.metrics
 import sklearn.preprocessing
 import tensorflow.compat.v1 as tf
 from tensorflow.compat.v1 import gfile
-
+import os
+import networkx as nx
+import random
 
 def parse_index_file(filename):
   """Parse index file."""
@@ -308,3 +310,111 @@ def load_graphsage_data(dataset_path, dataset_str, normalize=True):
 
   tf.logging.info('Data loaded, %f seconds.', time.time() - start_time)
   return num_data, train_adj, full_adj, feats, train_feats, test_feats, labels, train_data, val_data, test_data
+
+## Code copied from LADIES, repeated for readability and ease of modifying for required library.
+def custom_data(dataset_str,normalize=True):
+    MAX_LABELS = 10
+    MAX_FEATURE_SIZE = 256
+    if dataset_str == 'patents':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
+        picklefilename = "./cit-Patents.pickle"
+    elif dataset_str == 'orkut':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/com-orkut.ungraph.txt'
+        picklefilename = "./com-orkut.pickle"
+    elif dataset_str == 'livejournal':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/soc-LiveJournal1.txt'
+        picklefilename = "./soc-LiveJournal1.pickle"
+    elif dataset_str == "reddit":
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/reddit_edgelist'
+        picklefilename = "./reddit_edgelist.pickle"
+    elif dataset_str == "ppi":
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/ppi_edgelist'
+        picklefilename = "./ppi_edgelist.pickle"
+    else:
+        assert(False)
+        
+    if (os.path.exists(picklefilename)):
+        f = open(picklefilename, 'rb')
+        G = pickle.load(f)
+        f.close()
+        edges = G.edges()
+    else:
+        edges = []
+        G = nx.Graph()
+        for line in open(filename):
+            if line.startswith('#'):
+                continue
+            a,b = line.split()
+            a,b = int(a),int(b)
+            edges += [[a,b]]
+        G.add_edges_from(edges)
+        print ("Edges Added")
+        ################## reorder
+        remap = {}
+        count = 0
+        for i in G.nodes():
+            remap[i] = count
+            count = count + 1
+        G = nx.Graph()
+        new_edges = []
+        for a,b in edges:
+            new_edges += [[remap[a],remap[b]]]
+        edges = new_edges
+        G.add_edges_from(edges)
+        print ("Reorder Done")
+        ################## end reorder
+        f = open(picklefilename, 'wb')
+        pickle.dump(G, f)
+        f.close()
+    
+    max_nodes = max(G.nodes()) + 1
+    num_data = max_nodes
+    degrees = np.zeros(max_nodes, dtype=np.int64)
+    labels = np.zeros((max_nodes,MAX_LABELS), dtype = np.int64)
+    idx_train = []
+    idx_test = []
+    idx_val = []
+    for s in G:
+        r = random.random()
+        if r >= .9:
+            idx_test += [int(s)]
+        elif r >= .8:
+            idx_val += [s]
+        else:
+            idx_train += [s]
+        degrees[s] = len(G[s])
+        labels[s][random.randint(0, MAX_LABELS-1)] = 1
+
+    train_data = np.array(idx_train, dtype=np.int32)
+    test_data = np.array(idx_test, dtype=np.int32)
+    val_data = np.array(idx_val, dtype=np.int32)
+    is_train = np.ones((num_data), dtype=np.bool)
+    is_train[val_data] = False
+    is_train[test_data] = False
+
+
+    # Ignoring normalization as features are randomly created
+    feats = np.random.rand(max_nodes,MAX_FEATURE_SIZE)
+    
+    num_data = max_nodes
+    def _construct_adj(edges):
+        adj = sp.csr_matrix((np.ones(
+        (edges.shape[0]), dtype=np.float32), (edges[:, 0], edges[:, 1])),
+                        shape=(num_data, num_data))
+        adj += adj.transpose()
+        return adj
+    train_edges = [(e[0], e[1]) for e in edges if is_train[e[0]] and is_train[e[1]]]
+    edges = np.array(edges, dtype=np.int32)
+    train_edges = np.array(train_edges, dtype=np.int32)
+
+    train_adj = _construct_adj(train_edges)
+    full_adj = _construct_adj(edges)
+    train_feats = feats[train_data]
+    test_feats = feats[test_data]
+
+    return num_data, train_adj, full_adj, feats, train_feats, test_feats, labels, train_data, val_data, test_data
+
+
+if __name__=='__main__':
+    custom_data('ppi')
+

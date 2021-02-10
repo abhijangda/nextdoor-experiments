@@ -10,3 +10,4 @@ ext/
 GraphSAGE/
 *.pt
 venv/
+*.pickle

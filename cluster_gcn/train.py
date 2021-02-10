@@ -34,6 +34,7 @@ flags = tf.flags
 FLAGS = flags.FLAGS
 flags.DEFINE_string('save_name', './mymodel.ckpt', 'Path for saving model')
 flags.DEFINE_string('dataset', 'ppi', 'Dataset string.')
+flags.DEFINE_string('custom_data','None','custom dataset string')
 flags.DEFINE_string('data_prefix', 'data/', 'Datapath prefix.')
 flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
 flags.DEFINE_integer('epochs', 400, 'Number of epochs to train.')
@@ -61,11 +62,20 @@ flags.DEFINE_bool('validation', True,
                   'Print validation accuracy after each epoch.')
 
 
-def load_data(data_prefix, dataset_str, precalc):
+def load_data(data_prefix, dataset_str, precalc, custom_data_str):
   """Return the required data formats for GCN models."""
-  (num_data, train_adj, full_adj, feats, train_feats, test_feats, labels,
-   train_data, val_data,
-   test_data) = utils.load_graphsage_data(data_prefix, dataset_str)
+  print(custom_data_str)
+  if custom_data_str != 'None': 
+    print('##############################')
+    (num_data, train_adj, full_adj, feats, train_feats, test_feats, labels,
+    train_data, val_data,
+    test_data) = utils.custom_data(custom_data_str)
+  else:
+    (num_data, train_adj, full_adj, feats, train_feats, test_feats, labels,
+    train_data, val_data,
+    test_data) = utils.load_graphsage_data(data_prefix, dataset_str)
+
+
   visible_data = train_data
 
   y_train = np.zeros(labels.shape)
@@ -133,7 +143,7 @@ def main(unused_argv):
   # Load data
   (train_adj, full_adj, train_feats, test_feats, y_train, y_val, y_test,
    train_mask, val_mask, test_mask, _, val_data, test_data, num_data,
-   visible_data) = load_data(FLAGS.data_prefix, FLAGS.dataset, FLAGS.precalc)
+   visible_data) = load_data(FLAGS.data_prefix, FLAGS.dataset, FLAGS.precalc, FLAGS.custom_data)
 
   # Partition graph and do preprocessing
   if FLAGS.bsize > 1:
