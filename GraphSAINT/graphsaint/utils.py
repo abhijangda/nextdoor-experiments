@@ -7,7 +7,126 @@ import os
 import yaml
 import scipy.sparse as sp
 from graphsaint.globals import *
+import networkx as nx
+import pickle,random
 
+def load_custom_dataset(dataset_str, normalize=True):
+    MAX_LABELS = 10
+    MAX_FEATURE_SIZE = 256
+    if dataset_str == 'patents':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
+        picklefilename = "./cit-Patents.pickle"
+    elif dataset_str == 'orkut':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/com-orkut.ungraph.txt'
+        picklefilename = "./com-orkut.pickle"
+    elif dataset_str == 'livejournal':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/soc-LiveJournal1.txt'
+        picklefilename = "./soc-LiveJournal1.pickle"
+    elif dataset_str == "reddit":
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/reddit_edgelist'
+        picklefilename = "./reddit_edgelist.pickle"
+    elif dataset_str == "ppi":
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/ppi_edgelist'
+        picklefilename = "./ppi_edgelist.pickle"
+    else:
+        assert(False)
+        
+    if (os.path.exists(picklefilename)):
+        f = open(picklefilename, 'rb')
+        G = pickle.load(f)
+        f.close()
+        edges = G.edges()
+    else:
+        edges = []
+        G = nx.Graph()
+        for line in open(filename):
+            if line.startswith('#'):
+                continue
+            a,b = line.split()
+            a,b = int(a),int(b)
+            edges += [[a,b]]
+        G.add_edges_from(edges)
+        print ("Edges Added")
+        ################## reorder
+        remap = {}
+        count = 0
+        for i in G.nodes():
+            remap[i] = count
+            count = count + 1
+        G = nx.Graph()
+        new_edges = []
+        for a,b in edges:
+            new_edges += [[remap[a],remap[b]]]
+        edges = new_edges
+        G.add_edges_from(edges)
+        print ("Reorder Done")
+        ################## end reorder
+        f = open(picklefilename, 'wb')
+        pickle.dump(G, f)
+        f.close()
+    
+    N = max(G.nodes())+1
+    def coo_format(train_edges):
+        r = []
+        c = []
+        v = []
+        for e in train_edges:
+            r.append(e[0])
+            c.append(e[1])
+            v.append(1)
+        return r,c,v
+    r,c,v = coo_format(edges)
+    adj_full = scipy.sparse.coo_matrix((v,(r,c)),shape=(N,N)).astype(np.bool)
+    adj_full = adj_full.tocsr()
+    # adj_full = scipy.sparse.load_npz('./{}/adj_full.npz'.format(prefix)).astype(np.bool)
+    num_data = N 
+    degrees = np.zeros(N, dtype=np.int64)
+    labels = np.zeros((N,MAX_LABELS), dtype = np.int64)
+    idx_train = []
+    idx_test = []
+    idx_val = []
+    class_map = {}
+    for s in G:
+        r = random.random()
+        if r >= .9:
+            idx_test += [int(s)]
+        elif r >= .8:
+            idx_val += [s]
+        else:
+            idx_train += [s]
+        degrees[s] = len(G[s])
+        class_map[s] = random.randint(0,MAX_LABELS-1)
+        #labels[s][random.randint(0, MAX_LABELS-1)] = 1
+
+    train_data = np.array(idx_train, dtype=np.int32)
+    test_data = np.array(idx_test, dtype=np.int32)
+    val_data = np.array(idx_val, dtype=np.int32)
+    is_train = np.ones((num_data), dtype=np.bool)
+    is_train[val_data] = False
+    is_train[test_data] = False
+    train_edges = [(e[0], e[1]) for e in edges if is_train[e[0]] and is_train[e[1]]]
+    r,c,v = coo_format(train_edges)
+    adj_train = scipy.sparse.coo_matrix((v,(r,c)),shape=(N,N)).astype(np.bool)
+    adj_train = adj_train.tocsr()
+    #adj_train = scipy.sparse.load_npz('./{}/adj_train.npz'.format(prefix)).astype(np.bool)
+    
+    role = {'tr':idx_train,'te':idx_test,'va':idx_val}
+    #role = json.load(open('./{}/role.json'.format(prefix)))
+    feats = np.random.rand(N,MAX_FEATURE_SIZE)
+
+    #feats = np.load('./{}/feats.npy'.format(prefix))
+    
+    #class_map = json.load(open('./{}/class_map.json'.format(prefix)))
+    #class_map = {int(k):v for k,v in class_map.items()}
+    assert len(class_map) == feats.shape[0]
+    # ---- normalize feats ---- (Dont touch) 
+    #train_nodes = np.array(list(set(adj_train.nonzero()[0])))
+    #train_feats = feats[train_nodes]
+    #scaler = StandardScaler()
+    #scaler.fit(train_feats)
+    #feats = scaler.transform(feats)
+    # -------------------------
+    return adj_full, adj_train, feats, class_map, role
 
 def load_data(prefix, normalize=True):
     """
@@ -57,6 +176,10 @@ def load_data(prefix, normalize=True):
                             for test nodes. The value is the list of IDs of nodes belonging to
                             the train/val/test sets.
     """
+    if prefix == 'patents' or prefix == 'orkut' or prefix =='livejournal' or prefix == 'reddit' or prefix =='ppi' :
+        print("reached checkpoint")
+        return load_custom_dataset(prefix)
+
     adj_full = scipy.sparse.load_npz('./{}/adj_full.npz'.format(prefix)).astype(np.bool)
     adj_train = scipy.sparse.load_npz('./{}/adj_train.npz'.format(prefix)).astype(np.bool)
     role = json.load(open('./{}/role.json'.format(prefix)))
@@ -214,3 +337,6 @@ def printf(msg,style=''):
         print(msg)
     else:
         print("{color1}{msg}{color2}".format(color1=_bcolors[style],msg=msg,color2='\033[0m'))
+
+if __name__ == "__main__":
+    load_custom_dataset('patents')
