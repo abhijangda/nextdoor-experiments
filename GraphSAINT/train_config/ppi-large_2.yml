@@ -11,7 +11,9 @@ params:
     weight_decay: 0.0
     sample_coverage: 50
 phase:
-  - end: 200
-    sampler: 'rw'
+  - end: 100
+    size_frontier: 1000
+    size_subgraph: 3000
+    sampler: 'mrw'
     depth: 2
     num_root: 3000

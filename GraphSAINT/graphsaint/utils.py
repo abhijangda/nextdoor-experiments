@@ -12,7 +12,7 @@ import pickle,random
 
 def load_custom_dataset(dataset_str, normalize=True):
     MAX_LABELS = 10
-    MAX_FEATURE_SIZE = 256
+    MAX_FEATURE_SIZE = 8
     if dataset_str == 'patents':
         filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
         picklefilename = "./cit-Patents.pickle"
@@ -309,7 +309,10 @@ def adj_norm(adj, deg=None, sort_indices=True):
     rather than ascending order
     """
     diag_shape = (adj.shape[0],adj.shape[1])
+    #adj.setdiag(1)
+
     D = adj.sum(1).flatten() if deg is None else deg
+    
     norm_diag = sp.dia_matrix((1/D,0),shape=diag_shape)
     adj_norm = norm_diag.dot(adj)
     if sort_indices:

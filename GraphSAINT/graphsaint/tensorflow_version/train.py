@@ -130,7 +130,7 @@ def prepare(train_data,train_params,arch_gcn):
 def train(train_phases,model,minibatch,\
             sess,train_stat,ph_misc_stat,summary_writer):
     import time
-
+    BYPASS = True 
     # saver = tf.train.Saver(var_list=tf.trainable_variables())
     saver=tf.train.Saver()
 
@@ -157,6 +157,8 @@ def train(train_phases,model,minibatch,\
                 t0 = time.time()
                 feed_dict, labels = minibatch.feed_dict(mode='train')
                 t1 = time.time()
+                if BYPASS:
+                    continue
                 if args_global.timeline:      # profile the code with Tensorflow Timeline
                     _,__,loss_train,pred_train = sess.run([train_stat[0], \
                             model.opt_op, model.loss, model.preds], feed_dict=feed_dict, \
@@ -177,6 +179,8 @@ def train(train_phases,model,minibatch,\
                     l_f1mic_tr.append(f1_mic)
                     l_f1mac_tr.append(f1_mac)
                     l_size_subg.append(minibatch.size_subgraph)
+            if BYPASS:
+                continue
             time_train += time_train_ep
             time_prepare += time_prepare_ep
             if args_global.cpu_eval:      # Full batch evaluation using CPU
@@ -200,7 +204,7 @@ def train(train_phases,model,minibatch,\
                 if not os.path.exists(args_global.dir_log+'/models'):
                     os.makedirs(args_global.dir_log+'/models')
                 print('  Saving models ...')
-                savepath = saver.save(sess, '{}/models/saved_model_{}.chkpt'.format(args_global.dir_log,timestamp),write_meta_graph=False,write_state=False)
+                savepath = saver.save(sess, '{}/models/saved_model_{}.chkpt'.format(args_global.dir_log,timestamp).replace(' ','_'),write_meta_graph=False,write_state=False)
  
             if args_global.tensorboard:
                 misc_stat = sess.run([train_stat[1]],feed_dict={\
@@ -219,11 +223,13 @@ def train(train_phases,model,minibatch,\
     for tl in many_runs_timeline:
         timelines.update_timeline(tl)
     timelines.save('timeline.json')
-    saver.restore(sess_eval, '{}/models/saved_model_{}.chkpt'.format(args_global.dir_log,timestamp))
+    '''
+    saver.restore(sess_eval, '{}/models/saved_model_{}.chkpt'.format(args_global.dir_log,timestamp).replace(' ','_'))
     loss_val, f1mic_val, f1mac_val, duration = evaluate_full_batch(sess_eval,model,minibatch,many_runs_timeline,mode='val')
     printf("Full validation (Epoch {:4d}): \n  F1_Micro = {:.4f}\tF1_Macro = {:.4f}".format(e_best,f1mic_val,f1mac_val),style='red')
     loss_test, f1mic_test, f1mac_test, duration = evaluate_full_batch(sess_eval,model,minibatch,many_runs_timeline,mode='test')
     printf("Full test stats: \n  F1_Micro = {:.4f}\tF1_Macro = {:.4f}".format(f1mic_test,f1mac_test),style='red')
+    '''
     printf('Total training time: {:6.2f} sec'.format(time_train),style='red')
     #ret = {'loss_val_opt':loss_val,'f1mic_val_opt':f1mic_val,'f1mac_val_opt':f1mac_val,\
     #        'loss_test_opt':loss_test,'f1mic_test_opt':f1mic_test,'f1mac_test_opt':f1mac_test,\

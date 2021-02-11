@@ -176,7 +176,7 @@ class Minibatch:
             if len(self.subgraphs_remaining_nodes) == 0:
                 self.par_graph_sample('train')
                 print()
-
+            tt5 = time.time()
             self.node_subgraph = self.subgraphs_remaining_nodes.pop()
             self.size_subgraph = len(self.node_subgraph)
             adj = sp.csr_matrix((self.subgraphs_remaining_data.pop(),self.subgraphs_remaining_indices.pop(),\
@@ -200,7 +200,7 @@ class Minibatch:
             adj_7 = sp.csr_matrix(([],[],np.zeros(2)),shape=(1,self.node_subgraph.shape[0]))
 
             _dropout = self.dropout
-            self.sampling_time += time.time() - tt0
+            self.sampling_time += tt5 - tt0
             self.batch_num += 1
         feed_dict = dict()
         feed_dict.update({self.placeholders['node_subgraph']: self.node_subgraph})
