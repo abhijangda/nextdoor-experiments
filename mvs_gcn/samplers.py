@@ -322,6 +322,10 @@ class graphsaint_sampler(base_sampler):
 
         return adjs, batch_nodes, batch_nodes, probs_nodes*len(self.train_nodes), sampled_nodes
 
+tt  = 0
+tt1 = 0
+tt2 = 0
+tt3 = 0
 class subgraph_sampler(base_sampler):
     def __init__(self, adj_matrix, train_nodes):
         #assert(adj_matrix.diagonal().sum() == 0)  # make sure diagnal is zero
@@ -348,16 +352,25 @@ class subgraph_sampler(base_sampler):
         # lap_matrix = self.dropedge(percent=0.8)
         # adj = lap_matrix[batch_nodes, :][:, batch_nodes]
         # U = lap_matrix[batch_nodes, :]
-        #global tt
+        global tt, tt1,tt2,tt3
         
         
-        #t0 = time.time()
+        t0 = time.time()
         adj = self.lap_matrix[batch_nodes, :][:, batch_nodes]
+        t1 = time.time()
+        tt3 += t1-t0
+        t0 = time.time()
         U = self.lap_matrix[batch_nodes, :]
+        t1 = time.time()
+        tt2 += t1 - t0
+        t0 = time.time()
         is_neighbor = np.array(np.sum(U, axis=0))[0]>0
         neighbors = np.arange(len(is_neighbor))[is_neighbor]
         neighbors = np.setdiff1d(neighbors, batch_nodes)
         after_nodes_exact = np.concatenate([batch_nodes, neighbors])
+        t1 = time.time()
+        tt += t1-t0
+        t0 = time.time()
         adj_exact = U[:, after_nodes_exact]
         adjs = []
         adjs_exact = []
@@ -368,13 +381,15 @@ class subgraph_sampler(base_sampler):
             adjs_exact += [sparse_mx_to_torch_sparse_tensor(adj_exact)]
             sampled_nodes.append(batch_nodes)
             input_nodes_exact.append(neighbors)
-        
+        t1 = time.time()
+        tt1 += t1 - t0
+
+        print(tt, tt1, tt2, tt3, adj_exact.shape, type(adj_exact))
         adjs.reverse()
         adjs_exact.reverse()
         sampled_nodes.reverse()
         input_nodes_exact.reverse()
-        #t1 = time.time()
-        #tt += t1-t0
+       
         
         
 #         for U_row in U:

@@ -21,7 +21,7 @@ import numpy as np
 import partition_utils
 import tensorflow.compat.v1 as tf
 import utils
-import json, os
+import json, os, pickle
 
 tf.logging.set_verbosity(tf.logging.INFO)
 tf.disable_eager_execution()
@@ -147,9 +147,19 @@ def main(unused_argv):
 
   # Partition graph and do preprocessing
   if FLAGS.bsize > 1:
-    _, parts = partition_utils.partition_graph(train_adj, visible_data,
-                                               FLAGS.num_clusters)
     parts_file = FLAGS.dataset + "-parts-txt"
+    parts_pickle_file = FLAGS.dataset + "-parts-pickle"
+    if os.path.exists(parts_pickle_file):
+      f = open(parts_pickle_file, 'rb')
+      parts = pickle.load(f)
+      f.close()
+    else:
+      _, parts = partition_utils.partition_graph(train_adj, visible_data,
+                                               FLAGS.num_clusters)
+      f = open(parts_pickle_file, 'wb')
+      pickle.dump(parts, f)
+      f.close()
+
     if not os.path.exists(parts_file):
       with open(parts_file, 'w') as f:
         s = "{"
@@ -170,17 +180,17 @@ def main(unused_argv):
                                             FLAGS.num_clusters,
                                             FLAGS.diag_lambda)
 
-  (_, val_features_batches, val_support_batches, y_val_batches,
-   val_mask_batches) = utils.preprocess(full_adj, test_feats, y_val, val_mask,
-                                        np.arange(num_data),
-                                        FLAGS.num_clusters_val,
-                                        FLAGS.diag_lambda)
+  # (_, val_features_batches, val_support_batches, y_val_batches,
+  #  val_mask_batches) = utils.preprocess(full_adj, test_feats, y_val, val_mask,
+  #                                       np.arange(num_data),
+  #                                       FLAGS.num_clusters_val,
+  #                                       FLAGS.diag_lambda)
 
-  (_, test_features_batches, test_support_batches, y_test_batches,
-   test_mask_batches) = utils.preprocess(full_adj, test_feats, y_test,
-                                         test_mask, np.arange(num_data),
-                                         FLAGS.num_clusters_test,
-                                         FLAGS.diag_lambda)
+  # (_, test_features_batches, test_support_batches, y_test_batches,
+  #  test_mask_batches) = utils.preprocess(full_adj, test_feats, y_test,
+  #                                        test_mask, np.arange(num_data),
+  #                                        FLAGS.num_clusters_test,
+  #                                        FLAGS.diag_lambda)
   idx_parts = list(range(len(parts)))
 
   # Some preprocessing
@@ -269,33 +279,33 @@ def main(unused_argv):
         outs = sess.run([model.opt_op, model.loss, model.accuracy],
                         feed_dict=feed_dict)
     
-    print(sampling_time,"sampling_time")
-    print(training_time,"training_time")
     total_training_time += time.time() - t
+
     print_str = 'Epoch: %04d ' % (epoch + 1) + 'training time: {:.5f} '.format(
         total_training_time) + 'train_acc= {:.5f} '.format(outs[2])
-
-    # Validation
-    if FLAGS.validation:
-      cost, acc, micro, macro = evaluate(sess, model, val_features_batches,
-                                         val_support_batches, y_val_batches,
-                                         val_mask_batches, val_data,
-                                         placeholders)
-      cost_val.append(cost)
-      print_str += 'val_acc= {:.5f} '.format(
-          acc) + 'mi F1= {:.5f} ma F1= {:.5f} '.format(micro, macro)
-
-    tf.logging.info(print_str)
-
-    if epoch > FLAGS.early_stopping and cost_val[-1] > np.mean(
-        cost_val[-(FLAGS.early_stopping + 1):-1]):
-      tf.logging.info('Early stopping...')
-      break
-
-  tf.logging.info('Optimization Finished!')
   print(sampling_time,"Total sampling time")
   print(training_time,"Total training time")
   print(extraction_time,"Total extraction time")
+  #   return 
+  #   # Validation
+  #   if FLAGS.validation:
+  #     cost, acc, micro, macro = evaluate(sess, model, val_features_batches,
+  #                                        val_support_batches, y_val_batches,
+  #                                        val_mask_batches, val_data,
+  #                                        placeholders)
+  #     cost_val.append(cost)
+  #     print_str += 'val_acc= {:.5f} '.format(
+  #         acc) + 'mi F1= {:.5f} ma F1= {:.5f} '.format(micro, macro)
+
+  #   tf.logging.info(print_str)
+
+  #   if epoch > FLAGS.early_stopping and cost_val[-1] > np.mean(
+  #       cost_val[-(FLAGS.early_stopping + 1):-1]):
+  #     tf.logging.info('Early stopping...')
+  #     break
+
+  # tf.logging.info('Optimization Finished!')
+  return
   # Save model
   saver.save(sess, FLAGS.save_name)
 

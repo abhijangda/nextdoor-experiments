@@ -141,11 +141,10 @@ def preprocess_multicluster(adj,
     for pt_idx in range(st + 1, min(st + block_size, num_clusters)):
       pt = np.concatenate((pt, parts[pt_idx]), axis=0)
     
-    t0 = time.time()
     ff = features[pt, :]
     features_batches.append(ff)
     y_train_batches.append(y_train[pt, :])
-   
+    t0 = time.time()
     support_now = adj[pt, :][:, pt]
     if diag_lambda == -1:
       support_batches.append(sparse_to_tuple(normalize_adj(support_now)))
@@ -314,7 +313,7 @@ def load_graphsage_data(dataset_path, dataset_str, normalize=True):
 ## Code copied from LADIES, repeated for readability and ease of modifying for required library.
 def custom_data(dataset_str,normalize=True):
     MAX_LABELS = 10
-    MAX_FEATURE_SIZE = 256
+    MAX_FEATURE_SIZE = 64
     if dataset_str == 'patents':
         filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
         picklefilename = "./cit-Patents.pickle"

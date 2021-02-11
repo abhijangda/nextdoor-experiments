@@ -132,11 +132,14 @@ def variance_reduced_boost_step(net, optimizer, feat_data, labels,
     # Run over the train_loader
     while iter_num < inner_loop_num:
         for adjs, adjs_exact, input_nodes, output_nodes, probs_nodes, sampled_nodes, input_exact_nodes in train_data:
-            
+            t0 = time.time()
+            # print("136:", adjs.shape, adjs_exact.shape)
             adjs = package_mxl(adjs, device)
             adjs_exact = package_mxl(adjs_exact, device)
             
             weight = 1.0/torch.FloatTensor(probs_nodes).to(device)
+            t1 = time.time()
+            print("142: transferring time", t1-t0)
             # compute current stochastic gradient
             
             optimizer.zero_grad()

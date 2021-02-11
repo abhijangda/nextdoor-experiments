@@ -343,14 +343,17 @@ def mvs_gcn_plus(feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_n
             sample_mask = np.random.uniform(0, 1, num_train_nodes) <= train_nodes_p
             probs_nodes = train_nodes_p[sample_mask] * len(train_nodes) * is_ratio
             batch_nodes = train_nodes[sample_mask]
+            print(num_train_nodes, len(batch_nodes))
             train_data = []
-
+            _t0 = time.time()
             for p in process_ids:
                 train_data += [subgraph_sampler_.mini_batch(np.random.randint(2**32 - 1), batch_nodes, probs_nodes,
                             samp_num_list, num_nodes, adj_matrix, args.n_layers)]
-            
+            _t1 = time.time()
+
 
         tp1 = time.time()
+        print("353:", tp1-tp0, _t1-_t0)
         data_prepare_times += [tp1-tp0]
         
         inner_loop_num = args.batch_num
@@ -395,7 +398,8 @@ def mvs_gcn_plus(feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_n
               '| val loss: %.8f' % cur_test_loss,
               '| val f1: %.8f' % val_f1,
               '| sampling time: %.8f' % (tp1-tp0),
-              '| training time: %.8f' % (training_t2 - training_t1))
+              '| training time: %.8f' % (training_t2 - training_t1),
+              '| variance reduced boost step time: %.8f' %(t3-t2))
     if False and bool(args.show_grad_norm):
         times, full_batch_times, data_prepare_times = \
             times[int(200/args.batch_num):], full_batch_times[int(200/args.batch_num):], data_prepare_times[int(200/args.batch_num):]
