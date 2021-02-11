@@ -33,7 +33,7 @@ np.random.seed(seed)
 flags = tf.flags
 FLAGS = flags.FLAGS
 flags.DEFINE_string('save_name', './mymodel.ckpt', 'Path for saving model')
-flags.DEFINE_string('dataset', 'ppi', 'Dataset string.')
+flags.DEFINE_string('dataset', 'None', 'Dataset string.')
 flags.DEFINE_string('custom_data','None','custom dataset string')
 flags.DEFINE_string('data_prefix', 'data/', 'Datapath prefix.')
 flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
@@ -148,17 +148,18 @@ def main(unused_argv):
   # Partition graph and do preprocessing
   if FLAGS.bsize > 1:
     parts_file = FLAGS.dataset + "-parts-txt"
-    parts_pickle_file = FLAGS.dataset + "-parts-pickle"
-    if os.path.exists(parts_pickle_file):
+    parts_pickle_file = FLAGS.dataset + "-parts-pickle" if (FLAGS.dataset != 'None')  else FLAGS.custom_data + "-parts-pickle"
+    print("parts_pickle_file", parts_pickle_file)
+    if False and os.path.exists(parts_pickle_file):
       f = open(parts_pickle_file, 'rb')
       parts = pickle.load(f)
       f.close()
     else:
       _, parts = partition_utils.partition_graph(train_adj, visible_data,
                                                FLAGS.num_clusters)
-      f = open(parts_pickle_file, 'wb')
-      pickle.dump(parts, f)
-      f.close()
+      #f = open(parts_pickle_file, 'wb')
+      #pickle.dump(parts, f)
+      #f.close()
 
     if not os.path.exists(parts_file):
       with open(parts_file, 'w') as f:

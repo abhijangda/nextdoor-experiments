@@ -27,6 +27,12 @@ def partition_graph(adj, idx_nodes, num_clusters):
   start_time = time.time()
   num_nodes = len(idx_nodes)
   num_all_nodes = adj.shape[0]
+  parts = []
+  cluster_size = num_all_nodes//num_clusters
+  num_clusters = num_all_nodes//cluster_size
+  for i in range (0, num_clusters):
+    parts += [list(range(i*cluster_size, i*cluster_size + cluster_size))]
+  return None, parts
 
   neighbor_intervals = []
   neighbors = []
