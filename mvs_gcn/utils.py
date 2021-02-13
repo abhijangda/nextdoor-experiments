@@ -26,6 +26,9 @@ import time
 import sys
 import os
 import math
+import pickle
+import random
+
 """
 Load data function adopted from https://github.com/williamleif/GraphSAGE
 """
@@ -205,8 +208,94 @@ def load_data_gcn(dataset_str):
     return adj_matrix, np.array(labels), features.toarray(), \
         np.array(idx_train), np.array(idx_val), np.array(idx_test)
 
+def custom_data(dataset_str):
+    MAX_LABELS = 10
+    MAX_FEATURE_SIZE = 8
+    if dataset_str == 'patents':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
+        picklefilename = "./cit-Patents.pickle"
+    elif dataset_str == 'orkut':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/com-orkut.ungraph.txt'
+        picklefilename = "./com-orkut.pickle"
+    elif dataset_str == 'livejournal':
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/soc-LiveJournal1.txt'
+        picklefilename = "./soc-LiveJournal1.pickle"
+    elif dataset_str == "reddit":
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/reddit_edgelist'
+        picklefilename = "./reddit_edgelist.pickle"
+    elif dataset_str == "ppi":
+        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/ppi_edgelist'
+        picklefilename = "./ppi_edgelist.pickle"
+    else:
+        assert(False)
+        
+    if (os.path.exists(picklefilename)):
+        f = open(picklefilename, 'rb')
+        G = pickle.load(f)
+        f.close()
+        edges = G.edges()
+    else:
+        edges = []
+        G = nx.Graph()
+        for line in open(filename):
+            if line.startswith('#'):
+                continue
+            a,b = line.split()
+            a,b = int(a),int(b)
+            edges += [[a,b]]
+        G.add_edges_from(edges)
+        print ("Edges Added")
+        ################## reorder
+        remap = {}
+        count = 0
+        for i in G.nodes():
+            remap[i] = count
+            count = count + 1
+        G = nx.Graph()
+        new_edges = []
+        for a,b in edges:
+            new_edges += [[remap[a],remap[b]]]
+        edges = new_edges
+        G.add_edges_from(edges)
+        print ("Reorder Done")
+        ################## end reorder
+        f = open(picklefilename, 'wb')
+        pickle.dump(G, f)
+        f.close()
+    
+    max_nodes = max(G.nodes()) + 1
+    adj_matrix   = get_adj(np.array(edges),max_nodes)
+    num_data = max_nodes
+    degrees = np.zeros(max_nodes, dtype=np.int64)
+    labels = []
+    np.zeros((max_nodes,MAX_LABELS), dtype = np.int64)
+    idx_train = []
+    idx_test = []
+    idx_val = []
+    for s in G:
+        r = random.random()
+        if r >= .9:
+            idx_test += [int(s)]
+        elif r >= .8:
+            idx_val += [s]
+        else:
+            idx_train += [s]
+        degrees[s] = len(G[s])
+        labels += [random.randint(0, MAX_LABELS-1)] 
+
+    # Ignoring normalization as features are randomly created
+    feats = np.random.rand(max_nodes,MAX_FEATURE_SIZE)
+    
+    num_data = max_nodes
+
+    return adj_matrix, np.array(labels), np.array(feats), \
+            np.array(idx_train), np.array(idx_val), np.array(idx_test)
+
 
 def preprocess_data(dataset):
+    if dataset in ['patents','livejournal','orkut']:
+        return custom_data(dataset)
+
     if dataset in ['ppi', 'ppi-large', 'reddit', 'flickr', 'yelp']:
         prefix = './data/{}/{}'.format(dataset, dataset)
         G, feats, id_map, walks, class_map = load_data_graphsage(prefix, False)
@@ -284,8 +373,8 @@ def get_adj(edges, num_nodes):
     adj = sp.coo_matrix((np.ones(edges.shape[0]), (edges[:, 0], edges[:, 1])),
                         shape=(num_nodes, num_nodes), dtype=np.float32)
     adj = adj + adj.T.multiply(adj.T > adj) - adj.multiply(adj.T > adj)
-    assert(adj.diagonal().sum()==0)
-    assert((adj!=adj.T).nnz==0 )
+    #assert(adj.diagonal().sum()==0)
+    #assert((adj!=adj.T).nnz==0 )
     return adj
 
 

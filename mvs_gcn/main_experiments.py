@@ -17,9 +17,9 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('--dataset', type=str, default='reddit',
                     help='Dataset name: cora/citeseer/pubmed/flickr/reddit/ppi/ppi-large')
-parser.add_argument('--nhid', type=int, default=256,
+parser.add_argument('--nhid', type=int, default=6,
                     help='Hidden state dimension')
-parser.add_argument('--epoch_num', type=int, default=10,
+parser.add_argument('--epoch_num', type=int, default=2,
                     help='Number of Epoch')
 parser.add_argument('--pool_num', type=int, default=1,
                     help='Number of Pool')
