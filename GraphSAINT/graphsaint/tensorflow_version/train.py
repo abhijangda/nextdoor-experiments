@@ -130,7 +130,7 @@ def prepare(train_data,train_params,arch_gcn):
 def train(train_phases,model,minibatch,\
             sess,train_stat,ph_misc_stat,summary_writer):
     import time
-    BYPASS = True 
+    BYPASS = False 
     # saver = tf.train.Saver(var_list=tf.trainable_variables())
     saver=tf.train.Saver()
 
@@ -147,9 +147,9 @@ def train(train_phases,model,minibatch,\
         #       when closer to convergence. -- This might speed up convergence. 
         minibatch.set_sampler(phase)
         num_batches = minibatch.num_training_batches()
-        printf('START PHASE {:4d}'.format(ip),style='underline')
+        #printf('START PHASE {:4d}'.format(ip),style='underline')
         for e in range(epoch_ph_start,int(phase['end'])):
-            printf('Epoch {:4d}'.format(e),style='bold')
+            #printf('Epoch {:4d}'.format(e),style='bold')
             minibatch.shuffle()
             l_loss_tr, l_f1mic_tr, l_f1mac_tr, l_size_subg = [], [], [], []
             time_train_ep, time_prepare_ep = 0, 0
@@ -197,13 +197,13 @@ def train(train_phases,model,minibatch,\
                 sess_eval=sess
             loss_val,f1mic_val,f1mac_val,time_eval = \
                 evaluate_full_batch(sess_eval,model,minibatch,many_runs_timeline,mode='val')
-            printf(' TRAIN (Ep avg): loss = {:.4f}\tmic = {:.4f}\tmac = {:.4f}\ttrain time = {:.4f} sec'.format(f_mean(l_loss_tr),f_mean(l_f1mic_tr),f_mean(l_f1mac_tr),time_train_ep))
-            printf(' VALIDATION:     loss = {:.4f}\tmic = {:.4f}\tmac = {:.4f}'.format(loss_val,f1mic_val,f1mac_val),style='yellow')
+            #printf(' TRAIN (Ep avg): loss = {:.4f}\tmic = {:.4f}\tmac = {:.4f}\ttrain time = {:.4f} sec'.format(f_mean(l_loss_tr),f_mean(l_f1mic_tr),f_mean(l_f1mac_tr),time_train_ep))
+            #printf(' VALIDATION:     loss = {:.4f}\tmic = {:.4f}\tmac = {:.4f}'.format(loss_val,f1mic_val,f1mac_val),style='yellow')
             if f1mic_val > f1mic_best:
                 f1mic_best, e_best = f1mic_val, e
                 if not os.path.exists(args_global.dir_log+'/models'):
                     os.makedirs(args_global.dir_log+'/models')
-                print('  Saving models ...')
+                #print('  Saving models ...')
                 savepath = saver.save(sess, '{}/models/saved_model_{}.chkpt'.format(args_global.dir_log,timestamp).replace(' ','_'),write_meta_graph=False,write_state=False)
  
             if args_global.tensorboard:
@@ -235,8 +235,8 @@ def train(train_phases,model,minibatch,\
     #        'loss_test_opt':loss_test,'f1mic_test_opt':f1mic_test,'f1mac_test_opt':f1mac_test,\
     #        'epoch_best':e_best,
     #        'time_train': time_train}
-    print("sampling time",minibatch.sampling_time)
-    print("training_time",time_train)
+    print("sampling_time:",minibatch.sampling_time)
+    print("training_time:",time_train)
     return      # everything is logged by TF. no need to return anything
 
 
