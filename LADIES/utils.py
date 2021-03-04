@@ -100,6 +100,7 @@ def custom_dataset(dataset_str):
             idx_train += [s]
         degrees[s] = len(G[s])
         labels[s] = random.randint(0, MAX_LABELS)
+    print("train,test,validation datasets created.")
     features = np.random.rand(max_nodes,MAX_FEATURE_SIZE)
     print ("features created")
     toret = (np.array(edges), labels, features, np.max(labels)+1,  np.array(idx_train),np.array(idx_val) , np.array(idx_test))

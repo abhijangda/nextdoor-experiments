@@ -26,6 +26,10 @@ class NextDoorSamplerFastGCN:
         self.samples = []
         self.batch_size = batch_size
 
+    def freeDeviceMemory(self):
+        FastGCNSamplingPy3.freeDeviceMemory()
+    
+
     def sample(self,num_nodes):
         layers = []
         #print("nodes", len(self.nodes))
@@ -63,6 +67,9 @@ class NextDoorSamplerLADIES:
 
         self.samples = []
         self.batch_size = batch_size
+
+    def freeDeviceMemory(self):
+        LADIESSamplingPy3.freeDeviceMemory()
 
     def sample(self,num_nodes):
         layers = []

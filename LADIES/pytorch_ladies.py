@@ -178,7 +178,7 @@ def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_ma
         after_nodes = nd.sample(0)[sample_number][d] if(enable_nextdoor) else np.random.choice(num_nodes, samp_num_list[d], replace = False)
         t4 = time.time()
         crit_sampling_time += t4-t3
-        # print(adj.shape, type(adj), fastgcn_p[after_nodes].shape, type(fastgcn_p[after_nodes]))
+        # print(lap_matrix.shape, fastgcn_p.shape)
         adj = lap_matrix[previous_nodes, : ][:, after_nodes].multiply(1/fastgcn_p[after_nodes])
         
         samples += [(after_nodes, adj)]
@@ -329,160 +329,173 @@ training_time = 0
 process_ids = np.arange(args.batch_num)
 samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
-if args.sample_method == 'ladies':
-    sampler = ladies_sampler
-elif args.sample_method == 'fastgcn':
-    sampler = fastgcn_sampler
-elif args.sample_method == 'full':
-    sampler = default_sampler
-elif args.sample_method == 'nextdoor_fastgcn':
-    sampler = nextdoor_fastgcn_sampler
-    nd = NextDoorSamplerFastGCN(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
-elif args.sample_method == 'nextdoor_ladies':
-    sampler = nextdoor_ladies_sampler
-    nd = NextDoorSamplerLADIES(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
+
 
 
 # In[ ]:
 
 
 
+for sample_method in ['ladies', 'fastgcn', 'nextdoor_ladies', 'nextdoor_fastgcn']:
 
+    print ("\n\n\nsampler is ", sample_method)
+    nd = None
+    if sample_method == 'ladies':
+        sampler = ladies_sampler
+    elif sample_method == 'fastgcn':
+        sampler = fastgcn_sampler
+    elif sample_method == 'full':
+        sampler = default_sampler
+    elif sample_method == 'nextdoor_fastgcn':
+        sampler = nextdoor_fastgcn_sampler
+        nd = NextDoorSamplerFastGCN(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
+    elif sample_method == 'nextdoor_ladies':
+        sampler = nextdoor_ladies_sampler
+        nd = NextDoorSamplerLADIES(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
+    asynchronous = False
 
-asynchronous = False
+    all_res = []
+    training_time = 0
+    
+    # global sampling_time, crit_sampling_time
 
-all_res = []
-for oiter in range(5):
-    print(feat_data.shape)
-    encoder = GCN(nfeat = feat_data.shape[1], nhid=args.nhid, layers=args.n_layers, dropout = 0.2).to(device)
-    susage  = SuGCN(encoder = encoder, num_classes=num_classes, dropout=0.5, inp = feat_data.shape[1])
-    susage.to(device)
+    sampling_time = 0
+    crit_sampling_time = 0
 
-    optimizer = optim.Adam(filter(lambda p : p.requires_grad, susage.parameters()))
-    best_val = 0
-    best_tst = -1
-    cnt = 0
-    times = []
-    res   = []
-    print('-' * 10)
-    print(len(feat_data))
-    end_to_end_t1 = time.time()
-    if (asynchronous):
-        pool = mp.Pool(args.pool_num)
-        jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+    for oiter in range(5):
+        print(feat_data.shape)
+        encoder = GCN(nfeat = feat_data.shape[1], nhid=args.nhid, layers=args.n_layers, dropout = 0.2).to(device)
+        susage  = SuGCN(encoder = encoder, num_classes=num_classes, dropout=0.5, inp = feat_data.shape[1])
+        susage.to(device)
 
-    for epoch in np.arange(args.epoch_num):
-        susage.train()
-        train_losses = []
-        batches = len(train_nodes)//args.batch_size
-        print("num batches", batches)
-        if (not asynchronous):
-            ######################### Synchronous Version ########################
-            useMP = False
-            if False:
-                with mp.Pool(processes=args.pool_num) as pool:
+        optimizer = optim.Adam(filter(lambda p : p.requires_grad, susage.parameters()))
+        best_val = 0
+        best_tst = -1
+        cnt = 0
+        times = []
+        res   = []
+        print('-' * 10)
+        print(len(feat_data))
+        end_to_end_t1 = time.time()
+        if (asynchronous):
+            pool = mp.Pool(args.pool_num)
+            jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+
+        for epoch in np.arange(args.epoch_num):
+            susage.train()
+            train_losses = []
+            batches = len(train_nodes)//args.batch_size
+            print("num batches", batches)
+            if (not asynchronous):
+                ######################### Synchronous Version ########################
+                useMP = False
+                if False:
+                    with mp.Pool(processes=args.pool_num) as pool:
+                        idx = torch.randperm(len(train_nodes))[:args.batch_size]
+                        batch_nodes = train_nodes[idx]
+                        sampleArgs = (np.random.randint(2**32 - 1), batch_nodes, \
+                            samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+                        jobs = [pool.apply_async(sampler, sampleArgs) for b in range(args.batch_num)]
+                        train_data = [job.get() for job in jobs[:-1]]
+                        valid_data = jobs[-1].get()
+
+                else:
                     idx = torch.randperm(len(train_nodes))[:args.batch_size]
                     batch_nodes = train_nodes[idx]
-                    sampleArgs = (np.random.randint(2**32 - 1), batch_nodes, \
-                        samp_num_list, len(feat_data), lap_matrix, args.n_layers)
-                    jobs = [pool.apply_async(sampler, sampleArgs) for b in range(args.batch_num)]
-                    train_data = [job.get() for job in jobs[:-1]]
-                    valid_data = jobs[-1].get()
-
+                    train_data = [sampler(np.random.randint(2**32 - 1), batch_nodes, \
+                            samp_num_list, len(feat_data), lap_matrix, args.n_layers) for b in range(args.batch_num)]
+                    idx = torch.randperm(len(valid_nodes))[:args.batch_size]
+                    batch_nodes = valid_nodes[idx]
+                    valid_data = sampler(np.random.randint(2**32 - 1), batch_nodes, \
+                            samp_num_list, len(feat_data), lap_matrix, args.n_layers)
             else:
-                idx = torch.randperm(len(train_nodes))[:args.batch_size]
-                batch_nodes = train_nodes[idx]
-                train_data = [sampler(np.random.randint(2**32 - 1), batch_nodes, \
-                        samp_num_list, len(feat_data), lap_matrix, args.n_layers) for b in range(args.batch_num)]
-                idx = torch.randperm(len(valid_nodes))[:args.batch_size]
-                batch_nodes = valid_nodes[idx]
-                valid_data = sampler(np.random.randint(2**32 - 1), batch_nodes, \
-                        samp_num_list, len(feat_data), lap_matrix, args.n_layers)
-        else:
-            ########### Asynchronous version ###############
-            train_data = [job.get() for job in jobs[:-1]]
-            valid_data = jobs[-1].get()
-            pool.close()
-            pool.join()
-            pool = mp.Pool(args.pool_num)
-            '''
-                #Use CPU-GPU cooperation to reduce the overhead for sampling. (conduct sampling while training)
-            '''
-            jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
-        print("len(train_data)", len(train_data))
-        t0 = time.time()
-        for _iter in range(args.n_iters):
-            for adjs, input_nodes, output_nodes in train_data:    
-                adjs = package_mxl(adjs, device)
-                optimizer.zero_grad()
-                t1 = time.time()
-                susage.train()
-                output = susage.forward(feat_data[input_nodes], adjs)
-                if args.sample_method == 'full':
-                    output = output[output_nodes]
-                loss_train = F.cross_entropy(output, labels[output_nodes])
-                loss_train.backward()
-                torch.nn.utils.clip_grad_norm_(susage.parameters(), 0.2)
-                optimizer.step()
-                times += [time.time() - t1]
-                train_losses += [loss_train.detach().tolist()]
-                del loss_train
-        susage.eval()
-        adjs, input_nodes, output_nodes = valid_data
+                ########### Asynchronous version ###############
+                train_data = [job.get() for job in jobs[:-1]]
+                valid_data = jobs[-1].get()
+                pool.close()
+                pool.join()
+                pool = mp.Pool(args.pool_num)
+                '''
+                    #Use CPU-GPU cooperation to reduce the overhead for sampling. (conduct sampling while training)
+                '''
+                jobs = prepare_data(pool, sampler, process_ids, train_nodes, valid_nodes, samp_num_list, len(feat_data), lap_matrix, args.n_layers)
+            print("len(train_data)", len(train_data))
+
+            t0 = time.time()
+            for _iter in range(args.n_iters):
+                for adjs, input_nodes, output_nodes in train_data:    
+                    adjs = package_mxl(adjs, device)
+                    optimizer.zero_grad()
+                    t1 = time.time()
+                    susage.train()
+                    output = susage.forward(feat_data[input_nodes], adjs)
+                    if args.sample_method == 'full':
+                        output = output[output_nodes]
+                    loss_train = F.cross_entropy(output, labels[output_nodes])
+                    loss_train.backward()
+                    torch.nn.utils.clip_grad_norm_(susage.parameters(), 0.2)
+                    optimizer.step()
+                    times += [time.time() - t1]
+                    train_losses += [loss_train.detach().tolist()]
+                    del loss_train
+            susage.eval()
+            adjs, input_nodes, output_nodes = valid_data
+            adjs = package_mxl(adjs, device)
+            output = susage.forward(feat_data[input_nodes], adjs)
+            if args.sample_method == 'full':
+                output = output[output_nodes]
+            loss_valid = F.cross_entropy(output, labels[output_nodes]).detach().tolist()
+            valid_f1 = f1_score(output.argmax(dim=1).cpu(), labels[output_nodes].cpu(), average='micro')
+            print(("Epoch: %d (%.1fs) Train Loss: %.2f    Valid Loss: %.2f Valid F1: %.3f") %                   (epoch, np.sum(times), np.average(train_losses), loss_valid, valid_f1))
+            if valid_f1 > best_val + 1e-2:
+                best_val = valid_f1
+                torch.save(susage, './save/best_model.pt')
+                cnt = 0
+            else:
+                cnt += 1
+            # if cnt == args.n_stops // args.batch_num:
+            #     break
+            t2 = time.time()
+            training_time += t2-t0
+        
+        end_to_end_t2 = time.time()
+        print("end_to_end_time", end_to_end_t2 - end_to_end_t1)
+        print("training_time:",training_time)
+        print("sampling_time:",sampling_time)
+        print("crit_sampling_time", crit_sampling_time)
+        print("Per Iteration Application Sampling time for %d nodes:"%(len(train_nodes)) ,crit_sampling_time/args.batch_num * batches / (100 if (len(train_nodes) > 1000000) else 1)/args.epoch_num)
+        if (nd != None):
+            nd.freeDeviceMemory()
+        break
+        best_model = torch.load('./save/best_model.pt')
+        best_model.eval()
+        test_f1s = []
+        '''
+        If using batch sampling for inference:
+        '''
+        #     for b in np.arange(len(test_nodes) // args.batch_size):
+        #         batch_nodes = test_nodes[b * args.batch_size : (b+1) * args.batch_size]
+        #         adjs, input_nodes, output_nodes = sampler(np.random.randint(2**32 - 1), batch_nodes,
+        #                                     samp_num_list * 20, len(feat_data), lap_matrix, args.n_layers)
+        #         adjs = package_mxl(adjs, device)
+        #         output = best_model.forward(feat_data[input_nodes], adjs)[output_nodes]
+        #         test_f1 = f1_score(output.argmax(dim=1).cpu(), labels[output_nodes].cpu(), average='micro')
+        #         test_f1s += [test_f1]
+        
+        '''
+        If using full-batch inference:
+        '''
+        batch_nodes = test_nodes
+        adjs, input_nodes, output_nodes = default_sampler(np.random.randint(2**32 - 1), batch_nodes,
+                                        samp_num_list * 20, len(feat_data), lap_matrix, args.n_layers)
         adjs = package_mxl(adjs, device)
-        output = susage.forward(feat_data[input_nodes], adjs)
-        if args.sample_method == 'full':
-            output = output[output_nodes]
-        loss_valid = F.cross_entropy(output, labels[output_nodes]).detach().tolist()
-        valid_f1 = f1_score(output.argmax(dim=1).cpu(), labels[output_nodes].cpu(), average='micro')
-        print(("Epoch: %d (%.1fs) Train Loss: %.2f    Valid Loss: %.2f Valid F1: %.3f") %                   (epoch, np.sum(times), np.average(train_losses), loss_valid, valid_f1))
-        if valid_f1 > best_val + 1e-2:
-            best_val = valid_f1
-            torch.save(susage, './save/best_model.pt')
-            cnt = 0
-        else:
-            cnt += 1
-        # if cnt == args.n_stops // args.batch_num:
-        #     break
-        t2 = time.time()
-        training_time += t2-t0
-    
-    end_to_end_t2 = time.time()
-    print("end_to_end_time", end_to_end_t2 - end_to_end_t1)
-    print("training_time:",training_time)
-    print("sampling_time:",sampling_time)
-    print("crit_sampling_time", crit_sampling_time)
-    print("Per Iteration Application Sampling time for %d nodes:"%(len(train_nodes)) ,crit_sampling_time/args.batch_num * batches / (100 if (len(train_nodes) > 1000000) else 1)/args.epoch_num)
-    break
-    best_model = torch.load('./save/best_model.pt')
-    best_model.eval()
-    test_f1s = []
-    '''
-    If using batch sampling for inference:
-    '''
-    #     for b in np.arange(len(test_nodes) // args.batch_size):
-    #         batch_nodes = test_nodes[b * args.batch_size : (b+1) * args.batch_size]
-    #         adjs, input_nodes, output_nodes = sampler(np.random.randint(2**32 - 1), batch_nodes,
-    #                                     samp_num_list * 20, len(feat_data), lap_matrix, args.n_layers)
-    #         adjs = package_mxl(adjs, device)
-    #         output = best_model.forward(feat_data[input_nodes], adjs)[output_nodes]
-    #         test_f1 = f1_score(output.argmax(dim=1).cpu(), labels[output_nodes].cpu(), average='micro')
-    #         test_f1s += [test_f1]
-    
-    '''
-    If using full-batch inference:
-    '''
-    batch_nodes = test_nodes
-    adjs, input_nodes, output_nodes = default_sampler(np.random.randint(2**32 - 1), batch_nodes,
-                                    samp_num_list * 20, len(feat_data), lap_matrix, args.n_layers)
-    adjs = package_mxl(adjs, device)
-    output = best_model.forward(feat_data[input_nodes], adjs)[output_nodes]
-    test_f1s = [f1_score(output.argmax(dim=1).cpu(), labels[output_nodes].cpu(), average='micro')]
-    
-    print('Iteration: %d, Test F1: %.3f' % (oiter, np.average(test_f1s)))
-    print("training_time:",training_time)
-    print("sampling_time:",sampling_time)
-    print("crit_time",crit_sampling_time)
+        output = best_model.forward(feat_data[input_nodes], adjs)[output_nodes]
+        test_f1s = [f1_score(output.argmax(dim=1).cpu(), labels[output_nodes].cpu(), average='micro')]
+        
+        print('Iteration: %d, Test F1: %.3f' % (oiter, np.average(test_f1s)))
+        print("training_time:",training_time)
+        print("sampling_time:",sampling_time)
+        print("crit_time",crit_sampling_time)
 '''
     Visualize the train-test curve
 '''
