@@ -20,11 +20,17 @@ if gnn == 'graphsaint':
     process = subprocess.Popen(["./nextdoor_run.sh",dataset],cwd="GraphSAINT",stdout = subprocess.PIPE) 
     output = process.communicate()[0]
     output = output.decode('utf-8')
-    print(output)
     training_time = re.search("training_time: (\d+\.\d+)",output).groups()[0]
     sampling_time = re.search("sampling_time: (\d+\.\d+)",output).groups()[0]
     
-
+if gnn == 'cluster_gcn':
+    os.system("cat cluster_gcn/run_custom.sh")
+    process = subprocess.Popen(["./run_custom.sh",dataset],cwd="cluster_gcn",stdout = subprocess.PIPE)
+    output = process.communicate()[0]
+    output = output.decode('utf-8')
+    #print(output)
+    training_time = re.search("training_time: (\d+\.\d+)",output).groups()[0]
+    sampling_time = re.search("sampling_time: (\d+\.\d+)",output).groups()[0]
 
 
 

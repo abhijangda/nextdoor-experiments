@@ -284,9 +284,12 @@ def main(unused_argv):
 
     print_str = 'Epoch: %04d ' % (epoch + 1) + 'training time: {:.5f} '.format(
         total_training_time) + 'train_acc= {:.5f} '.format(outs[2])
-  print(sampling_time,"Total sampling time")
-  print(training_time,"Total training time")
-  print(extraction_time,"Total extraction time")
+  print("sampling_time:",sampling_time)
+  print("training_time:",training_time)
+
+  #print(sampling_time,"Total sampling time")
+  #print(training_time,"Total training time")
+  #print(extraction_time,"Total extraction time")
   #   return 
   #   # Validation
   #   if FLAGS.validation:
