@@ -7,7 +7,7 @@ chmod +x nextdoor_run.sh
 source venv/bin/activate
 pip install -r requirements.txt
 cd ..
-echo "Setup GraphSAINT Complete"
+echo "Setup GraphSAINT Complete!"
 
 cd cluster_gcn
 virtualenv venv
