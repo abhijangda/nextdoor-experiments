@@ -96,6 +96,10 @@ sampling_time = 0
 crit_sampling_time = 0
 training_time = 0
 
+fastgcn_p = None
+fastgcn_p_set = False
+sample_number = 0
+
 def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
     '''
         FastGCN_Sampler: Sample a fixed number of nodes per layer. The sampling probability (importance)
@@ -103,13 +107,19 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
     '''
     global sampling_time
     global crit_sampling_time
+    global nd, sampling_time, fastgcn_p, fastgcn_p_set, sample_number,crit_sampling_time
+
     t1 = time.time()
     np.random.seed(seed)
     previous_nodes = batch_nodes
     adjs  = []
     #     pre-compute the sampling probability (importance) based on the global degree (lap_matrix)
-    pi = np.array(np.sum(lap_matrix.multiply(lap_matrix), axis=0))[0]
-    p = pi / np.sum(pi)
+
+    if (fastgcn_p_set == False):
+        pi = np.array(np.sum(lap_matrix.multiply(lap_matrix), axis=0))[0]
+        p = pi / np.sum(pi)
+        fastgcn_p = p
+        fastgcn_p_set = True
     '''
         Sample nodes from top to bottom, based on the pre-computed probability. Then reconstruct the adjacency matrix.
     '''
@@ -118,14 +128,14 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
         U = lap_matrix[previous_nodes , :]
         #t3 = time.time()
         #     sample the next layer's nodes based on the pre-computed probability (p).
-        s_num = np.min([np.sum(p > 0), samp_num_list[d]])
+        s_num = np.min([np.sum(fastgcn_p > 0), samp_num_list[d]])
         #print(num_nodes)
         t2 = time.time()
-        after_nodes = np.random.choice(num_nodes, s_num, p = p, replace = False)
+        after_nodes = np.random.choice(num_nodes, samp_num_list[d], p = fastgcn_p, replace = False)
         #t3 = time.time()
         #     col-select the lap_matrix (U), and then devided by the sampled probability for 
         #     unbiased-sampling. Finally, conduct row-normalization to avoid value explosion.         
-        adj = (U[: , after_nodes].multiply(1/p[after_nodes]))
+        adj = (U[: , after_nodes].multiply(1/fastgcn_p[after_nodes]))
         t3 = time.time()
 
         #t3 = time.time()
@@ -145,9 +155,6 @@ def fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, dep
     sampling_time += t4-t1
     return adjs, previous_nodes, batch_nodes
 
-fastgcn_p = None
-fastgcn_p_set = False
-sample_number = 0
 
 def nextdoor_fastgcn_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_matrix, depth):
     enable_nextdoor = True
