@@ -1,0 +1,1 @@
+g++ graph.cpp -shared -o libgraph.so -fPIC
