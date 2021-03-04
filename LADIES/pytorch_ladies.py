@@ -333,6 +333,7 @@ training_time = 0
 process_ids = np.arange(args.batch_num)
 samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
+
 from nextdoor_patch import *
 nd = NextDoorSamplerFastGCN(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
 
@@ -437,8 +438,8 @@ for oiter in range(5):
     
     end_to_end_t2 = time.time()
     print("end_to_end_time", end_to_end_t2 - end_to_end_t1)
-    print("training_time",training_time)
-    print("sampling_time",sampling_time)
+    print("training_time:",training_time)
+    print("sampling_time:",sampling_time)
     print("crit_sampling_time", crit_sampling_time)
     print("Per Iteration Application Sampling time for %d nodes:"%(len(train_nodes)) ,crit_sampling_time/args.batch_num * batches / (100 if (len(train_nodes) > 1000000) else 1)/args.epoch_num)
     break
@@ -468,8 +469,8 @@ for oiter in range(5):
     test_f1s = [f1_score(output.argmax(dim=1).cpu(), labels[output_nodes].cpu(), average='micro')]
     
     print('Iteration: %d, Test F1: %.3f' % (oiter, np.average(test_f1s)))
-    print("training_time",training_time)
-    print("sampling_time",sampling_time)
+    print("training_time:",training_time)
+    print("sampling_time:",sampling_time)
     print("crit_time",crit_sampling_time)
 '''
     Visualize the train-test curve
