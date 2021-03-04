@@ -28,6 +28,19 @@ import os
 import random
 import pickle
 
+from ctypes import *
+from ctypes.util import *
+import networkx as nx, numpy as np
+
+libgraphPath = '/mnt/homes/abhinav/nextdoor-experiments/graph_loading/libgraph.so'
+#l1 = 'libGraph.so'
+# print(find_library(l1))
+libgraph = CDLL(libgraphPath)
+libgraph.loadgraph.argtypes = [c_char_p]
+
+
+
+
 def parse_index_file(filename):
     """Parse index file."""
     index = []
@@ -39,58 +52,39 @@ def custom_dataset(dataset_str):
     MAX_LABELS = 10
     MAX_FEATURE_SIZE = 256 
     if dataset_str == 'patents':
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
+        filename = '/mnt/homes/abhinav/GPUesque/input/patents.data'
         picklefilename = "./cit-Patents.pickle"
     elif dataset_str == 'orkut':
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/com-orkut.ungraph.txt'
+        filename = '/mnt/homes/abhinav/GPUesque/input/orkut.data'
         picklefilename = "./com-orkut.pickle"
     elif dataset_str == 'livejournal':    
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/soc-LiveJournal1.txt'
+        filename = '/mnt/homes/abhinav/GPUesque/input/LJ1.data'
         picklefilename = "./soc-LiveJournal1.pickle"
     elif dataset_str == "reddit":
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/reddit_edgelist'
+        filename = '/mnt/homes/abhinav/GPUesque/input/reddit.data'
         picklefilename = "./reddit_edgelist.pickle"
     elif dataset_str == "ppi":
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/ppi_edgelist'
+        filename = '/mnt/homes/abhinav/GPUesque/input/ppi.data'
         picklefilename = "./ppi_edgelist.pickle"
     else:
         assert(False)
+    
+    graphPath = bytes(filename, encoding='utf8')
+    libgraph.loadgraph(graphPath)
+    libgraph.getEdgePairList.restype = np.ctypeslib.ndpointer(dtype=c_int, shape=(libgraph.numberOfEdges(), 2))
 
-    if (os.path.exists(picklefilename)):
-        f = open(picklefilename, 'rb')
-        G = pickle.load(f)
-        f.close()
-        edges = G.edges
-    else:
-        edges = []
-        G = nx.Graph()
-        for line in open(filename):
-            if line.startswith('#'):
-                continue
-            a,b = line.split()
-            a,b = int(a),int(b)
-            edges += [[a,b]]
-        G.add_edges_from(edges)
-        print ("Edges Added")
-        ################## reorder
-        remap = {}
-        count = 0
-        for i in G.nodes:
-            remap[i] = count
-            count = count + 1
-        G = nx.Graph()
-        new_edges = []
-        for a,b in edges:
-            new_edges += [[remap[a],remap[b]]]
-        edges = new_edges
-        G.add_edges_from(edges)
-        print ("Reorder Done")
-        ################## end reorder
-        f = open(picklefilename, 'wb')
-        pickle.dump(G, f)
-        f.close()
+    print("Graph Loaded in C++")
+
+    edges = libgraph.getEdgePairList()
+    # print("Number of Edges", d.numberOfEdges())
+    # print("Number of Vertices", d.numberOfVertices())
+    # print (edges)
+    G = nx.Graph()
+    print("Loading networkx graph")
+    G.add_edges_from(edges)
 
     max_nodes = max(G.nodes) + 1
+    print ("max_nodes ", max_nodes)
     degrees = np.zeros(max_nodes, dtype=np.int64)
     labels = np.zeros(max_nodes, dtype = np.int64)
     idx_train = []
@@ -108,8 +102,9 @@ def custom_dataset(dataset_str):
         labels[s] = random.randint(0, MAX_LABELS)
     features = np.random.rand(max_nodes,MAX_FEATURE_SIZE)
     print ("features created")
-    return np.array(edges), labels, features, np.max(labels)+1,  np.array(idx_train),np.array(idx_val) , np.array(idx_test)
-    
+    toret = (np.array(edges), labels, features, np.max(labels)+1,  np.array(idx_train),np.array(idx_val) , np.array(idx_test))
+    print("Returned tuple created")
+    return toret
 
     
 def load_data(dataset_str):

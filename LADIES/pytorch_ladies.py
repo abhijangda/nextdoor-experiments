@@ -215,7 +215,7 @@ def nextdoor_ladies_sampler(seed, batch_nodes, samp_num_list, num_nodes, lap_mat
         #     Add output nodes for self-loop
         after_nodes = np.unique(np.concatenate((after_nodes, batch_nodes)))
         #     col-select the lap_matrix (U), and then devided by the sampled probability for 
-        #     unbiased-sampling. Finally, conduct row-normalization to avoid value explosion.      
+        #     unbiased-sampling. Finally, conduct row-normalization to avoid value explosion.  
         adj = U[: , after_nodes].multiply(1/p[after_nodes])
         adjs += [sparse_mx_to_torch_sparse_tensor(row_normalize(adj))]
         #     Turn the sampled nodes as previous_nodes, recursively conduct sampling.
@@ -296,16 +296,17 @@ print(args.dataset, args.sample_method)
 edges, labels, feat_data, num_classes, train_nodes, valid_nodes, test_nodes = load_data(args.dataset)
 
 lap_matrix_file = args.dataset + "-lap-matrix.pkl"
-if os.path.exists(lap_matrix_file):
-    f = open(lap_matrix_file, 'rb')
-    lap_matrix = pickle.load(f)
-    f.close()
-else:
-    adj_matrix = get_adj(edges, feat_data.shape[0])
-    lap_matrix = row_normalize(adj_matrix + sp.eye(adj_matrix.shape[0]))
-    f = open(lap_matrix_file, 'wb')
-    pickle.dump(lap_matrix, f)
-    f.close()
+# if false and os.path.exists(lap_matrix_file):
+#     f = open(lap_matrix_file, 'rb')
+#     lap_matrix = pickle.load(f)
+#     f.close()
+# else:
+adj_matrix = get_adj(edges, feat_data.shape[0])
+lap_matrix = row_normalize(adj_matrix + sp.eye(adj_matrix.shape[0]))
+    #lap_matrix = row_normalize(adj_matrix + sp.eye(adj_matrix.shape[0]))
+    # f = open(lap_matrix_file, 'wb')
+    # pickle.dump(lap_matrix, f)
+    # f.close()
 print("lap matrix loaded")
 
 if type(feat_data) == scipy.sparse.lil.lil_matrix:
@@ -314,7 +315,12 @@ else:
     feat_data = torch.FloatTensor(feat_data).to(device)
 labels    = torch.LongTensor(labels).to(device) 
 
+from nextdoor_patch import *
 
+
+training_time = 0
+process_ids = np.arange(args.batch_num)
+samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
 if args.sample_method == 'ladies':
     sampler = ladies_sampler
@@ -324,18 +330,16 @@ elif args.sample_method == 'full':
     sampler = default_sampler
 elif args.sample_method == 'nextdoor_fastgcn':
     sampler = nextdoor_fastgcn_sampler
+    nd = NextDoorSamplerFastGCN(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
 elif args.sample_method == 'nextdoor_ladies':
     sampler = nextdoor_ladies_sampler
+    nd = NextDoorSamplerLADIES(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
+
 
 # In[ ]:
 
-training_time = 0
-process_ids = np.arange(args.batch_num)
-samp_num_list = np.array([args.samp_num, args.samp_num, args.samp_num, args.samp_num, args.samp_num])
 
 
-from nextdoor_patch import *
-nd = NextDoorSamplerFastGCN(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
 
 
 asynchronous = False
