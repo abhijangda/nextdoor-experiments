@@ -1,6 +1,14 @@
 #!/bin/bash
 
 
+cd GraphSAGE
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cd ..
+echo "Setup GraphSAGE Complete"
+
+
 cd GraphSAINT
 virtualenv venv
 chmod +x nextdoor_run.sh

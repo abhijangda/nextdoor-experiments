@@ -11,3 +11,4 @@ GraphSAGE/
 *.pt
 venv/
 *.pickle
+*.so
