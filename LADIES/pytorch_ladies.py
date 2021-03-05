@@ -459,10 +459,10 @@ for sample_method in ['ladies', 'fastgcn', 'nextdoor_ladies', 'nextdoor_fastgcn'
             training_time += t2-t0
         
         end_to_end_t2 = time.time()
-        print("end_to_end_time", end_to_end_t2 - end_to_end_t1)
-        print("training_time:",training_time)
-        print("sampling_time:",sampling_time)
-        print("crit_sampling_time", crit_sampling_time)
+        print("end_to_end_time (%s)"%sample_method, end_to_end_t2 - end_to_end_t1)
+        print("training_time: (%s)"%sample_method,training_time)
+        print("sampling_time:(%s)"%sample_method,sampling_time)
+        print("crit_sampling_time (%s)"%sample_method, crit_sampling_time)
         print("Per Iteration Application Sampling time for %d nodes:"%(len(train_nodes)) ,crit_sampling_time/args.batch_num * batches / (100 if (len(train_nodes) > 1000000) else 1)/args.epoch_num)
         if (nd != None):
             nd.freeDeviceMemory()

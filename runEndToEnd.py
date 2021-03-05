@@ -1,5 +1,5 @@
 import argparse, os, subprocess
-import shutil
+import shutil, re
 
 parser = argparse.ArgumentParser(description='Benchmark')
 parser.add_argument('-nextdoor', type=str,
@@ -32,19 +32,31 @@ gnns = ['FastGCN', 'LADIES']
 #   shutil.copyfile(src, dst)
 
 os.chdir(cwd)
-results = {gnn: {graph: -1 for graph in graphInfo} for gnn in gnns}
+baselineResults = {gnn.lower(): {graph: -1 for graph in graphInfo} for gnn in gnns}
+nextdoorResults = {gnn.lower(): {graph: -1 for graph in graphInfo} for gnn in gnns}
+
 def runForGNN(gnn):
   global results
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
+    gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --sample_method fastgcn --epoch_num 10 --n_iters 2"
+
   status,output = subprocess.getstatusoutput("env -i bash -c 'source venv/bin/activate && env'")
   for line in output.split('\n'):
     (key, _, value) = line.partition("=")
     os.environ[key] = value
     
   for graph in graphInfo:
-    c = "python3 pytorch_ladies.py --cuda 0 --dataset %s --sample_method fastgcn --epoch_num 10 --n_iters 2"%graph.lower()
+    c = gnnCommand % graph.lower()
     status,output = subprocess.getstatusoutput(c)
-    print(output)
+    samplerTimes = re.findall('end_to_end_time.+', output)
+    for samplerTime in samplerTimes:
+      s = re.findall(r'\((\w+)\)\s*([\.\d]+)', samplerTime)[0]
+      samplerName = s[0]
+      time = s[1]
+      if 'nextdoor_' in samplerName:
+        nextdoorResults[samplerName[len("nextdoor_"):]] = time
+      else:
+        baselineResults[samplerName] = time
 
 runForGNN('FastGCN')
