@@ -42,7 +42,8 @@ parser.add_argument('--sample_method', type=str, default='ladies',
                     help='Sampled Algorithms: ladies/fastgcn/full')
 parser.add_argument('--cuda', type=int, default=0,
                     help='Avaiable GPU ID')
-
+parser.add_argument('--graph_dir', type=str, required=True, 
+                    help='Directory containing graphs')
 
 
 args = parser.parse_args()
@@ -300,7 +301,7 @@ else:
     
     
 print(args.dataset, args.sample_method)
-edges, labels, feat_data, num_classes, train_nodes, valid_nodes, test_nodes = load_data(args.dataset)
+edges, labels, feat_data, num_classes, train_nodes, valid_nodes, test_nodes = load_data(args.graph_dir, args.dataset)
 
 lap_matrix_file = args.dataset + "-lap-matrix.pkl"
 # if false and os.path.exists(lap_matrix_file):
@@ -348,10 +349,10 @@ for sample_method in ['ladies', 'fastgcn', 'nextdoor_ladies', 'nextdoor_fastgcn'
         sampler = default_sampler
     elif sample_method == 'nextdoor_fastgcn':
         sampler = nextdoor_fastgcn_sampler
-        nd = NextDoorSamplerFastGCN(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
+        nd = NextDoorSamplerFastGCN(args.dataset, args.batch_size, args.graph_dir, edges, train_nodes, samp_num_list)
     elif sample_method == 'nextdoor_ladies':
         sampler = nextdoor_ladies_sampler
-        nd = NextDoorSamplerLADIES(args.dataset, args.batch_size, args.dataset, edges, train_nodes, samp_num_list)
+        nd = NextDoorSamplerLADIES(args.dataset, args.batch_size, args.graph_dir, edges, train_nodes, samp_num_list)
     asynchronous = False
 
     all_res = []

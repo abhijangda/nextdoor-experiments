@@ -30,7 +30,6 @@ def writeToLog(s):
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
-
 gnns = ['FastGCN', 'LADIES']
 #Build sampling application in NextDoor folder
 for gnn in gnns:
@@ -39,8 +38,6 @@ for gnn in gnns:
   writeToLog("Chdir to "+ d)
   writeToLog("Executing make")
   status, output = subprocess.getstatusoutput("make clean")
-  if (status != 0):
-    print(output)
   writeToLog(output)
   status, output = subprocess.getstatusoutput("make -j")
   if (status != 0):
@@ -87,7 +84,7 @@ def runForGNN(gnn):
 runForGNN('FastGCN')
  
 #Print results
-print ("\n\nTable 5: End-to-end speedups after integratingcuSamplerin GNNs over vanilla GNNs")
+print ("\n\nTable 5: End-to-end speedups after integrating NextDoor in GNNs over vanilla GNNs")
 row_format = "{:>30}" * 3
 print (row_format.format("GNN", "Graph", "Speedup"))
 for samplerName in baselineResults:

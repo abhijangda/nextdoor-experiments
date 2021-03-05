@@ -1,5 +1,5 @@
 
-import numpy as np
+import numpy as np, os
 import FastGCNSamplingPy3, LADIESSamplingPy3
 import ctypes
 
@@ -8,21 +8,12 @@ libLADIESSampling = ctypes.CDLL("./LADIESSamplingPy3.so")
 
 class NextDoorSamplerFastGCN:
 
-    def __init__(self, dataset, batch_size, graph, edges , nodes,layer_dims):
+    def __init__(self, dataset, batch_size, graph_dir, edges , nodes,layer_dims):
         self.edges = edges
         self.layer_dims = layer_dims
         self.nodes = nodes
-        if (dataset == "reddit"):
-            FastGCNSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/reddit.data")
-        elif (dataset == "ppi"):
-            FastGCNSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/ppi.data")
-        elif (dataset == "orkut"):
-            FastGCNSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/orkut.data")
-        elif (dataset == "livejournal"):
-            FastGCNSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/LJ1.data")
-        elif (dataset == "patents"):
-            FastGCNSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/patents.data")
-
+        filename = os.path.join(graph_dir,dataset+".data")
+        FastGCNSamplingPy3.initSampling(filename)
         self.samples = []
         self.batch_size = batch_size
 
@@ -50,21 +41,12 @@ class NextDoorSamplerFastGCN:
 
 class NextDoorSamplerLADIES:
 
-    def __init__(self, dataset, batch_size, graph, edges , nodes,layer_dims):
+    def __init__(self, dataset, batch_size, graph_dir, edges , nodes,layer_dims):
         self.edges = edges
         self.layer_dims = layer_dims
         self.nodes = nodes
-        if (dataset == "reddit"):
-            LADIESSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/reddit.data")
-        elif (dataset == "ppi"):
-            LADIESSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/ppi.data")
-        elif (dataset == "orkut"):
-            LADIESSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/orkut.data")
-        elif (dataset == "livejournal"):
-            LADIESSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/LJ1.data")
-        elif (dataset == "patents"):
-            LADIESSamplingPy3.initSampling("/mnt/homes/abhinav/GPUesque/input/patents.data")
-
+        filename = os.path.join(graph_dir,dataset+".data")
+        LADIESSamplingPy3.initSampling(filename)
         self.samples = []
         self.batch_size = batch_size
 

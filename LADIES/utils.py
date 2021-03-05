@@ -32,7 +32,7 @@ from ctypes import *
 from ctypes.util import *
 import networkx as nx, numpy as np
 
-libgraphPath = '/mnt/homes/abhinav/nextdoor-experiments/graph_loading/libgraph.so'
+libgraphPath = '../graph_loading/libgraph.so'
 #l1 = 'libGraph.so'
 # print(find_library(l1))
 libgraph = CDLL(libgraphPath)
@@ -48,27 +48,13 @@ def parse_index_file(filename):
         index.append(int(line.strip()))
     return index
 
-def custom_dataset(dataset_str):
+def custom_dataset(graph_dir, dataset_str):
     MAX_LABELS = 10
     MAX_FEATURE_SIZE = 256 
-    if dataset_str == 'patents':
-        filename = '/mnt/homes/abhinav/GPUesque/input/patents.data'
-        picklefilename = "./cit-Patents.pickle"
-    elif dataset_str == 'orkut':
-        filename = '/mnt/homes/abhinav/GPUesque/input/orkut.data'
-        picklefilename = "./com-orkut.pickle"
-    elif dataset_str == 'livejournal':    
-        filename = '/mnt/homes/abhinav/GPUesque/input/LJ1.data'
-        picklefilename = "./soc-LiveJournal1.pickle"
-    elif dataset_str == "reddit":
-        filename = '/mnt/homes/abhinav/GPUesque/input/reddit.data'
-        picklefilename = "./reddit_edgelist.pickle"
-    elif dataset_str == "ppi":
-        filename = '/mnt/homes/abhinav/GPUesque/input/ppi.data'
-        picklefilename = "./ppi_edgelist.pickle"
-    else:
-        assert(False)
-    
+    filename = os.path.join(graph_dir, dataset_str+".data")
+    if not os.path.exists(filename):
+        raise Exception("Graph %s at '%s' do not exist"%(dataset_str, filename))
+
     graphPath = bytes(filename, encoding='utf8')
     libgraph.loadgraph(graphPath)
     libgraph.getEdgePairList.restype = np.ctypeslib.ndpointer(dtype=c_int, shape=(libgraph.numberOfEdges(), 2))
@@ -108,9 +94,9 @@ def custom_dataset(dataset_str):
     return toret
 
     
-def load_data(dataset_str):
+def load_data(graph_dir, dataset_str):
     if dataset_str == "ppi" or dataset_str == "reddit" or dataset_str == 'orkut' or dataset_str == 'livejournal' or dataset_str == 'patents':
-        return custom_dataset(dataset_str)
+        return custom_dataset(graph_dir, dataset_str)
     
     if dataset_str == 'ppi':
         prefix = './ppi/ppi'
