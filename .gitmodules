@@ -1,3 +1,0 @@
-[submodule "GraphSAGE"]
-	path = GraphSAGE
-	url = https://github.com/sandeep06011991/GraphSAGE.git
