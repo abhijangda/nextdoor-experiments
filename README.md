@@ -85,6 +85,10 @@ cd nextdoor-experiments
 export NEXTDOOR_EXP_DIR=$TOP_DIR/nextdoor-experiments
 ```
 
+To keep the packing simple we updated the implementation of these GNNs to use the latest version of NumPy, PyTorch and Tensorflow, so, that we have only a single CUDA version, i.e. CUDA 11.0. Unfortunately, with this new version they have added a restriction that each tensor must be of length less than 2GB. This is not possible for large graphs like Orkut and LiveJournal. Hence, for following GNNs we get Out of Memory error.
+* GraphSAGE, MVS, and ClusterGCN gives out of Memory on Orkut and LiveJournal
+* GraphSAINT, FastGCN, and LADIES gives out of Memory on Orkut
+
 ### Testing NextDoor
 
 <b>Setting up Google Test</b>: We need to setup Google Test. Within the NextDoor directory, execute following commands to build googletest.
