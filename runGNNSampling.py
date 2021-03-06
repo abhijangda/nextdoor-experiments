@@ -91,12 +91,12 @@ def runForGNN(gnn):
       samplingTimeResults[samplerName][graph] = float(time)
   os.chdir(cwd)
 
-#runForGNN('clustergcn')
+runForGNN('clustergcn')
 runForGNN('graphsaint')
-#runForGNN('mvs')
-#runForGNN('FastGCN')
+runForGNN('mvs')
+runForGNN('FastGCN')
 #runForGNN('LADIES')
-#runForGNN('graphsage')
+runForGNN('graphsage')
 
 #Print results
 import json

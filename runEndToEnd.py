@@ -114,6 +114,6 @@ print (row_format.format("GNN", "Graph", "Speedup"))
 for samplerName in baselineResults:
     for graph in graphInfo:
         speedup = baselineResults[samplerName][graph]/nextdoorResults[samplerName][graph]
-        if (speedup < 0):
+        if (baselineResults[samplerName][graph] < 0 or nextdoorResults[samplerName][graph] < 0):
           speedup = "OOM"
         print (row_format.format(samplerName, graph, speedup))
