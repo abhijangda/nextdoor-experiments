@@ -63,7 +63,7 @@ def runForGNN(gnn):
     for samplerTime in samplerTimes:
       s = re.findall(r'\((\w+)\)\s*([\.\d]+)', samplerTime)
       samplerName = s[0][0]
-      if('nextdoor_' in samplerName ):
+      if 'nextdoor_' in samplerName:
         continue
       time = s[0][1]
       samplingTimeResults[samplerName][graph] = float(time)

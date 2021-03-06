@@ -45,7 +45,8 @@ for gnn in gnns:
   writeToLog(output)
   #Copy libraries from NextDoor folder to GNN folder
   src = os.path.join(d, gnn+"SamplingPy3.so")
-  dst = os.path.join(cwd, 'LADIES/',gnn+"SamplingPy3.so")
+  gnnDir = 'LADIES/' if gnn == 'FastGCN' else gnn
+  dst = os.path.join(cwd, gnnDir, gnn+"SamplingPy3.so")
   shutil.copyfile(src, dst)
 
 os.chdir(cwd)
@@ -58,8 +59,7 @@ def runForGNN(gnn):
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
     gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --sample_method fastgcn --epoch_num 10 --n_iters 2"
-  
-  if gnn == 'graphsage':
+  else if gnn == 'graphsage':
     os.chdir('./GraphSAGE')
     gnnCommand = "python3 experiment/nextdoor_end2end.py %s"
   writeToLog("doing perf eval of %s"%gnn)
