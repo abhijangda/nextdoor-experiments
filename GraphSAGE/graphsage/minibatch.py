@@ -243,6 +243,19 @@ class NodeMinibatchIterator(object):
             elif len(neighbors) < self.max_degree:
                 neighbors = np.random.choice(neighbors, self.max_degree, replace=True)
             adj[self.id2idx[nodeid], :] = neighbors
+        # for nodeid in self.G.nodes():
+        #     if self.G.node[nodeid]['test'] or self.G.node[nodeid]['val']:
+        #         continue
+        #     neighbors = np.array(self.G.neighbors(nodeid))
+        #     #    if (not self.G[nodeid][neighbor]['train_removed'])])
+        #     deg[nodeid] = len(neighbors)
+        #     if len(neighbors) == 0:
+        #         continue
+        #     if len(neighbors) > self.max_degree:
+        #         neighbors = np.random.choice(neighbors, self.max_degree, replace=False)
+        #     elif len(neighbors) < self.max_degree:
+        #         neighbors = np.random.choice(neighbors, self.max_degree, replace=True)
+        #     adj[nodeid, :] = neighbors
         return adj, deg
 
     def construct_test_adj(self):

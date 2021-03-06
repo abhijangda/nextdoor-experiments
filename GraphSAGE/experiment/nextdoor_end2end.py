@@ -181,6 +181,7 @@ def supervised_epoch_time(G,feats, id_map, walks, class_map, batch_size):
     FLAGS.batch_size = batch_size
     FLAGS.sigmoid = True
     #train_data = load_data((G,id_map,class_map,num_classes,batch_size))
+    print("Start training")
     time = train((G,feats,id_map,walks,class_map),batch_size)
     print("end_to_end_time(graphsage)", time)
     add_to_dict('SEPOCH',time)
@@ -196,6 +197,7 @@ def nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map, batch_size):
     FLAGS.sigmoid = True
     FLAGS.batch_size = batch_size
     #train_data = load_data(FLAGS.train_prefix)
+    print("Start training")
     time = train((G,feats,id_map,walks,class_map), KHopSamplingPy3 , batch_size)
     print("end_to_end_time(nextdoor_graphsage)", time)
     add_to_dict('NEXTSEPOCH', time)
@@ -214,7 +216,7 @@ def run():
     DATA = sys.argv[1]
     KHopSamplingPy3.initSampling(DATA+".data")
     #DATA = sys.argv[2]
-    batchSize = 32
+    batchSize = 32 if ('ppi' in DATA or 'reddit' in DATA) else 512
 
     add_to_dict("DATASET",(DATA))
     is_available = tf.test.is_gpu_available(
@@ -230,11 +232,12 @@ def run():
         num_classes = len(list(class_map.values())[0])
     else:
         num_classes = len(set(class_map.values()))
-    minibatch = getMiniBatchIterator(G, id_map, class_map, num_classes,batchSize)
-    supervised_sampling(minibatch)
-    minibatch = getSampledBatchIterator(G,id_map, class_map, num_classes,batchSize)
+    print(233)
+    # minibatch = getMiniBatchIterator(G, id_map, class_map, num_classes,batchSize)
+    # supervised_sampling(minibatch)
+    # minibatch = getSampledBatchIterator(G,id_map, class_map, num_classes,batchSize)
     #nextdoor_sampling(minibatch)
-    supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
+    # supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
     nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
     #create_measurement_file()
     print("All Done !!! ")

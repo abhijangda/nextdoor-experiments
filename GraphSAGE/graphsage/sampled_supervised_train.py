@@ -188,7 +188,7 @@ def train(train_data, NextDoorKHopSampler, test_data=None):
     # Init variables
     sess.run(tf.global_variables_initializer(), feed_dict={adj_info_ph: minibatch.adj})
     lib = ctypes.CDLL("./KHopSamplingPy3.so")
-    lib.finalSamplesArray.restype = ndpointer(dtype=ctypes.c_int, shape=(NextDoorKHopSampler.finalSampleLength()))
+    lib.finalSamplesArray.restype = ndpointer(dtype=ctypes.c_int, shape=(min(NextDoorKHopSampler.finalSampleLength(), 1<<30)))
 
     # Train model
 

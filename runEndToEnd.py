@@ -30,10 +30,16 @@ def writeToLog(s):
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
-gnns = ['FastGCN', 'LADIES']
+gnns = ['GraphSAGE', 'FastGCN', 'LADIES']
 #Build sampling application in NextDoor folder
 for gnn in gnns:
-  d = os.path.join(args.nextdoor,'src/apps/',gnn.lower())
+  appName = None
+  if (gnn == 'FastGCN' or gnn == 'LADIES'):
+    appName = gnn.lower()
+  else if (gnn == 'GraphSAGE'):
+    appName = 'khop'
+
+  d = os.path.join(args.nextdoor,'src/apps/',)
   os.chdir(d)
   writeToLog("Chdir to "+ d)
   writeToLog("Executing make")
