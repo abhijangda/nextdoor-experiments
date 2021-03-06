@@ -23,7 +23,7 @@ libgraph.loadgraph.argtypes = [c_char_p]
 
 def custom_dataset(graph_dir, dataset_str):
     MAX_LABELS = 10
-    MAX_FEATURE_SIZE = 256 
+    MAX_FEATURE_SIZE = 1 
     filename = os.path.join(graph_dir, dataset_str+".data")
     if not os.path.exists(filename):
         raise Exception("Graph %s at '%s' do not exist"%(dataset_str, filename))
@@ -63,7 +63,9 @@ def custom_dataset(graph_dir, dataset_str):
     idx_test = []
     idx_val = []
     class_map = {}
-    for s in G:
+    for s in range(N):
+        if s not in G.nodes():
+            G.add_node(s)
         r = random.random()
         if r >= .9:
             idx_test += [int(s)]
@@ -95,7 +97,8 @@ def custom_dataset(graph_dir, dataset_str):
     
     #class_map = json.load(open('./{}/class_map.json'.format(prefix)))
     #class_map = {int(k):v for k,v in class_map.items()}
-    assert len(class_map) == feats.shape[0]
+    print(len(class_map), feats.shape[0])
+    #assert len(class_map) == feats.shape[0]
     # ---- normalize feats ---- (Dont touch) 
     #train_nodes = np.array(list(set(adj_train.nonzero()[0])))
     #train_feats = feats[train_nodes]
