@@ -30,6 +30,6 @@ cd LADIES
 virtualenv venv
 chmod +x run_custom.sh
 source venv/bin/activate
-pip install -r requrements.txt
+pip install -r requirements.txt
 cd ..
 echo "Setup FastGCN|LADIES Complete"
