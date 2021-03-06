@@ -7,6 +7,8 @@ import tensorflow.compat.v1 as tf
 import numpy as np
 import sklearn
 from sklearn import metrics
+import ctypes
+from numpy.ctypeslib import ndpointer
 
 from graphsage.supervised_models import SampledSupervisedGraphsage
 from graphsage.models import SAGEInfo
@@ -129,7 +131,7 @@ def construct_placeholders(num_classes):
     return placeholders
 
 
-def train(train_data, test_data=None):
+def train(train_data, NextDoorKHopSampler, test_data=None):
     G = train_data[0]
     features = train_data[1]
     id_map = train_data[2]
@@ -185,6 +187,8 @@ def train(train_data, test_data=None):
 
     # Init variables
     sess.run(tf.global_variables_initializer(), feed_dict={adj_info_ph: minibatch.adj})
+    lib = ctypes.CDLL("./KHopSamplingPy3.so")
+    lib.finalSamplesArray.restype = ndpointer(dtype=ctypes.c_int, shape=(NextDoorKHopSampler.finalSampleLength()))
 
     # Train model
 
@@ -198,6 +202,10 @@ def train(train_data, test_data=None):
     total_epoch_time = 0
     for epoch in range(FLAGS.epochs):
         minibatch.shuffle()
+        s_time = time.time()
+        NextDoorKHopSampler.sample()
+        finalSamples = lib.finalSamplesArray()
+        minibatch.nextdoorFinalSamples = finalSamples
         s_time = time.time()
         iter = 0
         print('Epoch: %04d' % (epoch + 1))

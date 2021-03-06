@@ -1,3 +1,4 @@
+import numpy as np
 
 class GraphKHopSampler():
 
@@ -16,18 +17,31 @@ class GraphKHopSampler():
     # Function has to be replaced with next door
     # nodes of batch_size
     # returns a dictionarky khop with {"hop1":10*len(nodes),"hop2":250*len(nodes)}
-    def getKHopSamples(self, nodes):
-        khop = {}
+    def getKHopSampleSizes(self, nodes):
+        target = [0 for i in range(len(self.layer_infos))]
+
         for i in range(len(self.layer_infos)):
             size = 0
-            output = []
+            
+            target[i] = self.support_sizes[i] * len(nodes)
+
+        return target
+        
+    def getKHopSamples(self, nodes):
+        khop = {}
+        nodes = np.asarray(nodes)
+        for i in range(len(self.layer_infos)):
+            size = 0
+            
             target = self.support_sizes[i] * len(nodes)
+            output = np.ndarray((target,), dtype=np.int32)
+            
             while(size < target):
                 if(size+ len(nodes) <= target):
-                    output.extend(nodes[:])
+                    output[size:size+len(nodes)] = nodes
                     size = size +len(nodes)
                 else:
-                    output.extend(nodes.copy()[:(target-size)])
+                    output[size:target] = nodes[:(target-size)]
                     size = size + target - size
             khop[("hop{}".format(i+1))] = output
         return khop

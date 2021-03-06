@@ -347,6 +347,10 @@ class NodeMinibatchIteratorWithKHop(NodeMinibatchIterator):
                  **kwargs)
         self.khop_sampler = GraphSampler.GraphKHopSampler(G,layer_infos)
         self.khop_cache = None
+        self.t = 0
+        self.sum_hop1 = 0
+        self.sum_hop2 = 0
+        self.nextdoorFinalSamples = []
 
     def end(self):
         return self.batch_num * self.batch_size >= len(self.train_nodes)
@@ -354,13 +358,24 @@ class NodeMinibatchIteratorWithKHop(NodeMinibatchIterator):
     def batch_feed_dict(self, batch_nodes, val=False):
         batch1id = batch_nodes
         batch1 = [self.id2idx[n] for n in batch1id]
-
         labels = np.vstack([self._make_label_vec(node) for node in batch1id])
         feed_dict = dict()
-        khop = self.khop_sampler.getKHopSamples(batch1)
+        # t1 = time.time()
+        # khop = self.khop_sampler.getKHopSamples(batch1)
+        khop_sizes = self.khop_sampler.getKHopSampleSizes(batch1)
+
+        batch_samples = self.nextdoorFinalSamples
+        khop1 = np.asarray(batch_samples[:khop_sizes[0]])
+        khop2 = np.asarray(batch_samples[:khop_sizes[1]])
         feed_dict.update({self.placeholders['batch_size']: len(batch1)})
         feed_dict.update({self.placeholders['batch']: batch1})
-        feed_dict.update({self.placeholders['hop1']:khop["hop1"]})
-        feed_dict.update({self.placeholders['hop2']: khop["hop2"]})
+        # feed_dict.update({self.placeholders['hop1']: khop["hop1"]})
+        # feed_dict.update({self.placeholders['hop2']: khop["hop2"]})
+        feed_dict.update({self.placeholders['hop1']: khop1})
+        feed_dict.update({self.placeholders['hop2']: khop2})
         feed_dict.update({self.placeholders['labels']: labels})
+        # t2 = time.time()
+
+        # self.t += (t2 - t1)
+        # print ("Total time in batch_feed_dict ", self.t)
         return feed_dict, labels

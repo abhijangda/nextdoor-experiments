@@ -1,5 +1,8 @@
 import sys,os
 from os import path
+sys.path.insert(0, os.getcwd())
+
+import KHopSamplingPy3
 
 import networkx as nx
 import random
@@ -7,8 +10,6 @@ import tensorflow.compat.v1 as tf
 import numpy as np
 tf.disable_eager_execution()
 tf.disable_v2_behavior()
-
-sys.path.insert(0, os.getcwd())
 import time
 from graphsage.utils import load_data, run_random_walks
 from graphsage.minibatch import NodeMinibatchIterator, EdgeMinibatchIterator, NodeMinibatchIteratorWithKHop
@@ -195,7 +196,7 @@ def nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map, batch_size):
     FLAGS.sigmoid = True
     FLAGS.batch_size = batch_size
     #train_data = load_data(FLAGS.train_prefix)
-    time = train((G,feats,id_map,walks,class_map),batch_size)
+    time = train((G,feats,id_map,walks,class_map), KHopSamplingPy3 , batch_size)
     print("end_to_end_time(nextdoor_graphsage)", time)
     add_to_dict('NEXTSEPOCH', time)
 
@@ -209,7 +210,9 @@ def del_all_flags(FLAGS):
 def run():
     global PREFIX
     import sys
+    
     DATA = sys.argv[1]
+    KHopSamplingPy3.initSampling(DATA+".data")
     #DATA = sys.argv[2]
     batchSize = 32
 
@@ -230,7 +233,7 @@ def run():
     minibatch = getMiniBatchIterator(G, id_map, class_map, num_classes,batchSize)
     supervised_sampling(minibatch)
     minibatch = getSampledBatchIterator(G,id_map, class_map, num_classes,batchSize)
-    nextdoor_sampling(minibatch)
+    #nextdoor_sampling(minibatch)
     supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
     nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
     #create_measurement_file()
