@@ -33,7 +33,7 @@ def writeToLog(s):
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
-gnns = ['FastGCN', 'LADIES']
+gnns = ['FastGCN', 'LADIES','mvs_gcn']
 #Build sampling application in NextDoor folder
 
 samplingTimeResults = {gnn.lower(): {graph: -1 for graph in graphInfo} for gnn in gnns}
@@ -45,6 +45,10 @@ def runForGNN(gnn):
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
     gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --epoch_num 10 --n_iters 2 --graph_dir %s"
+  if gnn == 'mvs_gcn':
+    os.chdir('./mvs_gcn')
+    gnnCommand = "python main_experiments.py --dataset %s --graph_dir %s --batch_size 256 --samp_num 256 --cuda 0 --is_ratio 1.0 --batch_num 20 --n_stops 1000 --show_grad_norm 1 --n_layers 2"
+    
   writeToLog("doing perf eval of %s"%gnn)
   status,output = subprocess.getstatusoutput("env -i bash -c 'source venv/bin/activate && env'")
   writeToLog(output)
@@ -68,7 +72,7 @@ def runForGNN(gnn):
       time = s[0][1]
       samplingTimeResults[samplerName][graph] = float(time)
 
-runForGNN('FastGCN')
+runForGNN('mvs_gcn')
  
 #Print results
 print (samplingTimeResults)

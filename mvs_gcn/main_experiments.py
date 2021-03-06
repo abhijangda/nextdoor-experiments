@@ -17,6 +17,8 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('--dataset', type=str, default='reddit',
                     help='Dataset name: cora/citeseer/pubmed/flickr/reddit/ppi/ppi-large')
+parser.add_argument('--graph_dir',type = str, default = None, 
+                        help = 'Absolute path of directory containing binaries of datasets')
 parser.add_argument('--nhid', type=int, default=6,
                     help='Hidden state dimension')
 parser.add_argument('--epoch_num', type=int, default=2,
@@ -56,7 +58,7 @@ else:
     device = torch.device("cpu")
 
 adj_matrix, labels, feat_data, train_nodes, valid_nodes, test_nodes = preprocess_data(
-    args.dataset)
+    args.graph_dir,args.dataset)
 print("Dataset information")
 print(adj_matrix.shape, labels.shape, feat_data.shape,
       train_nodes.shape, valid_nodes.shape, test_nodes.shape)
@@ -67,7 +69,7 @@ else:
     feat_data = torch.FloatTensor(feat_data).to(device)
     
 args.multi_class = True if args.dataset in ['ppi', 'ppi-large', 'yelp', 'amazon'] else False
-
+args.multi_class = False
 if args.multi_class:
     labels = torch.FloatTensor(labels).to(device)
     args.num_classes = labels.shape[1]
