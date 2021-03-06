@@ -35,7 +35,7 @@ def writeToLog(s):
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
-gnns = ['FastGCN', 'LADIES','mvs','graphsaint','clustergcn']
+gnns = ['FastGCN', 'LADIES','mvs','graphsaint','clustergcn','graphsage']
 #Build sampling application in NextDoor folder
 
 samplingTimeResults = {gnn.lower(): {graph: -1 for graph in graphInfo} for gnn in gnns}
@@ -56,7 +56,10 @@ def runForGNN(gnn):
   if gnn == 'clustergcn':
     os.chdir('./cluster_gcn')
     gnnCommand = "python train.py --dataset %s  --graph_dir %s  --nomultilabel --num_layers 3 --num_clusters 1500 --bsize 20 --hidden1 512 --dropout 0.2 --weight_decay 0  --early_stopping 200 --num_clusters_val 20 --num_clusters_test 1 --epochs 1 --save_name $1  --learning_rate 0.005 --diag_lambda 0.0001 --novalidation"
-  
+  if gnn == 'graphsage':
+    os.chdir('./GraphSAGE')
+    #  python experiment/epoch_run_time.py dataset graphdir 
+    gnnCommand = "python experiment/epoch_run_time.py  %s %s"
   if gnnCommand == None :
     raise Exception("gnn name not found",gnn)
   writeToLog("doing perf eval of %s"%gnn)
@@ -88,13 +91,12 @@ def runForGNN(gnn):
       samplingTimeResults[samplerName][graph] = float(time)
   os.chdir(cwd)
 
-runForGNN('clustergcn')
-runForGNN('graphsaint')
-runForGNN('mvs')
-runForGNN('FastGCN')
-# runForGNN('LADIES')
-# runForGNN('graphsage')
-
+#runForGNN('clustergcn')
+#runForGNN('graphsaint')
+#runForGNN('mvs')
+#runForGNN('FastGCN')
+#runForGNN('LADIES')
+runForGNN('graphsage')
  
 #Print results
 import json

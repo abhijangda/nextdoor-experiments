@@ -1,6 +1,13 @@
 #!/bin/bash
 
 
+cd graph_loading
+chmod +x build.sh
+./build.sh
+cd ..
+echo "Graph loading module built"
+
+
 cd GraphSAGE
 virtualenv venv
 source venv/bin/activate
@@ -14,6 +21,7 @@ virtualenv venv
 chmod +x nextdoor_run.sh
 source venv/bin/activate
 pip install -r requirements.txt
+python graphsaint/setup.py build_ext --inplace
 cd ..
 echo "Setup GraphSAINT Complete!"
 

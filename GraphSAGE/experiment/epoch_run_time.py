@@ -197,7 +197,7 @@ def supervised_sampling(minibatch):
         sess.run(sample2 , feed_dict)
     end_time = time.time()
     sess.close()
-    print("sampling_time:",(end_time - start_time))
+    print("sampling_time (graphsage)",(end_time - start_time))
     add_to_dict("SSAMPLE",(end_time - start_time))
 
 def supervised_epoch_time(G,feats,id_map,walks,class_map):
@@ -236,8 +236,8 @@ def unsupervised_epoch_time(PREFIX):
 def run():
     global PREFIX
     import sys
-    dataset_dir = sys.argv[1]
-    file_name = sys.argv[2]
+    dataset_dir = sys.argv[2]
+    file_name = sys.argv[1]
     #add_to_dict("DATASET",(PREFIX))
     is_available = tf.test.is_gpu_available(
         cuda_only=False, min_cuda_compute_capability=None
