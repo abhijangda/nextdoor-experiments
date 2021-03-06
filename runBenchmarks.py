@@ -148,7 +148,10 @@ try:
             gnnWalk = walk.lower() if walk != "MultiRW" else "graphsaint"
             if not gnnWalk in samplingTimeResults or not graph in samplingTimeResults[gnnWalk]:
                 continue
-            speedup = samplingTimeResults[gnnWalk][graph]/results["LB"][walk][graph]
+            if (samplingTimeResults[gnnWalk][graph] < 0):
+                speedup = "OOM"
+            else:
+                speedup = samplingTimeResults[gnnWalk][graph]/results["LB"][walk][graph]
             print (row_format.format(walk, graph, speedup))
 except Exception as ee:
     print ("gnnSamplingResults.json did not exist. Did you execute runGNNSampling.py before this file?")
