@@ -320,7 +320,7 @@ class NodeMinibatchIterator(object):
         self.train_nodes = np.random.permutation(self.train_nodes)
         self.batch_num = 0
 
-import graphsage.GraphSampler
+import graphsage.GraphSampler as GraphSampler
 
 class NodeMinibatchIteratorWithKHop(NodeMinibatchIterator):
     """

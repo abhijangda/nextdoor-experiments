@@ -1,7 +1,12 @@
 import sys,os
 from os import path
 
-
+import networkx as nx
+import random
+import tensorflow.compat.v1 as tf
+import numpy as np
+tf.disable_eager_execution()
+tf.disable_v2_behavior()
 
 sys.path.insert(0, os.getcwd())
 import time
@@ -9,7 +14,7 @@ from graphsage.utils import load_data, run_random_walks
 from graphsage.minibatch import NodeMinibatchIterator, EdgeMinibatchIterator, NodeMinibatchIteratorWithKHop
 from graphsage.neigh_samplers import UniformNeighborSampler
 from graphsage.models import  SAGEInfo
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 PREFIX = "./example_data/toy-ppi"
 file = None
@@ -23,6 +28,60 @@ N_WALKS = 50
 os.environ["CUDA_VISIBLE_DEVICES"]=str(0)
 
 results = {}
+
+from ctypes import *
+from ctypes.util import *
+
+libgraphPath = '../graph_loading/libgraph.so'
+#l1 = 'libGraph.so'
+# print(find_library(l1))
+libgraph = CDLL(libgraphPath)
+libgraph.loadgraph.argtypes = [c_char_p]
+
+
+def custom_dataset(DATA):
+    MAX_LABELS = 10
+    MAX_FEATURE_SIZE = 8
+    filename = DATA+".data"
+    if not os.path.exists(filename):
+        raise Exception("Graph %s at '%s' do not exist"%(dataset_str, filename))
+
+    graphPath = bytes(filename, encoding='utf8')
+    libgraph.loadgraph(graphPath)
+    libgraph.getEdgePairList.restype = np.ctypeslib.ndpointer(dtype=c_int, shape=(libgraph.numberOfEdges(), 2))
+
+    print("Graph Loaded in C++")
+
+    edges = libgraph.getEdgePairList()
+    # print("Number of Edges", d.numberOfEdges())
+    # print("Number of Vertices", d.numberOfVertices())
+    # print (edges)
+    G = nx.Graph()
+    print("Loading networkx graph")
+    G.add_edges_from(edges)
+    id_map = {}
+    class_map = {}
+    i = 0
+    for n in G:
+        id_map[n] = i
+        i = i + 1
+        class_map[n] = random.randint(0,MAX_LABELS)
+        r = random.random()
+        G.node[n]['test'] = False
+        G.node[n]['val'] = False
+        G.node[n]['train_removed'] = False
+        if r >=.8 and r <.9:
+            G.node[n]['val'] = True
+        if r>= .9:
+            G.node[n]['test']=True
+    max_nodes = max(G.nodes()) + 1
+    features = np.random.rand(max_nodes,MAX_FEATURE_SIZE)
+    print ("features created")
+    toret = (G, features, id_map, None, class_map)
+    print("Returned tuple created")
+    return toret
+
+
 
 def add_to_dict(k,v):
     global results
@@ -110,7 +169,7 @@ def supervised_sampling(minibatch):
     add_to_dict("SSAMPLE",(end_time - start_time))
 
 
-def supervised_epoch_time(PREFIX, batch_size):
+def supervised_epoch_time(G,feats, id_map, walks, class_map, batch_size):
     tf.reset_default_graph()
     flags = tf.app.flags
     FLAGS = flags.FLAGS
@@ -120,11 +179,11 @@ def supervised_epoch_time(PREFIX, batch_size):
     FLAGS.model = 'graphsage_mean'
     FLAGS.batch_size = batch_size
     FLAGS.sigmoid = True
-    train_data = load_data(FLAGS.train_prefix)
-    time = train(train_data)
+    #train_data = load_data((G,id_map,class_map,num_classes,batch_size))
+    time = train((G,feats,id_map,walks,class_map),batch_size)
     add_to_dict('SEPOCH',time)
 
-def nextdoor_supervised_epoch_time(PREFIX, batch_size):
+def nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map, batch_size):
     tf.reset_default_graph()
     flags = tf.app.flags
     FLAGS = flags.FLAGS
@@ -134,8 +193,8 @@ def nextdoor_supervised_epoch_time(PREFIX, batch_size):
     FLAGS.model = 'graphsage_mean'
     FLAGS.sigmoid = True
     FLAGS.batch_size = batch_size
-    train_data = load_data(FLAGS.train_prefix)
-    time = train(train_data)
+    #train_data = load_data(FLAGS.train_prefix)
+    time = train((G,feats,id_map,walks,class_map),batch_size)
     print("NEXTSEPOCH {}".format(time))
     add_to_dict('NEXTSEPOCH', time)
 
@@ -149,15 +208,17 @@ def del_all_flags(FLAGS):
 def run():
     global PREFIX
     import sys
-    PREFIX = sys.argv[1]
-    batchSize = int(sys.argv[2])
-    add_to_dict("DATASET",(PREFIX))
+    DATA = sys.argv[1]
+    #DATA = sys.argv[2]
+    batchSize = 32
+
+    add_to_dict("DATASET",(DATA))
     is_available = tf.test.is_gpu_available(
         cuda_only=False, min_cuda_compute_capability=None
     )
     add_to_dict("BATCHSIZE",batchSize)
     add_to_dict ("GPU",is_available)
-    G, feats, id_map, walks, class_map = load_data(PREFIX, load_walks=True)
+    G, feats, id_map, walks, class_map = custom_dataset(DATA)
     print("Number of nodes {}".format(G.number_of_nodes()))
     print("Number of Edges {}".format(G.number_of_edges()))
     import sys
@@ -169,8 +230,8 @@ def run():
     supervised_sampling(minibatch)
     minibatch = getSampledBatchIterator(G,id_map, class_map, num_classes,batchSize)
     nextdoor_sampling(minibatch)
-    supervised_epoch_time(PREFIX,batchSize)
-    nextdoor_supervised_epoch_time(PREFIX,batchSize)
+    supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
+    nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
     create_measurement_file()
     print("All Done !!! ")
 

@@ -58,6 +58,10 @@ def runForGNN(gnn):
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
     gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --sample_method fastgcn --epoch_num 10 --n_iters 2"
+  
+  if gnn == 'graphsage':
+    os.chdir('./GraphSAGE')
+    gnnCommand = "python3 experiment/nextdoor_end2end.py %s"
   writeToLog("doing perf eval of %s"%gnn)
   status,output = subprocess.getstatusoutput("env -i bash -c 'source venv/bin/activate && env'")
   writeToLog(output)
@@ -81,7 +85,7 @@ def runForGNN(gnn):
       else:
         baselineResults[samplerName][graph] = float(time)
 
-runForGNN('FastGCN')
+runForGNN('graphsage')
  
 #Print results
 print ("\n\nTable 5: End-to-end speedups after integrating NextDoor in GNNs over vanilla GNNs")

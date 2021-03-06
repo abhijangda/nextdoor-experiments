@@ -1,11 +1,12 @@
 import os
 import sys
 
-USAGE = "USAGE:python  test_all_gnn.py (GNN_NAME) (DATASET) \
+USAGE = "USAGE:python  test_all_gnn.py (GNN_NAME) (ROOT_DIR) (DATASET) \
+                python test_all_gnn.py (ROOT_DIR) \
         GNN_NAME = graphsaint | cluster_gcn |  \
         DATASET = ppi | patents | orkut | livejournal | reddit "
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 4 or len(sys.argv) != 2:
     print(USAGE)
 
 import subprocess 
@@ -68,16 +69,23 @@ def run_mvs_gcn(dataset):
     except:
         return "OOM","OOM"
 
-def run_graphsage(dataset):
-    try:
-        process = subprocess.Popen(["./run_custom.sh",dataset],cwd="GraphSAGE",stdout = subprocess.PIPE)
-        output = process.communicate()[0]
-        output = output.decode('utf-8')
+def run_graphsage(root_dir,dataset):
+    if True:
+        os.chdir('./GraphSAGE')
+        gnnCommand = "python3 experiment/epoch_run_time.py {} {}"
+        status,output = subprocess.getstatusoutput("env -i bash -c 'source venv/bin/activate && env'")
+        for line in output.split('\n'):
+            (key, _, value) = line.partition("=")
+            os.environ[key] = value
+    
+        c = gnnCommand.format(root_dir,dataset)
+        print(c)
+        status,output = subprocess.getstatusoutput(c)
         print(output)
         training_time = re.search("training_time: (\d+\.\d+)",output).groups()[0]
         sampling_time = re.search("sampling_time: (\d+\.\d+)",output).groups()[0]
         return training_time,sampling_time
-    except:
+    #except:
         return "OOM","OOM"
 
 
@@ -99,9 +107,9 @@ def run_everything():
             print("{} | {} | {} | {}".format(arc,time[0], time[1], time[2]))
 
 
-def run_gnn_and_dataset(gnn,dataset):
+def run_gnn_and_dataset(gnn,rootdir,dataset):
     if gnn == 'graphsage':
-        t,s  = run_graphsage(dataset)
+        t,s  = run_graphsage(rootdir,dataset)
     elif gnn == 'graphsaint':
         t,s = run_graph_saint(dataset)
     elif gnn == 'cluster_gcn':
@@ -114,15 +122,17 @@ def run_gnn_and_dataset(gnn,dataset):
 
 
 if __name__=="__main__":
+    print(len(sys.argv))
     if len(sys.argv) < 2:
         run_everything()
     else:
-        if len(sys.argv) !=3:
+        if len(sys.argv) !=4:
             print(USAGE)
         else:
             gnn = sys.argv[1]
-            dataset = sys.argv[2]
-            run_gnn_and_dataset(gnn,dataset)
+            root_dir = sys.argv[2]
+            dataset = sys.argv[3]
+            run_gnn_and_dataset(gnn,root_dir,dataset)
 
 #print("Training time",training_time)
 #print("Sampling time", sampling_time)
