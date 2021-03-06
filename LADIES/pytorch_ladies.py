@@ -450,7 +450,7 @@ for sample_method in ['ladies', 'fastgcn', 'nextdoor_ladies', 'nextdoor_fastgcn'
             print(("Epoch: %d (%.1fs) Train Loss: %.2f    Valid Loss: %.2f Valid F1: %.3f") %                   (epoch, np.sum(times), np.average(train_losses), loss_valid, valid_f1))
             if valid_f1 > best_val + 1e-2:
                 best_val = valid_f1
-                torch.save(susage, './save/best_model.pt')
+                #torch.save(susage, './save/best_model.pt')
                 cnt = 0
             else:
                 cnt += 1
