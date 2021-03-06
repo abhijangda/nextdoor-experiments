@@ -79,12 +79,12 @@ def runForGNN(gnn):
   for graph in graphInfo:
     if (gnn == 'GraphSAGE' and (graph == "Orkut" or graph == "LiveJournal")):
       continue
-    graph = 'LJ1' if graph == 'LiveJournal' else graph.lower()
-    print (gnn, graph)
+    graph1 = 'LJ1' if graph == 'LiveJournal' else graph.lower()
+    print (gnn, graph1)
     if gnn == 'GraphSAGE':
-        c = gnnCommand %(os.path.join(input_dir,graph))
+        c = gnnCommand %(os.path.join(input_dir,graph1))
     else:
-        c = gnnCommand % (graph, input_dir)
+        c = gnnCommand % (graph1, input_dir)
     print(c)
     writeToLog("executing " + c)
     status,output = subprocess.getstatusoutput(c)
@@ -99,10 +99,14 @@ def runForGNN(gnn):
           nextdoorResults[samplerName[len("nextdoor_"):]][graph] = float(time)
         else:
           baselineResults[samplerName][graph] = float(time)
-    
+  os.chdir(cwd)
+
 runForGNN('GraphSAGE')
 runForGNN('FastGCN')
- 
+
+print(nextdoorResults)
+print(baselineResults)
+
 #Print results
 print ("\n\nTable 5: End-to-end speedups after integrating NextDoor in GNNs over vanilla GNNs")
 row_format = "{:>30}" * 3
