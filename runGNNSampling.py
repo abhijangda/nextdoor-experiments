@@ -18,11 +18,11 @@ cwd = os.getcwd()
 input_dir = args.nextdoor
 graph_dir = os.path.join(input_dir, "input")
 graphInfo = {
-    "PPI": {"v": 56944, "path": os.path.join(graph_dir, "ppi.data")},
+    #"PPI": {"v": 56944, "path": os.path.join(graph_dir, "ppi.data")},
     "LiveJournal": {"v": 4847569, "path": os.path.join(input_dir, "LJ1.data")},
     "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data")},
     "Patents": {"v":6009555,"path":os.path.join(input_dir, "patents.data")},
-    "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
+    #"Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
 }
 
 def writeToLog(s):

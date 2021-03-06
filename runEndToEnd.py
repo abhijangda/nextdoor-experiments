@@ -88,8 +88,8 @@ def runForGNN(gnn):
     print(c)
     writeToLog("executing " + c)
     status,output = subprocess.getstatusoutput(c)
+    writeToLog(output)
     if (status == 0):
-      writeToLog(output)
       samplerTimes = re.findall('end_to_end_time.+', output)
       for samplerTime in samplerTimes:
         s = re.findall(r'\((\w+)\)\s*([\.\d]+)', samplerTime)[0]

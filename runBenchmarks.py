@@ -176,6 +176,10 @@ for walk in nextDoorApps:
         t = results["InversionTime"][walk][graph]/results["LB"][walk][graph]
         print (row_format.format(walk, graph, t * 100))
 
+import json
+with open('benchmarkResults.json', 'w') as fp:
+    json.dump(results, fp)
+
 # #Multi GPU results
 # print ("\n\nFigure 10: Speedup of sampling using Multiple GPUs over 1 GPU")
 # row_format = "{:>30}" * 3
