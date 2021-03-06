@@ -284,7 +284,7 @@ def main(unused_argv):
 
     print_str = 'Epoch: %04d ' % (epoch + 1) + 'training time: {:.5f} '.format(
         total_training_time) + 'train_acc= {:.5f} '.format(outs[2])
-  print("sampling_time (cluster_gcn)",sampling_time)
+  print("sampling_time (clustergcn)",sampling_time)
   print("training_time:",training_time)
 
   #print(sampling_time,"Total sampling time")

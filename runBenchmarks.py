@@ -82,7 +82,6 @@ for app in nextDoorApps:
     writeToLog("Executing "+appBinary)
     status, output = subprocess.getstatusoutput(appBinary)
     writeToLog(output)
-    print (output)
     for technique in results:
         if technique == "KnightKing" or technique == "InversionTime" or technique == "MultiGPU-LB":
             continue
@@ -132,7 +131,25 @@ for walk in knightKingWalks:
     for graph in graphInfo:
         speedup = results["KnightKing"][walk][graph]/results["LB"][walk][graph]
         print (row_format.format(walk, graph, speedup))
-    
+
+#Speedup Over GNNs
+import json
+try:
+    with open('gnnSamplingResults.json', 'r') as fp:
+        samplingTimeResults = json.load(fp)
+
+    print ("\n\nFigure 7 (b): Speedup Over Existing GNNs")
+    row_format = "{:>30}" * 3
+    print (row_format.format("Sampling App", "Graph", "Speedup"))
+    for walk in nextDoorApps:
+        if walk in knightKingWalks:
+            continue
+        for graph in graphInfo:
+            speedup = samplingTimeResults[walk][graph]/results["LB"][walk][graph]
+            print (row_format.format(walk, graph, speedup))
+except:
+    print ("gnnSamplingResults.json did not exist. Did you execute runGNNSampling.py before this file?")
+
 #Speedup Over SP and TP
 print ("\n\nFigure 7 (c): Speedup Over SP and TP")
 row_format = "{:>30}" * 4
@@ -149,7 +166,7 @@ row_format = "{:>30}" * 3
 print (row_format.format("Sampling App", "Graph", "%age of Time in Index"))
 for walk in nextDoorApps:
     for graph in graphInfo:
-        t = results["InversionTime"][walk][graph]/results["LB"][walk][graph]
+        t = results["InversionTime"][walk.lower()][graph]/results["LB"][walk][graph]
         print (row_format.format(walk, graph, t * 100))
 
 # #Multi GPU results

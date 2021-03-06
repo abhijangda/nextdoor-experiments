@@ -2,21 +2,23 @@ import argparse, os, subprocess
 import shutil, re
 import datetime 
 
-logFile = os.path.join(os.getcwd(), "samplingBenchmarking.log")
+logFile = os.path.join(os.getcwd(), "gnnSamplingBenchmarking.log")
 
 parser = argparse.ArgumentParser(description='Benchmark')
 parser.add_argument('-nextdoor', type=str,
                     help='Path to NextDoor',required=True)
-parser.add_argument('-graph_dir', type=str, help='Path to Graph Binary Dir', required=True)
+parser.add_argument('-useSmallGraphs', type=bool, help='Use only PPI and Reddit',required=False)
 
 args = parser.parse_args()
 args.nextdoor = os.path.abspath(args.nextdoor)
-args.graph_dir = os.path.abspath(args.graph_dir)
+if not hasattr(args,'useSmallGraphs'):
+  args.useSmallGraphs = False
 
 cwd = os.getcwd()
-input_dir = cwd
+input_dir = args.nextdoor
+graph_dir = os.path.join(input_dir, "input")
 graphInfo = {
-    "PPI": {"v": 56944, "path": os.path.join(input_dir, "ppi.data")},
+    "PPI": {"v": 56944, "path": os.path.join(graph_dir, "ppi.data")},
     # "LiveJournal": {"v": 4847569, "path": os.path.join(input_dir, "LJ1.data")},
     # "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data")},
     # "Patents": {"v":6009555,"path":os.path.join(input_dir, "patents.data")},
@@ -33,7 +35,7 @@ def writeToLog(s):
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
-gnns = ['FastGCN', 'LADIES','mvs_gcn','graphsaint','cluster_gcn']
+gnns = ['FastGCN', 'LADIES','mvs','graphsaint','clustergcn']
 #Build sampling application in NextDoor folder
 
 samplingTimeResults = {gnn.lower(): {graph: -1 for graph in graphInfo} for gnn in gnns}
@@ -45,13 +47,13 @@ def runForGNN(gnn):
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
     gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --epoch_num 10 --n_iters 2 --graph_dir %s"
-  if gnn == 'mvs_gcn':
+  if gnn == 'mvs':
     os.chdir('./mvs_gcn')
     gnnCommand = "python main_experiments.py --dataset %s --graph_dir %s --batch_size 256 --samp_num 256 --cuda 0 --is_ratio 1.0 --batch_num 20 --n_stops 1000 --show_grad_norm 1 --n_layers 2"
   if gnn == 'graphsaint':
     os.chdir('./GraphSAINT')
     gnnCommand = "python -m graphsaint.tensorflow_version.train --dataset  %s --graph_dir %s --train_config train_config/mrw.yml --gpu 0 "
-  if gnn == 'cluster_gcn':
+  if gnn == 'clustergcn':
     os.chdir('./cluster_gcn')
     gnnCommand = "python train.py --dataset %s  --graph_dir %s  --nomultilabel --num_layers 3 --num_clusters 1500 --bsize 20 --hidden1 512 --dropout 0.2 --weight_decay 0  --early_stopping 200 --num_clusters_val 20 --num_clusters_test 1 --epochs 1 --save_name $1  --learning_rate 0.005 --diag_lambda 0.0001 --novalidation"
   writeToLog("doing perf eval of %s"%gnn)
@@ -62,12 +64,17 @@ def runForGNN(gnn):
     os.environ[key] = value
     
   for graph in graphInfo:
-    c = gnnCommand % (graph.lower(), args.graph_dir)
+    if (args.useSmallGraphs and graph in ['Patents', 'Orkut', 'LiveJournal']):
+      continue
+
+    c = gnnCommand % (graph.lower(), graph_dir)
     print(c)
     writeToLog("executing " + c)
     status,output = subprocess.getstatusoutput(c)
+    if status != 0:
+      print(output)  
+      continue
     writeToLog(output)
-    print(output)
     samplerTimes = re.findall('sampling_time.+', output)
     for samplerTime in samplerTimes:
       s = re.findall(r'\((\w+)\)\s*([\.\d]+)', samplerTime)
@@ -76,8 +83,16 @@ def runForGNN(gnn):
         continue
       time = s[0][1]
       samplingTimeResults[samplerName][graph] = float(time)
+    os.chdir(cwd)
+runForGNN('clustergcn')
+runForGNN('graphsaint')
+runForGNN('mvs')
+runForGNN('fastgcn')
+runForGNN('graphsage')
 
-runForGNN('cluster_gcn')
  
 #Print results
-print (samplingTimeResults)
+import json
+with open('gnnSamplingResults.json', 'w') as fp:
+    json.dump(samplingTimeResults, fp)
+print(samplingTimeResults)

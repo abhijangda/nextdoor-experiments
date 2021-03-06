@@ -403,9 +403,9 @@ def mvs_gcn_plus(feat_data, labels, adj_matrix, train_nodes, valid_nodes, test_n
     if False and bool(args.show_grad_norm):
         times, full_batch_times, data_prepare_times = \
             times[int(200/args.batch_num):], full_batch_times[int(200/args.batch_num):], data_prepare_times[int(200/args.batch_num):]
-    print('Average training_time mvs_gcn',np.mean(times))
+    print('Average training_time mvs',np.mean(times))
     print('Average full batch time is %0.3f'%np.mean(full_batch_times))
-    print('Average sampling_time (mvs_gcn)',np.mean(data_prepare_times))
+    print('Average sampling_time (mvs)',np.mean(data_prepare_times))
     f1_score_test = best_model.calculate_f1(feat_data, adjs_full, labels, test_nodes)
     return best_model, loss_train, loss_test, loss_train_all, f1_score_test, grad_variance_all
 
