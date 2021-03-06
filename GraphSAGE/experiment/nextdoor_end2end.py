@@ -211,10 +211,16 @@ def del_all_flags(FLAGS):
 
 def run():
     global PREFIX
-    import sys
+    import sys, ctypes
+    from numpy.ctypeslib import ndpointer
     
     DATA = sys.argv[1]
     KHopSamplingPy3.initSampling(DATA+".data")
+    # lib = ctypes.CDLL("./KHopSamplingPy3.so")
+    # print("NextDoorKHopSampler.finalSampleLength() ", KHopSamplingPy3.finalSampleLength())
+    # lib.finalSamplesArray.restype = ndpointer(dtype=ctypes.c_uint, shape=(KHopSamplingPy3.finalSampleLength()))
+    # KHopSamplingPy3.sample()
+    # finalSamples = lib.finalSamplesArray()
     #DATA = sys.argv[2]
     batchSize = 32 if ('ppi' in DATA or 'reddit' in DATA) else 512
 
@@ -237,8 +243,8 @@ def run():
     # supervised_sampling(minibatch)
     # minibatch = getSampledBatchIterator(G,id_map, class_map, num_classes,batchSize)
     #nextdoor_sampling(minibatch)
-    # supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
     nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
+    supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
     #create_measurement_file()
     print("All Done !!! ")
 

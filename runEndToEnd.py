@@ -11,7 +11,8 @@ parser.add_argument('-nextdoor', type=str,
 args = parser.parse_args()
 
 cwd = os.getcwd()
-input_dir = cwd
+input_dir = os.path.join(args.nextdoor, 'input')
+
 graphInfo = {
     "PPI": {"v": 56944, "path": os.path.join(input_dir, "ppi.data")},
     # "LiveJournal": {"v": 4847569, "path": os.path.join(input_dir, "LJ1.data")},
@@ -39,7 +40,7 @@ for gnn in gnns:
   else if (gnn == 'GraphSAGE'):
     appName = 'khop'
 
-  d = os.path.join(args.nextdoor,'src/apps/',)
+  d = os.path.join(args.nextdoor,'src/apps/',appName)
   os.chdir(d)
   writeToLog("Chdir to "+ d)
   writeToLog("Executing make")
@@ -65,7 +66,7 @@ def runForGNN(gnn):
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
     gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --sample_method fastgcn --epoch_num 10 --n_iters 2"
-  else if gnn == 'graphsage':
+  else if gnn == 'GraphSAGE':
     os.chdir('./GraphSAGE')
     gnnCommand = "python3 experiment/nextdoor_end2end.py %s"
   writeToLog("doing perf eval of %s"%gnn)
@@ -76,22 +77,26 @@ def runForGNN(gnn):
     os.environ[key] = value
     
   for graph in graphInfo:
+    if (gnn == 'GraphSAGE' and graph == "orkut"):
+      continue
     c = gnnCommand % graph.lower()
     print(c)
     writeToLog("executing " + c)
     status,output = subprocess.getstatusoutput(c)
-    writeToLog(output)
-    samplerTimes = re.findall('end_to_end_time.+', output)
-    for samplerTime in samplerTimes:
-      s = re.findall(r'\((\w+)\)\s*([\.\d]+)', samplerTime)[0]
-      samplerName = s[0]
-      time = s[1]
-      if 'nextdoor_' in samplerName:
-        nextdoorResults[samplerName[len("nextdoor_"):]][graph] = float(time)
-      else:
-        baselineResults[samplerName][graph] = float(time)
-
-runForGNN('graphsage')
+    if (status == 0):
+      writeToLog(output)
+      samplerTimes = re.findall('end_to_end_time.+', output)
+      for samplerTime in samplerTimes:
+        s = re.findall(r'\((\w+)\)\s*([\.\d]+)', samplerTime)[0]
+        samplerName = s[0]
+        time = s[1]
+        if 'nextdoor_' in samplerName:
+          nextdoorResults[samplerName[len("nextdoor_"):]][graph] = float(time)
+        else:
+          baselineResults[samplerName][graph] = float(time)
+    
+runForGNN('GraphSAGE')
+runForGNN('FastGCN')
  
 #Print results
 print ("\n\nTable 5: End-to-end speedups after integrating NextDoor in GNNs over vanilla GNNs")
@@ -100,4 +105,6 @@ print (row_format.format("GNN", "Graph", "Speedup"))
 for samplerName in baselineResults:
     for graph in graphInfo:
         speedup = baselineResults[samplerName][graph]/nextdoorResults[samplerName][graph]
+        if (speedup < 0):
+          speedup = "OOM"
         print (row_format.format(samplerName, graph, speedup))
