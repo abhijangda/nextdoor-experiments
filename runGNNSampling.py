@@ -33,7 +33,7 @@ def writeToLog(s):
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
-gnns = ['FastGCN', 'LADIES','mvs_gcn']
+gnns = ['FastGCN', 'LADIES','mvs_gcn','graphsaint']
 #Build sampling application in NextDoor folder
 
 samplingTimeResults = {gnn.lower(): {graph: -1 for graph in graphInfo} for gnn in gnns}
@@ -48,7 +48,9 @@ def runForGNN(gnn):
   if gnn == 'mvs_gcn':
     os.chdir('./mvs_gcn')
     gnnCommand = "python main_experiments.py --dataset %s --graph_dir %s --batch_size 256 --samp_num 256 --cuda 0 --is_ratio 1.0 --batch_num 20 --n_stops 1000 --show_grad_norm 1 --n_layers 2"
-    
+  if gnn == 'graphsaint':
+    os.chdir('./GraphSAINT')
+    gnnCommand = "python -m graphsaint.tensorflow_version.train --dataset  %s --graph_dir %s --train_config train_config/mrw.yml --gpu 0 "
   writeToLog("doing perf eval of %s"%gnn)
   status,output = subprocess.getstatusoutput("env -i bash -c 'source venv/bin/activate && env'")
   writeToLog(output)
@@ -72,7 +74,7 @@ def runForGNN(gnn):
       time = s[0][1]
       samplingTimeResults[samplerName][graph] = float(time)
 
-runForGNN('mvs_gcn')
+runForGNN('graphsaint')
  
 #Print results
 print (samplingTimeResults)

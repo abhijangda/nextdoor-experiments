@@ -120,7 +120,8 @@ def prepare(train_data,train_params,arch_gcn):
 
     misc_stats = tf.summary.merge([_misc_val_f1_micro,_misc_val_f1_macro,_misc_train_f1_micro,_misc_train_f1_macro,
                     _misc_time_per_epoch,_misc_size_subgraph])
-    summary_writer = tf.summary.FileWriter(log_dir(args_global.train_config,args_global.data_prefix,git_branch,git_rev,timestamp), sess.graph)
+    summary_writer = tf.summary.FileWriter(log_dir(args_global.train_config,args_global.dataset,git_branch,git_rev,timestamp), sess.graph)
+
     # Init variables
     sess.run(tf.global_variables_initializer())
     return model,minibatch, sess, [merged,misc_stats],ph_misc_stat, summary_writer
@@ -235,7 +236,7 @@ def train(train_phases,model,minibatch,\
     #        'loss_test_opt':loss_test,'f1mic_test_opt':f1mic_test,'f1mac_test_opt':f1mac_test,\
     #        'epoch_best':e_best,
     #        'time_train': time_train}
-    print("sampling_time:",minibatch.sampling_time)
+    print("sampling_time (graphsaint)",minibatch.sampling_time)
     print("training_time:",time_train)
     return      # everything is logged by TF. no need to return anything
 

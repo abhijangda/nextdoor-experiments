@@ -11,3 +11,4 @@ ext/
 venv/
 *.pickle
 *.so
+*.log

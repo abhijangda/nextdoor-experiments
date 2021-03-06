@@ -10,60 +10,37 @@ from graphsaint.globals import *
 import networkx as nx
 import pickle,random
 
-def load_custom_dataset(dataset_str, normalize=True):
+from ctypes import *
+from ctypes.util import *
+import networkx as nx, numpy as np
+
+libgraphPath = '../graph_loading/libgraph.so'
+#l1 = 'libGraph.so'
+# print(find_library(l1))
+libgraph = CDLL(libgraphPath)
+libgraph.loadgraph.argtypes = [c_char_p]
+
+
+def custom_dataset(graph_dir, dataset_str):
     MAX_LABELS = 10
-    MAX_FEATURE_SIZE = 8
-    if dataset_str == 'patents':
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/cit-Patents.txt'
-        picklefilename = "./cit-Patents.pickle"
-    elif dataset_str == 'orkut':
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/com-orkut.ungraph.txt'
-        picklefilename = "./com-orkut.pickle"
-    elif dataset_str == 'livejournal':
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/soc-LiveJournal1.txt'
-        picklefilename = "./soc-LiveJournal1.pickle"
-    elif dataset_str == "reddit":
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/reddit_edgelist'
-        picklefilename = "./reddit_edgelist.pickle"
-    elif dataset_str == "ppi":
-        filename = '/mnt/homes/spolisetty/nextdoor-experiments/datasets/ppi_edgelist'
-        picklefilename = "./ppi_edgelist.pickle"
-    else:
-        assert(False)
-        
-    if (os.path.exists(picklefilename)):
-        f = open(picklefilename, 'rb')
-        G = pickle.load(f)
-        f.close()
-        edges = G.edges()
-    else:
-        edges = []
-        G = nx.Graph()
-        for line in open(filename):
-            if line.startswith('#'):
-                continue
-            a,b = line.split()
-            a,b = int(a),int(b)
-            edges += [[a,b]]
-        G.add_edges_from(edges)
-        print ("Edges Added")
-        ################## reorder
-        remap = {}
-        count = 0
-        for i in G.nodes():
-            remap[i] = count
-            count = count + 1
-        G = nx.Graph()
-        new_edges = []
-        for a,b in edges:
-            new_edges += [[remap[a],remap[b]]]
-        edges = new_edges
-        G.add_edges_from(edges)
-        print ("Reorder Done")
-        ################## end reorder
-        f = open(picklefilename, 'wb')
-        pickle.dump(G, f)
-        f.close()
+    MAX_FEATURE_SIZE = 256 
+    filename = os.path.join(graph_dir, dataset_str+".data")
+    if not os.path.exists(filename):
+        raise Exception("Graph %s at '%s' do not exist"%(dataset_str, filename))
+
+    graphPath = bytes(filename, encoding='utf8')
+    libgraph.loadgraph(graphPath)
+    libgraph.getEdgePairList.restype = np.ctypeslib.ndpointer(dtype=c_int, shape=(libgraph.numberOfEdges(), 2))
+
+    print("Graph Loaded in C++")
+
+    edges = libgraph.getEdgePairList()
+    # print("Number of Edges", d.numberOfEdges())
+    # print("Number of Vertices", d.numberOfVertices())
+    # print (edges)
+    G = nx.Graph()
+    print("Loading networkx graph")
+    G.add_edges_from(edges)
     
     N = max(G.nodes())+1
     def coo_format(train_edges):
@@ -128,7 +105,7 @@ def load_custom_dataset(dataset_str, normalize=True):
     # -------------------------
     return adj_full, adj_train, feats, class_map, role
 
-def load_data(prefix, normalize=True):
+def load_data(graph_dir,dataset):
     """
     Load the various data files residing in the `prefix` directory.
     Files to be loaded:
@@ -176,6 +153,7 @@ def load_data(prefix, normalize=True):
                             for test nodes. The value is the list of IDs of nodes belonging to
                             the train/val/test sets.
     """
+    return custom_dataset(graph_dir, dataset)
     if prefix == 'patents' or prefix == 'orkut' or prefix =='livejournal' or prefix == 'reddit' or prefix =='ppi' :
         print("reached checkpoint")
         return load_custom_dataset(prefix)
@@ -256,7 +234,7 @@ def parse_n_prepare(flags):
         assert 'end' in ph
         assert 'sampler' in ph
     print("Loading training data..")
-    temp_data = load_data(flags.data_prefix)
+    temp_data = load_data(flags.graph_dir,flags.dataset)
     train_data = process_graph_data(*temp_data)
     print("Done loading training data..")
     return train_params,train_phases,train_data,arch_gcn
