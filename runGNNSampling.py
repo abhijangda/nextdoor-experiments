@@ -18,11 +18,11 @@ cwd = os.getcwd()
 input_dir = args.nextdoor
 graph_dir = os.path.join(input_dir, "input")
 graphInfo = {
-    "PPI": {"v": 56944, "path": os.path.join(graph_dir, "ppi.data")},
-    "LiveJournal": {"v": 4847569, "path": os.path.join(input_dir, "LJ1.data")},
+#    "PPI": {"v": 56944, "path": os.path.join(graph_dir, "ppi.data")},
+ #  "LiveJournal": {"v": 4847569, "path": os.path.join(input_dir, "LJ1.data")},
     "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data")},
-    "Patents": {"v":6009555,"path":os.path.join(input_dir, "patents.data")},
-    "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
+  # "Patents": {"v":6009555,"path":os.path.join(input_dir, "patents.data")},
+   # "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
 }
 
 def writeToLog(s):
@@ -55,7 +55,7 @@ def runForGNN(gnn):
     gnnCommand = "python -m graphsaint.tensorflow_version.train --dataset  %s --graph_dir %s --train_config train_config/mrw.yml --gpu 0 "
   if gnn == 'clustergcn':
     os.chdir('./cluster_gcn')
-    gnnCommand = "python train.py --dataset %s  --graph_dir %s  --nomultilabel --num_layers 3 --num_clusters 1500 --bsize 20 --hidden1 512 --dropout 0.2 --weight_decay 0  --early_stopping 200 --num_clusters_val 20 --num_clusters_test 1 --epochs 1 --save_name $1  --learning_rate 0.005 --diag_lambda 0.0001 --novalidation"
+    gnnCommand = "python train.py --dataset %s  --graph_dir %s  --nomultilabel --num_layers 3 --num_clusters 1500 --bsize 20 --hidden1 32 --dropout 0.2 --weight_decay 0  --early_stopping 200 --num_clusters_val 20 --num_clusters_test 1 --epochs 1 --save_name $1  --learning_rate 0.005 --diag_lambda 0.0001 --novalidation"
   if gnn == 'graphsage':
     os.chdir('./GraphSAGE')
     #  python experiment/epoch_run_time.py dataset graphdir
@@ -72,7 +72,13 @@ def runForGNN(gnn):
   for graph in graphInfo:
     if (args.useSmallGraphs and graph in ['Patents', 'Orkut', 'LiveJournal']):
       continue
-
+    if graph == 'LiveJournal':
+        if gnn = 'graphsage' or gnn = 'mvs_gcn' or gnn = 'cluster_gcn':
+            samplingTimeResults[gnn][graph] = -1
+            continue
+    if graph == 'Orkut':
+        samplingTimeResults[gnn][graph] = -1
+        continue
     c = gnnCommand % ('LJ1' if graph == 'LiveJournal' else graph.lower(), graph_dir)
     print(c)
     writeToLog("executing " + c)

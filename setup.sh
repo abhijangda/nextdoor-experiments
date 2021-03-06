@@ -41,3 +41,10 @@ source venv/bin/activate
 pip install -r requirements.txt
 cd ..
 echo "Setup FastGCN|LADIES Complete"
+
+cd mvs_gcn
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cd ..
+echo "Setup MVS GCN complete"

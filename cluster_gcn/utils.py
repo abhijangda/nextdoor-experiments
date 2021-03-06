@@ -324,7 +324,7 @@ libgraph.loadgraph.argtypes = [c_char_p]
 
 def custom_dataset(graph_dir, dataset_str):
     MAX_LABELS = 10
-    MAX_FEATURE_SIZE = 256 
+    MAX_FEATURE_SIZE = 8 
     filename = os.path.join(graph_dir, dataset_str+".data")
     if not os.path.exists(filename):
         raise Exception("Graph %s at '%s' do not exist"%(dataset_str, filename))
