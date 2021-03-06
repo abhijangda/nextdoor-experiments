@@ -131,7 +131,7 @@ def prepare(train_data,train_params,arch_gcn):
 def train(train_phases,model,minibatch,\
             sess,train_stat,ph_misc_stat,summary_writer):
     import time
-    BYPASS = False 
+    BYPASS = True 
     # saver = tf.train.Saver(var_list=tf.trainable_variables())
     saver=tf.train.Saver()
 
