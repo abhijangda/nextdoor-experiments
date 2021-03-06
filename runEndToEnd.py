@@ -65,7 +65,7 @@ def runForGNN(gnn):
   
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
-    gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --sample_method fastgcn --epoch_num 10 --n_iters 2"
+    gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --sample_method fastgcn --epoch_num 10 --n_iters 2 --graph_dir %s"
   else if gnn == 'GraphSAGE':
     os.chdir('./GraphSAGE')
     gnnCommand = "python3 experiment/nextdoor_end2end.py %s"
@@ -77,9 +77,9 @@ def runForGNN(gnn):
     os.environ[key] = value
     
   for graph in graphInfo:
-    if (gnn == 'GraphSAGE' and graph == "orkut"):
+    if (gnn == 'GraphSAGE' and (graph == "Orkut" or graph == "LiveJournal"):
       continue
-    c = gnnCommand % graph.lower()
+    c = gnnCommand % ('LJ1' if graph == 'LiveJournal' else graph.lower(), input_dir)
     print(c)
     writeToLog("executing " + c)
     status,output = subprocess.getstatusoutput(c)

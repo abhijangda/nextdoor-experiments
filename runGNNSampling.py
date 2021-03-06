@@ -92,7 +92,7 @@ runForGNN('clustergcn')
 runForGNN('graphsaint')
 runForGNN('mvs')
 runForGNN('FastGCN')
-runForGNN('LADIES')
+# runForGNN('LADIES')
 # runForGNN('graphsage')
 
  

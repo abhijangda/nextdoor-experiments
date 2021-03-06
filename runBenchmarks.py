@@ -145,6 +145,8 @@ try:
         if walk in knightKingWalks:
             continue
         for graph in graphInfo:
+            if not walk in samplingTimeResults or not graph in samplingTimeResults[walk]:
+                continue
             speedup = samplingTimeResults[walk][graph]/results["LB"][walk][graph]
             print (row_format.format(walk, graph, speedup))
 except:
