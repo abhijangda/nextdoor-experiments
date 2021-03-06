@@ -37,7 +37,7 @@ for gnn in gnns:
   appName = None
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     appName = gnn.lower()
-  else if (gnn == 'GraphSAGE'):
+  elif (gnn == 'GraphSAGE'):
     appName = 'khop'
 
   d = os.path.join(args.nextdoor,'src/apps/',appName)
@@ -51,9 +51,9 @@ for gnn in gnns:
     print(output)
   writeToLog(output)
   #Copy libraries from NextDoor folder to GNN folder
-  src = os.path.join(d, gnn+"SamplingPy3.so")
+  src = os.path.join(d, (gnn if(gnn != 'GraphSAGE') else "KHop") +"SamplingPy3.so")
   gnnDir = 'LADIES/' if gnn == 'FastGCN' else gnn
-  dst = os.path.join(cwd, gnnDir, gnn+"SamplingPy3.so")
+  dst = os.path.join(cwd, gnnDir, (gnn if(gnn != 'GraphSAGE') else "KHop")+ "SamplingPy3.so")
   shutil.copyfile(src, dst)
 
 os.chdir(cwd)
@@ -66,7 +66,7 @@ def runForGNN(gnn):
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
     gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --sample_method fastgcn --epoch_num 10 --n_iters 2 --graph_dir %s"
-  else if gnn == 'GraphSAGE':
+  elif gnn == 'GraphSAGE':
     os.chdir('./GraphSAGE')
     gnnCommand = "python3 experiment/nextdoor_end2end.py %s"
   writeToLog("doing perf eval of %s"%gnn)
@@ -77,9 +77,14 @@ def runForGNN(gnn):
     os.environ[key] = value
     
   for graph in graphInfo:
-    if (gnn == 'GraphSAGE' and (graph == "Orkut" or graph == "LiveJournal"):
+    if (gnn == 'GraphSAGE' and (graph == "Orkut" or graph == "LiveJournal")):
       continue
-    c = gnnCommand % ('LJ1' if graph == 'LiveJournal' else graph.lower(), input_dir)
+    graph = 'LJ1' if graph == 'LiveJournal' else graph.lower()
+    print (gnn, graph)
+    if gnn == 'GraphSAGE':
+        c = gnnCommand %(os.path.join(input_dir,graph))
+    else:
+        c = gnnCommand % (graph, input_dir)
     print(c)
     writeToLog("executing " + c)
     status,output = subprocess.getstatusoutput(c)
