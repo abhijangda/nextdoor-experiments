@@ -95,7 +95,7 @@ def custom_dataset(graph_dir, dataset_str):
 
     
 def load_data(graph_dir, dataset_str):
-    if dataset_str == "ppi" or dataset_str == "reddit" or dataset_str == 'orkut' or dataset_str == 'livejournal' or dataset_str == 'patents':
+    if dataset_str == "ppi" or dataset_str == "reddit" or dataset_str == 'orkut' or dataset_str == 'livejournal' or dataset_str == 'LJ1' or dataset_str == 'patents':
         return custom_dataset(graph_dir, dataset_str)
     
     if dataset_str == 'ppi':
