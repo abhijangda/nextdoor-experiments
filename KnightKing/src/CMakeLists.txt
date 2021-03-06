@@ -1,6 +1,0 @@
-IF(WITH_TESTS)
-    add_subdirectory(tests)
-ENDIF()
-add_subdirectory(apps)
-add_subdirectory(tools)
-add_subdirectory(examples)
