@@ -5,29 +5,30 @@ import re
 import datetime 
 
 #TODO: Store the output as log some where.
-logFile = "benchmarking.log"
+logFile = os.path.join(os.getcwd(), "benchmarking.log")
 
 parser = argparse.ArgumentParser(description='Benchmark')
 parser.add_argument('-knightKing', type=str,
                     help='Path to KnightKing',required=True)
 parser.add_argument('-nextdoor', type=str,
                     help='Path to NextDoor',required=True)
-parser.add_argument('-runs', type=int, help="Number of Runs",required=True)
+# parser.add_argument('-runs', type=int, help="Number of Runs",required=True)
 parser.add_argument('-gpus', type=str, help="CUDA DEVICES",required=False)
 
 args = parser.parse_args()
 args.nextdoor = os.path.abspath(args.nextdoor)
 args.knightKing = os.path.abspath(args.knightKing)
+cwd = os.getcwd()
 
 input_dir = os.path.join(args.nextdoor, "input")
 
 #Run KnightKing Benchmarks
 graphInfo = {
     "PPI": {"v": 56944, "path": os.path.join(input_dir, "ppi.data")},
-    # "LiveJournal": {"v": 4576926, "path": os.path.join(input_dir, "LJ1.data")},
-    # "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data")},
-    # "Patents": {"v":3774768,"path":os.path.join(input_dir, "patents.data")},
-    # "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
+    "LiveJournal": {"v": 4576926, "path": os.path.join(input_dir, "LJ1.data")},
+    "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data")},
+    "Patents": {"v":3774768,"path":os.path.join(input_dir, "patents.data")},
+    "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
 }
 
 knightKing = os.path.join(args.knightKing, 'build/bin')
@@ -36,7 +37,7 @@ knightKingWalks = {
     "Node2Vec": " -p 2.0 -q 0.5 -l 100 ", "PPR":" -t 0.001 ", "DeepWalk": " -l 100 ",
 }
 
-nextDoorApps = ["PPR", "Node2Vec","DeepWalk","KHop","MultiRW","MVS","ClusterGCN","FastGCN", "LADIES"]
+nextDoorApps = ["MVS"] #["PPR", "Node2Vec","DeepWalk","KHop","MultiRW","MVS","ClusterGCN","FastGCN", "LADIES"]
 multiGPUApps = ["PPR", "Node2Vec","DeepWalk","KHop"]
 
 results = {"KnightKing": {walk : {graph: -1 for graph in graphInfo} for walk in knightKingWalks},
@@ -57,7 +58,7 @@ writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strf
 for walk in knightKingWalks:
     for graph in graphInfo:
         times = []
-        for run in range(args.runs):
+        for run in range(1):
             walkBinary = os.path.join(knightKing, walk.lower()) + " -w %d "%graphInfo[graph]["v"] + \
                 " -v %d"%graphInfo[graph]["v"] +\
                 " -s weighted " + "-g " + graphInfo[graph]["path"] + \
@@ -158,6 +159,8 @@ row_format = "{:>30}" * 4
 print (row_format.format("Sampling App", "Graph", "Speedup over SP", "Speedup over TP"))
 for walk in nextDoorApps:
     for graph in graphInfo:
+        if graph == "Reddit":
+            continue
         speedupSP = results["SP"][walk][graph]/results["LB"][walk][graph]
         speedupTP = results["TP"][walk][graph]/results["LB"][walk][graph]
         print (row_format.format(walk, graph, speedupSP, speedupTP))
@@ -168,7 +171,9 @@ row_format = "{:>30}" * 3
 print (row_format.format("Sampling App", "Graph", "%age of Time in Index"))
 for walk in nextDoorApps:
     for graph in graphInfo:
-        t = results["InversionTime"][walk.lower()][graph]/results["LB"][walk][graph]
+        if graph == "Reddit":
+            continue
+        t = results["InversionTime"][walk][graph]/results["LB"][walk][graph]
         print (row_format.format(walk, graph, t * 100))
 
 # #Multi GPU results
