@@ -37,7 +37,7 @@ knightKingWalks = {
     "Node2Vec": " -p 2.0 -q 0.5 -l 100 ", "PPR":" -t 0.001 ", "DeepWalk": " -l 100 ",
 }
 
-nextDoorApps = ["MVS"] #["PPR", "Node2Vec","DeepWalk","KHop","MultiRW","MVS","ClusterGCN","FastGCN", "LADIES"]
+nextDoorApps = ["MVS", "PPR", "Node2Vec","DeepWalk","KHop","MultiRW","MVS","ClusterGCN","FastGCN", "LADIES"]
 multiGPUApps = ["PPR", "Node2Vec","DeepWalk","KHop"]
 
 results = {"KnightKing": {walk : {graph: -1 for graph in graphInfo} for walk in knightKingWalks},
@@ -148,7 +148,7 @@ try:
         for graph in graphInfo:
             if not walk in samplingTimeResults or not graph in samplingTimeResults[walk]:
                 continue
-            speedup = samplingTimeResults[walk][graph]/results["LB"][walk][graph]
+            speedup = samplingTimeResults[walk if walk != "MultiRW" else "graphsaint"][graph]/results["LB"][walk][graph]
             print (row_format.format(walk, graph, speedup))
 except:
     print ("gnnSamplingResults.json did not exist. Did you execute runGNNSampling.py before this file?")

@@ -1,6 +1,6 @@
 import argparse, os, subprocess
 import shutil, re
-import datetime 
+import datetime
 
 logFile = os.path.join(os.getcwd(), "gnnSamplingBenchmarking.log")
 
@@ -28,7 +28,7 @@ graphInfo = {
 def writeToLog(s):
     if not os.path.exists(logFile):
         open(logFile,"w").close()
-    
+
     f = open(logFile, "r+")
     f.write(s)
     f.close()
@@ -58,7 +58,7 @@ def runForGNN(gnn):
     gnnCommand = "python train.py --dataset %s  --graph_dir %s  --nomultilabel --num_layers 3 --num_clusters 1500 --bsize 20 --hidden1 512 --dropout 0.2 --weight_decay 0  --early_stopping 200 --num_clusters_val 20 --num_clusters_test 1 --epochs 1 --save_name $1  --learning_rate 0.005 --diag_lambda 0.0001 --novalidation"
   if gnn == 'graphsage':
     os.chdir('./GraphSAGE')
-    #  python experiment/epoch_run_time.py dataset graphdir 
+    #  python experiment/epoch_run_time.py dataset graphdir
     gnnCommand = "python experiment/epoch_run_time.py  %s %s"
   if gnnCommand == None :
     raise Exception("gnn name not found",gnn)
@@ -68,7 +68,7 @@ def runForGNN(gnn):
   for line in output.split('\n'):
     (key, _, value) = line.partition("=")
     os.environ[key] = value
-    
+
   for graph in graphInfo:
     if (args.useSmallGraphs and graph in ['Patents', 'Orkut', 'LiveJournal']):
       continue
@@ -78,7 +78,7 @@ def runForGNN(gnn):
     writeToLog("executing " + c)
     status,output = subprocess.getstatusoutput(c)
     if status != 0:
-      print(output)  
+      print(output)
       continue
     writeToLog(output)
     samplerTimes = re.findall('sampling_time.+', output)
@@ -91,13 +91,13 @@ def runForGNN(gnn):
       samplingTimeResults[samplerName][graph] = float(time)
   os.chdir(cwd)
 
-#runForGNN('clustergcn')
-#runForGNN('graphsaint')
-#runForGNN('mvs')
+runForGNN('clustergcn')
+runForGNN('graphsaint')
+runForGNN('mvs')
 #runForGNN('FastGCN')
-#runForGNN('LADIES')
+runForGNN('LADIES')
 runForGNN('graphsage')
- 
+
 #Print results
 import json
 with open('gnnSamplingResults.json', 'w') as fp:
