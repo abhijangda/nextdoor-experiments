@@ -44,7 +44,7 @@ def custom_dataset(DATA):
     MAX_FEATURE_SIZE = 8
     filename = DATA+".data"
     if not os.path.exists(filename):
-        raise Exception("Graph %s at '%s' do not exist"%(dataset_str, filename))
+        raise Exception("'%s' do not exist"%(filename))
 
     graphPath = bytes(filename, encoding='utf8')
     libgraph.loadgraph(graphPath)
@@ -181,6 +181,7 @@ def supervised_epoch_time(G,feats, id_map, walks, class_map, batch_size):
     FLAGS.sigmoid = True
     #train_data = load_data((G,id_map,class_map,num_classes,batch_size))
     time = train((G,feats,id_map,walks,class_map),batch_size)
+    print("end_to_end_time(graphsage)", time)
     add_to_dict('SEPOCH',time)
 
 def nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map, batch_size):
@@ -195,7 +196,7 @@ def nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map, batch_size):
     FLAGS.batch_size = batch_size
     #train_data = load_data(FLAGS.train_prefix)
     time = train((G,feats,id_map,walks,class_map),batch_size)
-    print("NEXTSEPOCH {}".format(time))
+    print("end_to_end_time(nextdoor_graphsage)", time)
     add_to_dict('NEXTSEPOCH', time)
 
 def del_all_flags(FLAGS):
@@ -232,7 +233,7 @@ def run():
     nextdoor_sampling(minibatch)
     supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
     nextdoor_supervised_epoch_time(G,feats,id_map,walks,class_map,batchSize)
-    create_measurement_file()
+    #create_measurement_file()
     print("All Done !!! ")
 
 
