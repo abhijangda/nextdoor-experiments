@@ -4,7 +4,7 @@
 
 This repository contains GNN implementations for reproducing results in the paper "Accelerating Graph Sampling using GPUs" to appear at EuroSys'21. 
 There are following GNN implementations in this repository:
-* GraphSAGE[1] in directory `GraphSAGE`
+* GraphSAGE in directory `GraphSAGE`
 * GraphSAINT in directory `GraphSAINT`
 * FastGCN and LADIES in directory `LADIES`
 * ClusterGCN in directory `ClusterGCN`
