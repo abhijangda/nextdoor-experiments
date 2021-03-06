@@ -43,7 +43,7 @@ samplingTimeResults = {gnn.lower(): {graph: -1 for graph in graphInfo} for gnn i
 
 def runForGNN(gnn):
   global results
-  
+  gnnCommand = None
   if (gnn == 'FastGCN' or gnn == 'LADIES'):
     os.chdir('./LADIES')
     gnnCommand = "python3 pytorch_ladies.py --cuda 0 --dataset %s --epoch_num 10 --n_iters 2 --graph_dir %s"
@@ -56,6 +56,8 @@ def runForGNN(gnn):
   if gnn == 'clustergcn':
     os.chdir('./cluster_gcn')
     gnnCommand = "python train.py --dataset %s  --graph_dir %s  --nomultilabel --num_layers 3 --num_clusters 1500 --bsize 20 --hidden1 512 --dropout 0.2 --weight_decay 0  --early_stopping 200 --num_clusters_val 20 --num_clusters_test 1 --epochs 1 --save_name $1  --learning_rate 0.005 --diag_lambda 0.0001 --novalidation"
+  if gnnCommand == None :
+    raise Exception("gnn name not found",gnn)
   writeToLog("doing perf eval of %s"%gnn)
   status,output = subprocess.getstatusoutput("env -i bash -c 'source venv/bin/activate && env'")
   writeToLog(output)
@@ -84,10 +86,12 @@ def runForGNN(gnn):
       time = s[0][1]
       samplingTimeResults[samplerName][graph] = float(time)
     os.chdir(cwd)
+
 runForGNN('clustergcn')
 runForGNN('graphsaint')
 runForGNN('mvs')
-runForGNN('fastgcn')
+runForGNN('FastGCN')
+runForGNN('LADIES')
 runForGNN('graphsage')
 
  
