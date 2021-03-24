@@ -36,8 +36,8 @@ knightKingWalks = {
     "Node2Vec": " -p 2.0 -q 0.5 -l 100 ", "PPR":" -t 0.001 ", "DeepWalk": " -l 100 ",
 }
 
-nextDoorApps = ["MVS", "PPR", "Node2Vec","DeepWalk","KHop","MultiRW","ClusterGCN","FastGCN", "LADIES"]
-multiGPUApps = ["PPR", "Node2Vec","DeepWalk","KHop"]
+nextDoorApps = ["MVS", "PPR", "Node2Vec","DeepWalk","KHop","Layer","MultiRW","ClusterGCN","FastGCN", "LADIES"]
+multiGPUApps = ["PPR", "Node2Vec","DeepWalk","KHop","Layer"]
 
 results = {"KnightKing": {walk : {graph: -1 for graph in graphInfo} for walk in knightKingWalks},
            "SP": {walk : {graph: -1 for graph in graphInfo} for walk in nextDoorApps},
@@ -111,10 +111,10 @@ if len(args.gpus) > 1:
         writeToLog(output)
         technique = "LB"
         for graph in graphInfo:
-            print (app, graph, technique)
+            print(app, graph, technique)
             o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
             if (len(o) == 0):
-                printf("Error executing %s for %s with input %s"%(technique, app, graph))
+                print("Error executing %s for %s with input %s"%(technique, app, graph))
                 continue
             out = o[0]
             end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
