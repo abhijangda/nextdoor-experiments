@@ -4,7 +4,6 @@ import subprocess
 import re
 import datetime 
 
-#TODO: Store the output as log some where.
 logFile = os.path.join(os.getcwd(), "benchmarking.log")
 
 parser = argparse.ArgumentParser(description='Benchmark')
@@ -37,7 +36,7 @@ knightKingWalks = {
     "Node2Vec": " -p 2.0 -q 0.5 -l 100 ", "PPR":" -t 0.001 ", "DeepWalk": " -l 100 ",
 }
 
-nextDoorApps = ["MVS", "PPR", "Node2Vec","DeepWalk","KHop","MultiRW","MVS","ClusterGCN","FastGCN", "LADIES"]
+nextDoorApps = ["MVS", "PPR", "Node2Vec","DeepWalk","KHop","MultiRW","ClusterGCN","FastGCN", "LADIES"]
 multiGPUApps = ["PPR", "Node2Vec","DeepWalk","KHop"]
 
 results = {"KnightKing": {walk : {graph: -1 for graph in graphInfo} for walk in knightKingWalks},
@@ -50,7 +49,7 @@ results = {"KnightKing": {walk : {graph: -1 for graph in graphInfo} for walk in 
 def writeToLog(s):
     if not os.path.exists(logFile):
         open(logFile,"w").close()
-    with open(logFile, "r+") as f:
+    with open(logFile, "a") as f:
         f.write(s)
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
@@ -74,55 +73,55 @@ writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strf
 
 #         results["KnightKing"][walk][graph] = avg
 
-# os.chdir(args.nextdoor)
+os.chdir(args.nextdoor)
 
-# for app in nextDoorApps:
-#     times = []
-#     appBinary = os.path.join("build/tests/singleGPU", app.lower())
-#     print ("Running ", appBinary)
-#     writeToLog("Executing "+appBinary)
-#     status, output = subprocess.getstatusoutput(appBinary)
-#     writeToLog(output)
-#     for technique in results:
-#         if technique == "KnightKing" or technique == "InversionTime" or technique == "MultiGPU-LB":
-#             continue
-#         for graph in graphInfo:
-#             print (app, graph, technique)
-#             o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
-#             if (len(o) == 0):
-#                 print("Error executing %s for %s with input %s"%(technique, app, graph))
-#                 continue
-#             out = o[0]
-#             end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
-#             results[technique][app][graph] = float(end2end[0])
-#             if (technique == "LB"):
-#                 inversionTime = re.findall(r'InversionTime: ([\d\.]+)', out)
-#                 loadbalancingTime = re.findall(r'LoadBalancingTime: ([\d\.]+)', out)
-#                 t = float(inversionTime[0]) + float(loadbalancingTime[0])
-#                 results["InversionTime"][app][graph] = t
+for app in nextDoorApps:
+    times = []
+    appBinary = os.path.join("build/tests/singleGPU", app.lower())
+    print ("Running ", appBinary)
+    writeToLog("Executing "+appBinary)
+    status, output = subprocess.getstatusoutput(appBinary)
+    writeToLog(output)
+    for technique in results:
+        if technique == "KnightKing" or technique == "InversionTime" or technique == "MultiGPU-LB":
+            continue
+        for graph in graphInfo:
+            print (app, graph, technique)
+            o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
+            if (len(o) == 0):
+                print("Error executing %s for %s with input %s"%(technique, app, graph))
+                continue
+            out = o[0]
+            end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
+            results[technique][app][graph] = float(end2end[0])
+            if (technique == "LB"):
+                inversionTime = re.findall(r'InversionTime: ([\d\.]+)', out)
+                loadbalancingTime = re.findall(r'LoadBalancingTime: ([\d\.]+)', out)
+                t = float(inversionTime[0]) + float(loadbalancingTime[0])
+                results["InversionTime"][app][graph] = t
 
-# if len(args.gpus) > 1:
-#     #MultiGPU Results
-#     for app in multiGPUApps:
-#         times = []
-#         appBinary = "CUDA_DEVICES="+args.gpus + " " + os.path.join("build/tests/multiGPU", app.lower())
-#         print ("Running ", appBinary)
-#         writeToLog("Executing "+appBinary)
-#         status, output = subprocess.getstatusoutput(appBinary)
-#         writeToLog(output)
-#         print (output)
-#         technique = "LB"
-#         for graph in graphInfo:
-#             print (app, graph, technique)
-#             o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
-#             if (len(o) == 0):
-#                 printf("Error executing %s for %s with input %s"%(technique, app, graph))
-#                 continue
-#             out = o[0]
-#             end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
-#             results["MultiGPU-LB"][app][graph] = float(end2end[0])
-# else:
-#     print ("Not taking MultiGPU results because only one GPU mentioned in 'gpus': ", args.gpus)
+if len(args.gpus) > 1:
+    #MultiGPU Results
+    for app in multiGPUApps:
+        times = []
+        appBinary = "CUDA_DEVICES="+args.gpus + " " + os.path.join("build/tests/multiGPU", app.lower())
+        print ("Running ", appBinary)
+        writeToLog("Executing "+appBinary)
+        status, output = subprocess.getstatusoutput(appBinary)
+        writeToLog(output)
+        print (output)
+        technique = "LB"
+        for graph in graphInfo:
+            print (app, graph, technique)
+            o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
+            if (len(o) == 0):
+                printf("Error executing %s for %s with input %s"%(technique, app, graph))
+                continue
+            out = o[0]
+            end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
+            results["MultiGPU-LB"][app][graph] = float(end2end[0])
+else:
+    print ("Not taking MultiGPU results because only one GPU mentioned in 'gpus': ", args.gpus)
     
 #Speedup Over KnightKing
 print ("\n\nFigure 7 (a): Speedup Over KnightKing")
@@ -184,10 +183,11 @@ with open('benchmarkResults.json', 'w') as fp:
     json.dump(results, fp)
 
 # #Multi GPU results
-# print ("\n\nFigure 10: Speedup of sampling using Multiple GPUs over 1 GPU")
-# row_format = "{:>30}" * 3
-# print (row_format.format("Sampling App", "Graph", "%age of Time in Index"))
-# for walk in multiGPUApps:
-#     for graph in graphInfo:
-#         speedup = results["LB"][walk][graph]/results["MultiGPU-LB"][walk][graph]
-#         print (row_format.format(walk, graph, speedup * 100))
+if len(args.gpus) > 1:
+    print ("\n\nFigure 10: Speedup of sampling using Multiple GPUs over 1 GPU")
+    row_format = "{:>30}" * 3
+    print (row_format.format("Sampling App", "Graph", "%age of Time in Index"))
+    for walk in multiGPUApps:
+        for graph in graphInfo:
+            speedup = results["LB"][walk][graph]/results["MultiGPU-LB"][walk][graph]
+            print (row_format.format(walk, graph, speedup))
