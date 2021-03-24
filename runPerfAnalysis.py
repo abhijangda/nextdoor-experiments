@@ -46,7 +46,7 @@ GlobalStoreEfficiency = {"metric":"gst_efficiency", "values": dict(valuesDict)}
 
 results = {"L2CacheReads": L2CacheReads,"WarpExecutionEfficiency": WarpExecutionEfficiency, 
            "MultiProcessorActivity":MultiProcessorActivity,"GlobalStoreEfficiency":GlobalStoreEfficiency}
-nvprofCommand = nvprofCommand + " --metrics " + args.metric
+nvprofCommand = nvprofCommand
 
 techniqueCommand = {"SP": "SampleParallel", "LB" : "TransitParallel -l"}
 LD_LIBRARY_PATH = os.getenv("LD_LIBRARY_PATH")
@@ -63,6 +63,8 @@ for app in nextDoorApps:
     appDir = app.lower()
     if app == "PPR" or app == "Node2Vec" or app == "DeepWalk":
         appDir = "randomwalks"
+        if (args.metric == "gst_efficiency"):
+            continue
     appDir = os.path.join(args.nextdoor, './src/apps/', appDir)
     print ("Chdir %s"%appDir)
     os.chdir(appDir)
@@ -76,8 +78,13 @@ for app in nextDoorApps:
         continue
 
     for graph in graphInfo:
-        templateCommand = 'sudo LD_LIBRARY_PATH=%s '%(LD_LIBRARY_PATH) + nvprofCommand + ' ' + './' + app + "Sampling -g %s -t edge-list -f binary -n 1 -k %s "
         for technique in techniqueCommand:
+            kernels = ""
+            if args.metric in ["warp_execution_efficiency", "sm_efficiency", "gst_efficiency"]:
+                kernels = '"gridKernel|threadBlockKernel|identityKernel|samplingKernel|sampleParallelKernel"'
+            
+            templateCommand = 'sudo LD_LIBRARY_PATH=%s '%(LD_LIBRARY_PATH) + nvprofCommand + (' ' if kernels == "" else " --kernels " + kernels) + " --metrics " + args.metric + ' ./' + app + "Sampling -g %s -t edge-list -f binary -n 1 -k %s "
+        
             if ((args.metric == "sm_efficiency" or args.metric == "gst_efficiency") and technique == "SP"):
                 continue
             command = templateCommand%(graphInfo[graph]["path"], techniqueCommand[technique])
@@ -101,13 +108,14 @@ for app in nextDoorApps:
                     continue
                 totalValue = 0
                 for kernel in kernels:
-                    regexp = r"(\d+)\s+%s.+?(\d+)\s*(\d+)\s*(\d+)"%(results[result]["metric"])
+                    print (kernel)
+                    regexp = r"(\d+)\s+%s.+?([\d\.]+).+?([\d\.]+).+?([\d\.]+)"%(results[result]["metric"])
                     values = re.findall(regexp,kernel)
                     for value in values:
                         if result == "L2CacheReads":
                             totalValue += int(value[0]) * int(value[3])
                         else:
-                            totalValue = max(totalValue, value[3])
+                            totalValue = max(totalValue, float(value[3]))
                 # print(totalValue)
                 results[result]["values"][technique][app][graph] = totalValue
 
@@ -143,6 +151,8 @@ elif args.metric == "gst_efficiency":
     row_format = "{:>20}" * 3
     print (row_format.format("Application", "Graph", "Value"))
     for app in nextDoorApps:
+        if app == "PPR" or app == "Node2Vec" or app == "DeepWalk":
+            continue
         for graph in graphInfo:
             relValue = results["MultiProcessorActivity"]["values"]["LB"][app][graph]
             print (row_format.format(app, graph, relValue))
