@@ -10,9 +10,16 @@ parser = argparse.ArgumentParser(description='Benchmark')
 parser.add_argument('-nextdoor', type=str,
                     help='Path to NextDoor',required=True)
 parser.add_argument('-nvprof', type=str, help='Path to nvprof', required = True)
+parser.add_argument('-metric',type=str,help='Metric to profile. Should be one of these: l2_read_transactions, warp_execution_efficiency, sm_efficiency, gst_efficiency', required=True)
 # parser.add_argument('-runs', type=int, help="Number of Runs",required=True)
 
+allMetrics = ["l2_read_transactions", "warp_execution_efficiency", "sm_efficiency", "gst_efficiency"]
+
 args = parser.parse_args()
+if args.metric not in allMetrics:
+    print("Invalid metric '%s'. Metric must be one of '%s'."%(args.metric, str(allMetrics)))
+    sys.exit(1)
+
 args.nextdoor = os.path.abspath(args.nextdoor)
 nvprofCommand = args.nvprof
 cwd = os.getcwd()
@@ -22,20 +29,25 @@ input_dir = os.path.join(args.nextdoor, "input")
 #Run KnightKing Benchmarks
 graphInfo = {
     "PPI": {"v": 56944, "path": os.path.join(input_dir, "ppi.data"), "w" : 5694400},
-    "LiveJournal": {"v": 4576926, "path": os.path.join(input_dir, "LJ1.data"), "w": 4576926},
-    "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data"), "w":3072441},
-    "Patents": {"v":3774768,"path":os.path.join(input_dir, "patents.data"), "w": 3774768},
+    # "LiveJournal": {"v": 4576926, "path": os.path.join(input_dir, "LJ1.data"), "w": 4576926},
+    # "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data"), "w":3072441},
+    # "Patents": {"v":3774768,"path":os.path.join(input_dir, "patents.data"), "w": 3774768},
  #   # "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data"), "w": 2329650}
 }
 
 nextDoorApps = ["PPR", "Node2Vec", "DeepWalk", "KHop", "Layer"]
-
-L2CacheReads = {"metric":"l2_read_transactions", "values":{"SP": {walk : {graph: -1 for graph in graphInfo} for walk in nextDoorApps},
+valuesDict = {"SP": {walk : {graph: -1 for graph in graphInfo} for walk in nextDoorApps},
                                              "LB": {walk : {graph: -1 for graph in graphInfo} for walk in nextDoorApps}
                                              }
-                                             }
+L2CacheReads = {"metric":"l2_read_transactions", "values": dict(valuesDict)}
+WarpExecutionEfficiency = {"metric":"warp_execution_efficiency", "values": dict(valuesDict)}
+MultiProcessorActivity = {"metric":"sm_efficiency", "values": dict(valuesDict)}
+GlobalStoreEfficiency = {"metric":"gst_efficiency", "values": dict(valuesDict)}
 
-results = {"L2CacheReads": L2CacheReads}
+results = {"L2CacheReads": L2CacheReads,"WarpExecutionEfficiency": WarpExecutionEfficiency, 
+           "MultiProcessorActivity":MultiProcessorActivity,"GlobalStoreEfficiency":GlobalStoreEfficiency}
+nvprofCommand = nvprofCommand + " --metrics " + args.metric
+
 techniqueCommand = {"SP": "SampleParallel", "LB" : "TransitParallel -l"}
 LD_LIBRARY_PATH = os.getenv("LD_LIBRARY_PATH")
 
@@ -64,8 +76,10 @@ for app in nextDoorApps:
         continue
 
     for graph in graphInfo:
-        templateCommand = 'sudo LD_LIBRARY_PATH=%s '%(LD_LIBRARY_PATH) + nvprofCommand + ' --metrics l2_read_transactions ' + './' + app + "Sampling -g %s -t edge-list -f binary -n 1 -k %s "
+        templateCommand = 'sudo LD_LIBRARY_PATH=%s '%(LD_LIBRARY_PATH) + nvprofCommand + ' ' + './' + app + "Sampling -g %s -t edge-list -f binary -n 1 -k %s "
         for technique in techniqueCommand:
+            if ((args.metric == "sm_efficiency" or args.metric == "gst_efficiency") and technique == "SP"):
+                continue
             command = templateCommand%(graphInfo[graph]["path"], techniqueCommand[technique])
             print("Executing '%s'"%command)
             writeToLog("Executing '%s'"%command)
@@ -83,24 +97,52 @@ for app in nextDoorApps:
                     kernels += [o]
             
             for result in results:
+                if (results[result]["metric"] != args.metric):
+                    continue
                 totalValue = 0
                 for kernel in kernels:
                     regexp = r"(\d+)\s+%s.+?(\d+)\s*(\d+)\s*(\d+)"%(results[result]["metric"])
                     values = re.findall(regexp,kernel)
                     for value in values:
-                        totalValue += int(value[0]) * int(value[3])
-                
+                        if result == "L2CacheReads":
+                            totalValue += int(value[0]) * int(value[3])
+                        else:
+                            totalValue = max(totalValue, value[3])
                 # print(totalValue)
                 results[result]["values"][technique][app][graph] = totalValue
 
 
 print(results)
 
-#Speedup Over KnightKing
-print ("\n\nFigure 8 (a): L2 Cache Transactions")
-row_format = "{:>20}" * 3
-print (row_format.format("Application", "Graph", "Relative Value"))
-for app in nextDoorApps:
-    for graph in graphInfo:
-        relValue = results["L2CacheReads"]["values"]["LB"][app][graph]/results["L2CacheReads"]["values"]["SP"][app][graph]
-        print (row_format.format(app, graph, relValue))
+if args.metric == "l2_read_transactions":
+    print ("\n\nFigure 8 (a): L2 Cache Transactions")
+    row_format = "{:>20}" * 3
+    print (row_format.format("Application", "Graph", "Relative Value"))
+    for app in nextDoorApps:
+        for graph in graphInfo:
+            relValue = results["L2CacheReads"]["values"]["LB"][app][graph]/results["L2CacheReads"]["values"]["SP"][app][graph]
+            print (row_format.format(app, graph, relValue))
+elif args.metric == "warp_execution_efficiency":
+    print ("\n\nFigure 8 (b): Warp Execution Efficiency")
+    row_format = "{:>20}" * 3
+    print (row_format.format("Application", "Graph", "Relative Value"))
+    for app in nextDoorApps:
+        for graph in graphInfo:
+            relValue = results["WarpExecutionEfficiency"]["values"]["LB"][app][graph]/results["WarpExecutionEfficiency"]["values"]["SP"][app][graph]
+            print (row_format.format(app, graph, 1/relValue))
+elif args.metric == "sm_efficiency":
+    print ("\n\nTable 4: Multiprocessor Activity")
+    row_format = "{:>20}" * 3
+    print (row_format.format("Application", "Graph", "Value"))
+    for app in nextDoorApps:
+        for graph in graphInfo:
+            relValue = results["MultiProcessorActivity"]["values"]["LB"][app][graph]
+            print (row_format.format(app, graph, relValue))
+elif args.metric == "gst_efficiency":
+    print ("\n\nTable 4: GlobalStoreEfficiency")
+    row_format = "{:>20}" * 3
+    print (row_format.format("Application", "Graph", "Value"))
+    for app in nextDoorApps:
+        for graph in graphInfo:
+            relValue = results["MultiProcessorActivity"]["values"]["LB"][app][graph]
+            print (row_format.format(app, graph, relValue))
