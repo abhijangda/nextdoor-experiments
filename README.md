@@ -163,12 +163,14 @@ python3 runGNNSampling.py -nextdoor $NEXTDOOR_DIR
 ```
 Above script will produce `gnnSamplingResults.json` in nextdoor-experiments directory. <b>Make sure it exists before proceeding to next step.</b>
 
-Second script is runBenchmarks.py which  executes KnightKing and NextDoor. This script will take upto 30 mins:
+Second script is runBenchmarks.py, which  executes KnightKing, NextDoor on single GPU, and Nextdoor on multiple GPUs. By default NextDoor will be executed on GPU with ID 0. To use multiple GPUs, use `-gpu` argument to list all GPUs. Following is the example of this script. This script will take upto 30 mins:
 ```
 cd $NEXTDOOR_DIR
 make -j
 cd $NEXTDOOR_EXP_DIR
-python3 runBenchmarks.py -knightKing $TOP_DIR/KnightKing -nextdoor $NEXTDOOR_DIR
+python3 runBenchmarks.py -knightKing $TOP_DIR/KnightKing -nextdoor $NEXTDOOR_DIR -gpus 0,1,2,3
 ```
+<b>Note that the above command assumes 4 GPUs with IDs 0,1,2,3. To use different numbers of GPUs please modify this list. If only one GPU is specified then multiple GPU results are not taken.<b>
+
 
 <i>Results</i>: runBenchmarks.py will produce results for Figure 7a, 7b, 7c and Figure 6. If -useSmallGraphs True is used in runGNNSampling.py then results of Figure 7b will be produced only for PPI and Reddit graphs. With larger graphs the speedup of NextDoor over existing GNNs increases exponentially.
