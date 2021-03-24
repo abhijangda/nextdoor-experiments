@@ -109,7 +109,6 @@ if len(args.gpus) > 1:
         writeToLog("Executing "+appBinary)
         status, output = subprocess.getstatusoutput(appBinary)
         writeToLog(output)
-        print (output)
         technique = "LB"
         for graph in graphInfo:
             print (app, graph, technique)
