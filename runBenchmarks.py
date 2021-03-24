@@ -54,24 +54,24 @@ def writeToLog(s):
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
-# for walk in knightKingWalks:
-#     for graph in graphInfo:
-#         times = []
-#         for run in range(1):
-#             walkBinary = os.path.join(knightKing, walk.lower()) + " -w %d "%graphInfo[graph]["v"] + \
-#                 " -v %d"%graphInfo[graph]["v"] +\
-#                 " -s weighted " + "-g " + graphInfo[graph]["path"] + \
-#                  knightKingWalks[walk]   
-#             print("Executing " + walkBinary)
-#             writeToLog("Executing "+walkBinary)
-#             status, output = subprocess.getstatusoutput(walkBinary)
-#             writeToLog(output)
-#             t = float(re.findall(r'total time ([\d\.]+)s', output)[0])
-#             times += [t]
+for walk in knightKingWalks:
+    for graph in graphInfo:
+        times = []
+        for run in range(1):
+            walkBinary = os.path.join(knightKing, walk.lower()) + " -w %d "%graphInfo[graph]["v"] + \
+                " -v %d"%graphInfo[graph]["v"] +\
+                " -s weighted " + "-g " + graphInfo[graph]["path"] + \
+                 knightKingWalks[walk]   
+            print("Executing " + walkBinary)
+            writeToLog("Executing "+walkBinary)
+            status, output = subprocess.getstatusoutput(walkBinary)
+            writeToLog(output)
+            t = float(re.findall(r'total time ([\d\.]+)s', output)[0])
+            times += [t]
 
-#         avg = sum(times)/len(times)
+        avg = sum(times)/len(times)
 
-#         results["KnightKing"][walk][graph] = avg
+        results["KnightKing"][walk][graph] = avg
 
 os.chdir(args.nextdoor)
 
