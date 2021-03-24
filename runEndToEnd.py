@@ -25,7 +25,7 @@ def writeToLog(s):
     if not os.path.exists(logFile):
         open(logFile,"w").close()
     
-    f = open(logFile, "r+")
+    f = open(logFile, "a")
     f.write(s)
     f.close()
 

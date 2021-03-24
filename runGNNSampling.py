@@ -18,18 +18,18 @@ cwd = os.getcwd()
 input_dir = args.nextdoor
 graph_dir = os.path.join(input_dir, "input")
 graphInfo = {
-#    "PPI": {"v": 56944, "path": os.path.join(graph_dir, "ppi.data")},
- #  "LiveJournal": {"v": 4847569, "path": os.path.join(input_dir, "LJ1.data")},
+   "PPI": {"v": 56944, "path": os.path.join(graph_dir, "ppi.data")},
+  "LiveJournal": {"v": 4847569, "path": os.path.join(input_dir, "LJ1.data")},
     "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data")},
-  # "Patents": {"v":6009555,"path":os.path.join(input_dir, "patents.data")},
-   # "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
+  "Patents": {"v":6009555,"path":os.path.join(input_dir, "patents.data")},
+   "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
 }
 
 def writeToLog(s):
     if not os.path.exists(logFile):
         open(logFile,"w").close()
 
-    f = open(logFile, "r+")
+    f = open(logFile, "a")
     f.write(s)
     f.close()
 
@@ -74,17 +74,17 @@ def runForGNN(gnn):
       continue
     if graph == 'LiveJournal':
         if gnn == 'graphsage' or gnn == 'mvs_gcn' or gnn == 'cluster_gcn':
-            samplingTimeResults[gnn][graph] = -1
+            samplingTimeResults[gnn.lower()][graph] = -1
             continue
     if graph == 'Orkut':
-        samplingTimeResults[gnn][graph] = -1
+        samplingTimeResults[gnn.lower()][graph] = -1
         continue
     c = gnnCommand % ('LJ1' if graph == 'LiveJournal' else graph.lower(), graph_dir)
     print(c)
     writeToLog("executing " + c)
     status,output = subprocess.getstatusoutput(c)
     if status != 0:
-      print(output)
+      print("Graph '%s' leads to OOM with GNN '%s'" %(graph,gnn))
       continue
     writeToLog(output)
     samplerTimes = re.findall('sampling_time.+', output)
@@ -101,7 +101,6 @@ runForGNN('clustergcn')
 runForGNN('graphsaint')
 runForGNN('mvs')
 runForGNN('FastGCN')
-#runForGNN('LADIES')
 runForGNN('graphsage')
 
 #Print results

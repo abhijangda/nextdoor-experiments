@@ -16,7 +16,7 @@ There are following GNN implementations in this repository:
 <b>Install Dependencies</b>: Execute following commands to install dependencies.
 
 ```
-sudo apt update && sudo apt install gcc linux-headers-$(uname -r) make g++ git python-dev python3-dev wget unzip python-pip python3-pip cmake openmpi* libopenmpi*
+sudo apt update && sudo apt install gcc linux-headers-$(uname -r) make g++ git python-dev python3-dev wget unzip python-pip python3-pip cmake openmpi* libopenmpi* libmetis-dev
 sudo pip3 install virtualenv
 ```
 

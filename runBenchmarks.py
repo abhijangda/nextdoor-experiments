@@ -23,11 +23,11 @@ input_dir = os.path.join(args.nextdoor, "input")
 
 #Run KnightKing Benchmarks
 graphInfo = {
-    "PPI": {"v": 56944, "path": os.path.join(input_dir, "ppi.data")},
-    "LiveJournal": {"v": 4576926, "path": os.path.join(input_dir, "LJ1.data")},
-    "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data")},
-    "Patents": {"v":3774768,"path":os.path.join(input_dir, "patents.data")},
-    "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data")}
+    "PPI": {"v": 56944, "path": os.path.join(input_dir, "ppi.data"), "w" : 5694400},
+    "LiveJournal": {"v": 4576926, "path": os.path.join(input_dir, "LJ1.data"), "w": 4576926},
+    "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data"), "w":3072441},
+    "Patents": {"v":3774768,"path":os.path.join(input_dir, "patents.data"), "w": 3774768},
+    "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data"), "w": 2329650}
 }
 
 knightKing = os.path.join(args.knightKing, 'build/bin')
@@ -58,7 +58,7 @@ for walk in knightKingWalks:
     for graph in graphInfo:
         times = []
         for run in range(1):
-            walkBinary = os.path.join(knightKing, walk.lower()) + " -w %d "%graphInfo[graph]["v"] + \
+            walkBinary = os.path.join(knightKing, walk.lower()) + " -w %d "%graphInfo[graph]["w"] + \
                 " -v %d"%graphInfo[graph]["v"] +\
                 " -s weighted " + "-g " + graphInfo[graph]["path"] + \
                  knightKingWalks[walk]   
