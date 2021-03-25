@@ -100,7 +100,7 @@ for app in nextDoorApps:
                 t = float(inversionTime[0]) + float(loadbalancingTime[0])
                 results["InversionTime"][app][graph] = t
 
-if len(args.gpus) > 1:
+if args.gpus != None and len(args.gpus) > 1:
     #MultiGPU Results
     for app in multiGPUApps:
         times = []
