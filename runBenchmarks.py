@@ -121,7 +121,8 @@ if args.gpus != None and len(args.gpus) > 1:
             results["MultiGPU-LB"][app][graph] = float(end2end[0])
 else:
     print ("Not taking MultiGPU results because only one GPU mentioned in 'gpus': ", args.gpus)
-    
+
+os.chdir(cwd)
 #Speedup Over KnightKing
 print ("\n\nFigure 7 (a): Speedup Over KnightKing")
 row_format = "{:>20}" * 3
