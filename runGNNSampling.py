@@ -91,7 +91,8 @@ def runForGNN(gnn):
     #  python experiment/epoch_run_time.py dataset graphdir
     gnnCommand = "python experiment/epoch_run_time.py  %s %s"
   if gnnCommand == None :
-    raise Exception("gnn name not found",gnn)
+    print("gnn name not found",gnn)
+    return
   writeToLog("doing perf eval of %s"%gnn)
   status,output = subprocess.getstatusoutput("env -i bash -c 'source venv/bin/activate && env'")
   writeToLog(output)
@@ -123,12 +124,15 @@ def runForGNN(gnn):
     writeToLog(output)
     samplerTimes = re.findall('sampling_time.+', output)
     for samplerTime in samplerTimes:
-      s = re.findall(r'\((\w+)\)\s*([\.\d]+)', samplerTime)
-      samplerName = s[0][0]
-      if 'nextdoor_' in samplerName:
-        continue
-      time = s[0][1]
-      samplingTimeResults[samplerName][graph] = float(time)
+      try:
+        s = re.findall(r'\((\w+)\)\s*([\.\d]+)', samplerTime)
+        samplerName = s[0][0]
+        if 'nextdoor_' in samplerName:
+          continue
+        time = s[0][1]
+        samplingTimeResults[samplerName][graph] = float(time)
+      except Exception as e:
+        writeToLog("Exception:" + str(s) + "\n{0}".format(e))
   os.chdir(cwd)
 
 runForGNN('clustergcn')
