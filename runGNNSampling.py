@@ -15,6 +15,7 @@ if not hasattr(args,'useSmallGraphs'):
   args.useSmallGraphs = False
 
 cwd = os.getcwd()
+args.nextdoor = os.path.abspath(args.nextdoor)
 input_dir = args.nextdoor
 graph_dir = os.path.join(input_dir, "input")
 graphInfo = {
@@ -34,6 +35,35 @@ def writeToLog(s):
     f.close()
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
+
+
+gnns = ['GraphSAGE', 'FastGCN', 'LADIES']
+#Build sampling application in NextDoor folder
+for gnn in gnns:
+  appName = None
+  if (gnn == 'FastGCN' or gnn == 'LADIES'):
+    appName = gnn.lower()
+  elif (gnn == 'GraphSAGE'):
+    appName = 'khop'
+
+  d = os.path.join(args.nextdoor,'src/apps/',appName)
+  os.chdir(d)
+  writeToLog("Chdir to "+ d)
+  writeToLog("Executing make")
+  status, output = subprocess.getstatusoutput("make clean")
+  writeToLog(output)
+  status, output = subprocess.getstatusoutput("make -j")
+  if (status != 0):
+    print(output)
+  writeToLog(output)
+  #Copy libraries from NextDoor folder to GNN folder
+  src = os.path.join(d, (gnn if(gnn != 'GraphSAGE') else "KHop") +"SamplingPy3.so")
+  gnnDir = 'LADIES/' if gnn == 'FastGCN' else gnn
+  dst = os.path.join(cwd, gnnDir, (gnn if(gnn != 'GraphSAGE') else "KHop")+ "SamplingPy3.so")
+  shutil.copyfile(src, dst)
+
+
+os.chdir(cwd)
 
 gnns = ['FastGCN', 'LADIES','mvs','graphsaint','clustergcn','graphsage']
 #Build sampling application in NextDoor folder
