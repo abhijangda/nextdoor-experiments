@@ -176,27 +176,28 @@ python3 runBenchmarks.py -knightKing $TOP_DIR/KnightKing -nextdoor $NEXTDOOR_DIR
 <i>Results</i>: runBenchmarks.py will produce results for Figure 7a, 7b, 7c and Figure 6. If -useSmallGraphs True is used in runGNNSampling.py then results of Figure 7b will be produced only for PPI and Reddit graphs. With larger graphs the speedup of NextDoor over existing GNNs increases exponentially.
 
 <b>Reproduce Figure 8 and Table 10</b>: We will now reproduce the numbers in Figure 8 and Table 10. These results are about four performance metrics. To obtain these results we will use script runPerfAnalysis.py in $NEXTDOOR_EXP_DIR. 
+Script requires path to nvprof, which is usually available in `/usr/local/cuda/bin/nvprof`. Script will need <b>sudo</b> access because nvprof do not profile kernels  without <b>sudo</b> access. 
 
 To obtain Figure 8(a) results for L2 Cache Transactions execute below command:
 ```
-cd $NEXTDOOR_DIR
-python3 runPerfAnalysis.py -nextdoor ../NextDoor/ -nvprof /usr/local/cuda/bin/nvprof -metric l2_cache_transactions
+cd $NEXTDOOR_EXP_DIR
+python3 runPerfAnalysis.py -nextdoor . $NEXTDOOR_DIR -nvprof /usr/local/cuda/bin/nvprof -metric l2_cache_transactions
 ```
 
 To obtain Figure 8(b) results for Warp Execution Efficiency, execute below commands:
 ```
-cd $NEXTDOOR_DIR
-python3 runPerfAnalysis.py -nextdoor ../NextDoor/ -nvprof /usr/local/cuda/bin/nvprof -metric warp_execution_efficiency
+cd $NEXTDOOR_EXP_DIR
+python3 runPerfAnalysis.py -nextdoor  $NEXTDOOR_DIR -nvprof /usr/local/cuda/bin/nvprof -metric warp_execution_efficiency
 ```
 
 To obtain Table 4 results for Global Store Efficiency, execute below commands:
 ```
-cd $NEXTDOOR_DIR
-python3 runPerfAnalysis.py -nextdoor ../NextDoor/ -nvprof /usr/local/cuda/bin/nvprof -metric gst_efficiency
+cd $NEXTDOOR_EXP_DIR
+python3 runPerfAnalysis.py -nextdoor  $NEXTDOOR_DIR -nvprof /usr/local/cuda/bin/nvprof -metric gst_efficiency
 ```
 
 To obtain Table 4 results for Multiprocessor Activity, execute below commands:
 ```
-cd $NEXTDOOR_DIR
-python3 runPerfAnalysis.py -nextdoor ../NextDoor/ -nvprof /usr/local/cuda/bin/nvprof -metric sm_efficiency
+cd $NEXTDOOR_EXP_DIR
+python3 runPerfAnalysis.py -nextdoor  $NEXTDOOR_DIR -nvprof /usr/local/cuda/bin/nvprof -metric sm_efficiency
 ```
