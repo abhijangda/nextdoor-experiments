@@ -2,7 +2,7 @@ import argparse
 import os
 import subprocess
 import re
-import datetime 
+import datetime,sys
 
 logFile = os.path.join(os.getcwd(), "perfanalysis.log")
 
