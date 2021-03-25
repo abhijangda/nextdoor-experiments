@@ -185,7 +185,7 @@ with open('benchmarkResults.json', 'w') as fp:
 if len(args.gpus) > 1:
     print ("\n\nFigure 10: Speedup of sampling using Multiple GPUs over 1 GPU")
     row_format = "{:>30}" * 3
-    print (row_format.format("Sampling App", "Graph", "%age of Time in Index"))
+    print (row_format.format("Sampling App", "Graph", "Speedup"))
     for walk in multiGPUApps:
         for graph in graphInfo:
             speedup = results["LB"][walk][graph]/results["MultiGPU-LB"][walk][graph]
