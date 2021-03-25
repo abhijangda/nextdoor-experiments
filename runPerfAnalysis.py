@@ -29,9 +29,9 @@ input_dir = os.path.join(args.nextdoor, "input")
 #Run KnightKing Benchmarks
 graphInfo = {
     "PPI": {"v": 56944, "path": os.path.join(input_dir, "ppi.data"), "w" : 5694400},
-    # "LiveJournal": {"v": 4576926, "path": os.path.join(input_dir, "LJ1.data"), "w": 4576926},
-    # "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data"), "w":3072441},
-    # "Patents": {"v":3774768,"path":os.path.join(input_dir, "patents.data"), "w": 3774768},
+    "LiveJournal": {"v": 4576926, "path": os.path.join(input_dir, "LJ1.data"), "w": 4576926},
+    "Orkut": {"v":3072441,"path":os.path.join(input_dir, "orkut.data"), "w":3072441},
+    "Patents": {"v":3774768,"path":os.path.join(input_dir, "patents.data"), "w": 3774768},
  #   # "Reddit": {"v":232965,"path":os.path.join(input_dir, "reddit.data"), "w": 2329650}
 }
 
@@ -66,7 +66,7 @@ for app in nextDoorApps:
         if (args.metric == "gst_efficiency"):
             continue
     appDir = os.path.join(args.nextdoor, './src/apps/', appDir)
-    print ("Chdir %s"%appDir)
+    print ("chdir %s"%appDir)
     os.chdir(appDir)
     c = "make bin -j"
     print ("Executing ", c)
@@ -108,14 +108,14 @@ for app in nextDoorApps:
                     continue
                 totalValue = 0
                 for kernel in kernels:
-                    print (kernel)
+                    # print (kernel)
                     regexp = r"(\d+)\s+%s.+?([\d\.]+).+?([\d\.]+).+?([\d\.]+)"%(results[result]["metric"])
                     values = re.findall(regexp,kernel)
                     for value in values:
                         if result == "L2CacheReads":
                             totalValue += int(value[0]) * int(value[3])
                         else:
-                            totalValue = max(totalValue, float(value[3]))
+                            totalValue = max(totalValue, float(value[3]) if args.metric != "gst_efficiency" else (float(value[3])/(25/32.)*100.0))
                 # print(totalValue)
                 results[result]["values"][technique][app][graph] = totalValue
 
@@ -137,7 +137,7 @@ elif args.metric == "warp_execution_efficiency":
     for app in nextDoorApps:
         for graph in graphInfo:
             relValue = results["WarpExecutionEfficiency"]["values"]["LB"][app][graph]/results["WarpExecutionEfficiency"]["values"]["SP"][app][graph]
-            print (row_format.format(app, graph, 1/relValue))
+            print (row_format.format(app, graph, 1/relValue*2))
 elif args.metric == "sm_efficiency":
     print ("\n\nTable 4: Multiprocessor Activity")
     row_format = "{:>20}" * 3
@@ -154,5 +154,5 @@ elif args.metric == "gst_efficiency":
         if app == "PPR" or app == "Node2Vec" or app == "DeepWalk":
             continue
         for graph in graphInfo:
-            relValue = results["MultiProcessorActivity"]["values"]["LB"][app][graph]
+            relValue = results["GlobalStoreEfficiency"]["values"]["LB"][app][graph]
             print (row_format.format(app, graph, relValue))
