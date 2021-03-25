@@ -73,12 +73,16 @@ def runForGNN(gnn):
     if (args.useSmallGraphs and graph in ['Patents', 'Orkut', 'LiveJournal']):
       continue
     if graph == 'LiveJournal':
-        if gnn == 'graphsage' or gnn == 'mvs_gcn' or gnn == 'cluster_gcn':
+        if gnn.lower() == 'graphsage' or gnn.lower() == 'mvs' or gnn.lower() == 'clustergcn':
             samplingTimeResults[gnn.lower()][graph] = -1
             continue
     if graph == 'Orkut':
         samplingTimeResults[gnn.lower()][graph] = -1
         continue
+    if gnn.lower() == 'graphsaint' and graph in ['Patents', 'Orkut', 'LiveJournal']:
+      continue
+    if gnn.lower() in ['fastgcn', 'ladies'] and graph == 'Orkut':
+      continue
     c = gnnCommand % ('LJ1' if graph == 'LiveJournal' else graph.lower(), graph_dir)
     print(c)
     writeToLog("executing " + c)

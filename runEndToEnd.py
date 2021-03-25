@@ -9,7 +9,7 @@ parser.add_argument('-nextdoor', type=str,
                     help='Path to NextDoor',required=True)
 
 args = parser.parse_args()
-
+args.nextdoor = os.path.abspath(args.nextdoor)
 cwd = os.getcwd()
 input_dir = os.path.join(args.nextdoor, 'input')
 
