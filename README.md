@@ -183,7 +183,7 @@ Script requires path to nvprof, which is usually available in `/usr/local/cuda/b
 To obtain Figure 8(a) results for L2 Cache Transactions execute below command:
 ```
 cd $NEXTDOOR_EXP_DIR
-python3 runPerfAnalysis.py -nextdoor . $NEXTDOOR_DIR -nvprof /usr/local/cuda/bin/nvprof -metric l2_cache_transactions
+python3 runPerfAnalysis.py -nextdoor . $NEXTDOOR_DIR -nvprof /usr/local/cuda/bin/nvprof -metric l2_read_transactions
 ```
 
 To obtain Figure 8(b) results for Warp Execution Efficiency, execute below commands:
