@@ -139,6 +139,7 @@ If any error comes please let us know.
 <b>System Requirements</b>:  For performance evaluation following requirements are needed.
 * <i>CPU</i> and <i>RAM</i>: NextDoor and KnightKing do not require more than 10 GB of RAM. However, running existing GNNs on large graphs (patents, livejournal, and orkut) requires upto 40 GB of RAM. For performance evaluation against CPU baselines, (KnightKing and all GNNs), we used two 16-core Intel Xeon Silver CPUs.  Hence, we recommend that the reviewer do performance evaluation on similar systems. 
 * <i>GPU</i>: In our paper we performed evaluation on NVIDIA Tesla V100 for single GPU results and 4 NVIDIA Tesla V100 for multiple GPU results. We also did performance evaluation on a NVIDIA GeForce GTX 1080Ti and found that performance dropped by a factor of 2 as compared to Tesla V100. In this case, We still obtained orders of magnitude improvement over CPU baselines. Hence, the evaluation of NextDoor vs CPU baselines (in Figure 7a and Figure 7b) will drop if a GPU with less execution resources than Tesla V100 is used. However, we still expect orders of magnitude improvement over CPU baselines and most of the other results in Figure 6 should show similar improvement over SP and TP. We require the GPU to have atleast 8 GB of available RAM.
+* <i>Disk Space</i>: Our experiments will need atleast 30GB of diskspace.
 
 We will now do performance evaluation of sampling implementations in NextDoor against the baselines to reproduce Figures 6 and 7 and Table 5. 
 In some cases you can see more improvement than presented in the paper. This is because we have been working on a new and optimized implementation of NextDoor.
@@ -172,6 +173,7 @@ python3 runBenchmarks.py -knightKing $TOP_DIR/KnightKing -nextdoor $NEXTDOOR_DIR
 ```
 <b>Note that the above command assumes 4 GPUs with IDs 0,1,2,3. To use different numbers of GPUs please modify this list. If only one GPU is specified then multiple GPU results are not taken.</b>
 
+<i>Reprint Previous Results</i>: Each invocation of this script stores the results in `benchmarkResults.json` file in `nextdoor-experiments` directory. To read these results and print them, use the optional flag `-printExistingResults true`.
 
 <i>Results</i>: runBenchmarks.py will produce results for Figure 7a, 7b, 7c and Figure 6. If -useSmallGraphs True is used in runGNNSampling.py then results of Figure 7b will be produced only for PPI and Reddit graphs. With larger graphs the speedup of NextDoor over existing GNNs increases exponentially.
 

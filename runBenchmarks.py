@@ -11,12 +11,15 @@ parser.add_argument('-knightKing', type=str,
                     help='Path to KnightKing',required=True)
 parser.add_argument('-nextdoor', type=str,
                     help='Path to NextDoor',required=True)
+parser.add_argument('-printExistingResults', type=bool,
+                    help='Print Results from previous invocation. Each invocation store results in benchmarkResults.json.',required=False)
 # parser.add_argument('-runs', type=int, help="Number of Runs",required=True)
 parser.add_argument('-gpus', type=str, help="CUDA DEVICES",required=False)
 
 args = parser.parse_args()
 args.nextdoor = os.path.abspath(args.nextdoor)
 args.knightKing = os.path.abspath(args.knightKing)
+printExistingResults = False if args.printExistingResults == None else args.printExistingResults
 cwd = os.getcwd()
 
 input_dir = os.path.join(args.nextdoor, "input")
@@ -54,73 +57,87 @@ def writeToLog(s):
 
 writeToLog("=========Starting Run at %s=========="%(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
-for walk in knightKingWalks:
-    for graph in graphInfo:
+if not printExistingResults:
+    if not os.path.exists(knightKing):
+        print ("KnightKing directory '%s' does not exist. Make sure you have clone KnightKing and build all its apps."%(knightKing))
+
+    if os.path.exists(knightKing):
+        for walk in knightKingWalks:
+            for graph in graphInfo:
+                times = []
+                for run in range(1):
+                    walkBinary = os.path.join(knightKing, walk.lower()) + " -w %d "%graphInfo[graph]["w"] + \
+                        " -v %d"%graphInfo[graph]["v"] +\
+                        " -s weighted " + "-g " + graphInfo[graph]["path"] + \
+                        knightKingWalks[walk]   
+                    print("Executing " + walkBinary)
+                    writeToLog("Executing "+walkBinary)
+                    status, output = subprocess.getstatusoutput(walkBinary)
+                    writeToLog(output)
+                    t = float(re.findall(r'total time ([\d\.]+)s', output)[0])
+                    times += [t]
+
+                avg = sum(times)/len(times)
+
+                results["KnightKing"][walk][graph] = avg
+
+    os.chdir(args.nextdoor)
+
+    for app in nextDoorApps:
         times = []
-        for run in range(1):
-            walkBinary = os.path.join(knightKing, walk.lower()) + " -w %d "%graphInfo[graph]["w"] + \
-                " -v %d"%graphInfo[graph]["v"] +\
-                " -s weighted " + "-g " + graphInfo[graph]["path"] + \
-                 knightKingWalks[walk]   
-            print("Executing " + walkBinary)
-            writeToLog("Executing "+walkBinary)
-            status, output = subprocess.getstatusoutput(walkBinary)
-            writeToLog(output)
-            t = float(re.findall(r'total time ([\d\.]+)s', output)[0])
-            times += [t]
-
-        avg = sum(times)/len(times)
-
-        results["KnightKing"][walk][graph] = avg
-
-os.chdir(args.nextdoor)
-
-for app in nextDoorApps:
-    times = []
-    appBinary = os.path.join("build/tests/singleGPU", app.lower())
-    print ("Running ", appBinary)
-    writeToLog("Executing "+appBinary)
-    status, output = subprocess.getstatusoutput(appBinary)
-    writeToLog(output)
-    for technique in results:
-        if technique == "KnightKing" or technique == "InversionTime" or technique == "MultiGPU-LB":
-            continue
-        for graph in graphInfo:
-            print (app, graph, technique)
-            o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
-            if (len(o) == 0):
-                print("Error executing %s for %s with input %s"%(technique, app, graph))
-                continue
-            out = o[0]
-            end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
-            results[technique][app][graph] = float(end2end[0])
-            if (technique == "LB"):
-                inversionTime = re.findall(r'InversionTime: ([\d\.]+)', out)
-                loadbalancingTime = re.findall(r'LoadBalancingTime: ([\d\.]+)', out)
-                t = float(inversionTime[0]) + float(loadbalancingTime[0])
-                results["InversionTime"][app][graph] = t
-
-if args.gpus != None and len(args.gpus) > 1:
-    #MultiGPU Results
-    for app in multiGPUApps:
-        times = []
-        appBinary = "CUDA_DEVICES="+args.gpus + " " + os.path.join("build/tests/multiGPU", app.lower())
+        appBinary = os.path.join("build/tests/singleGPU", app.lower())
         print ("Running ", appBinary)
         writeToLog("Executing "+appBinary)
         status, output = subprocess.getstatusoutput(appBinary)
         writeToLog(output)
-        technique = "LB"
-        for graph in graphInfo:
-            print(app, graph, technique)
-            o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
-            if (len(o) == 0):
-                print("Error executing %s for %s with input %s"%(technique, app, graph))
+        for technique in results:
+            if technique == "KnightKing" or technique == "InversionTime" or technique == "MultiGPU-LB":
                 continue
-            out = o[0]
-            end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
-            results["MultiGPU-LB"][app][graph] = float(end2end[0])
+            for graph in graphInfo:
+                print (app, graph, technique)
+                o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
+                if (len(o) == 0):
+                    print("Error executing %s for %s with input %s"%(technique, app, graph))
+                    continue
+                out = o[0]
+                end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
+                results[technique][app][graph] = float(end2end[0])
+                if (technique == "LB"):
+                    inversionTime = re.findall(r'InversionTime: ([\d\.]+)', out)
+                    loadbalancingTime = re.findall(r'LoadBalancingTime: ([\d\.]+)', out)
+                    t = float(inversionTime[0]) + float(loadbalancingTime[0])
+                    results["InversionTime"][app][graph] = t
+
+    if args.gpus != None and len(args.gpus) > 1:
+        #MultiGPU Results
+        for app in multiGPUApps:
+            times = []
+            appBinary = "CUDA_DEVICES="+args.gpus + " " + os.path.join("build/tests/multiGPU", app.lower())
+            print ("Running ", appBinary)
+            writeToLog("Executing "+appBinary)
+            status, output = subprocess.getstatusoutput(appBinary)
+            writeToLog(output)
+            technique = "LB"
+            for graph in graphInfo:
+                print(app, graph, technique)
+                o = re.findall(r'%s\.%s%s.+%s\.%s%s'%(app, graph, technique,app,graph,technique), output, re.DOTALL)
+                if (len(o) == 0):
+                    print("Error executing %s for %s with input %s"%(technique, app, graph))
+                    continue
+                out = o[0]
+                end2end = re.findall(r'End to end time ([\d\.]+) secs', out)
+                results["MultiGPU-LB"][app][graph] = float(end2end[0])
+    else:
+        print ("Not taking MultiGPU results because only one GPU mentioned in 'gpus': ", args.gpus)
 else:
-    print ("Not taking MultiGPU results because only one GPU mentioned in 'gpus': ", args.gpus)
+    os.chdir(cwd)
+    if not os.path.exists('benchmarkResults.json'):
+        print ('benchmarkResults.json does not exist. You should invoke the script without this flag to take results.')
+        sys.exit(0)
+
+    import json
+    with open('benchmarkResults.json', 'r') as fp:
+        results = json.load(fp)
 
 os.chdir(cwd)
 #Speedup Over KnightKing
@@ -131,6 +148,10 @@ for walk in knightKingWalks:
     for graph in graphInfo:
         speedup = results["KnightKing"][walk][graph]/results["LB"][walk][graph]
         print (row_format.format(walk, graph, speedup))
+
+import json
+with open('benchmarkResults.json', 'w') as fp:
+    json.dump(results, fp)
 
 #Speedup Over GNNs
 import json
@@ -144,7 +165,13 @@ try:
         if walk in knightKingWalks:
             continue
         for graph in graphInfo:
-            gnnWalk = walk.lower() if walk != "MultiRW" else "graphsaint"
+            if walk == "MultiRW":
+                gnnWalk = "graphsaint"
+            elif walk == "KHop":
+                gnnWalk = "graphsage"
+            else:
+                gnnWalk = walk.lower()
+                
             if not gnnWalk in samplingTimeResults or not graph in samplingTimeResults[gnnWalk]:
                 continue
             if (samplingTimeResults[gnnWalk][graph] < 0):
@@ -178,16 +205,15 @@ for walk in nextDoorApps:
         t = results["InversionTime"][walk][graph]/results["LB"][walk][graph]
         print (row_format.format(walk, graph, t * 100))
 
-import json
-with open('benchmarkResults.json', 'w') as fp:
-    json.dump(results, fp)
-
 # #Multi GPU results
-if len(args.gpus) > 1:
-    print ("\n\nFigure 10: Speedup of sampling using Multiple GPUs over 1 GPU")
-    row_format = "{:>30}" * 3
-    print (row_format.format("Sampling App", "Graph", "Speedup"))
-    for walk in multiGPUApps:
-        for graph in graphInfo:
-            speedup = results["LB"][walk][graph]/results["MultiGPU-LB"][walk][graph]
-            print (row_format.format(walk, graph, speedup))
+if args.gpus is not None and len(args.gpus) > 1:
+    if (results["MultiGPU-LB"][multiGPUApps[0]]["PPI"] == -1):
+        print ("MultiGPU results were not obtained in the execution.")
+    else:
+        print ("\n\nFigure 10: Speedup of sampling using Multiple GPUs over 1 GPU")
+        row_format = "{:>30}" * 3
+        print (row_format.format("Sampling App", "Graph", "Speedup"))
+        for walk in multiGPUApps:
+            for graph in graphInfo:
+                speedup = results["LB"][walk][graph]/results["MultiGPU-LB"][walk][graph]
+                print (row_format.format(walk, graph, speedup))
